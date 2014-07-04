@@ -1,0 +1,19 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+development:
+  <<: *default
+  database: bfc-members_development
+
+test:
+  <<: *default
+  database: bfc-members_test
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

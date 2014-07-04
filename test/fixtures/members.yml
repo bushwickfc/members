@@ -1,0 +1,94 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+addy:
+  first_name: Addy
+  middle_name: min
+  last_name: admin
+  email: admin@b.com
+  phone: MyString
+  phone2: MyString
+  fax: MyString
+  address: MyString
+  address2: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  zip: MyString
+  sex: M
+  status: MyString
+  join_date: 2014-06-17
+  admin: true
+  membership_agreement: true
+  monthly_hours: 4.0
+  fee_discount: 0.0
+  investment_discount: 0.0
+
+john:
+  first_name: John
+  middle_name: J
+  last_name: Jingleheimer
+  email: a@example.com
+  phone: 800-555-1212
+  phone2: 
+  fax: 
+  address: 13 mockingbird lane
+  address2: 
+  city: Brooklyn
+  state: NY
+  country: US
+  zip: 11221
+  sex: M
+  status: active
+  join_date: 2014-06-17
+  admin: false
+  membership_agreement: true
+  monthly_hours: 4.0
+  fee_discount: 0.0
+  investment_discount: 0.0
+
+member1:
+  first_name: First1
+  middle_name: Middle1
+  last_name: Last1
+  email: a@b.com
+  phone: MyString
+  phone2: MyString
+  fax: MyString
+  address: MyString
+  address2: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  zip: MyString
+  sex: M
+  status: MyString
+  join_date: 2014-06-17
+  admin: false
+  membership_agreement: false
+  monthly_hours: 4.0
+  fee_discount: 0.0
+  investment_discount: 0.0
+
+member2:
+  first_name: First2
+  middle_name: Middle2
+  last_name: Last2
+  email: b@a.com
+  phone: MyString
+  phone2: MyString
+  fax: MyString
+  address: MyString
+  address2: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  zip: MyString
+  sex: F
+  status: MyString
+  join_date: 2014-06-17
+  admin: false
+  membership_agreement: true
+  monthly_hours: 4.0
+  fee_discount: 50.0
+  investment_discount: 50.0

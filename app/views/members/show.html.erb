@@ -1,0 +1,109 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @member.first_name %>
+</p>
+
+<p>
+  <strong>Middle name:</strong>
+  <%= @member.middle_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @member.last_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @member.email %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @member.phone %>
+</p>
+
+<p>
+  <strong>Phone2:</strong>
+  <%= @member.phone2 %>
+</p>
+
+<p>
+  <strong>Fax:</strong>
+  <%= @member.fax %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @member.address %>
+</p>
+
+<p>
+  <strong>Address2:</strong>
+  <%= @member.address2 %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @member.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @member.state %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @member.country %>
+</p>
+
+<p>
+  <strong>Zip:</strong>
+  <%= @member.zip %>
+</p>
+
+<p>
+  <strong>Sex:</strong>
+  <%= @member.sex %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @member.status %>
+</p>
+
+<p>
+  <strong>Join date:</strong>
+  <%= @member.join_date %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @member.admin %>
+</p>
+
+<p>
+  <strong>Membership agreement:</strong>
+  <%= @member.membership_agreement %>
+</p>
+
+<p>
+  <strong>Monthly hours:</strong>
+  <%= @member.monthly_hours %>
+</p>
+
+<p>
+  <strong>Fee discount:</strong>
+  <%= @member.fee_discount %>
+</p>
+
+<p>
+  <strong>Investment discount:</strong>
+  <%= @member.investment_discount %>
+</p>
+
+<%= link_to 'Edit', edit_member_path(@member) %> |
+<%= link_to 'Back', members_path %>
