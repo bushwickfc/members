@@ -1,0 +1,10 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+membership:
+  member: suzy
+  name: "membership"
+
+it:
+  member: john
+  name: "it"

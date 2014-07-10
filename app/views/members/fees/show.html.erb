@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Member:</strong>
+  <%= @member.id %>
+</p>
+
+<p>
+  <strong>Receiver:</strong>
+  <%= @receiver.id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @fee.amount %>
+</p>
+
+<p>
+  <strong>Payment date:</strong>
+  <%= @fee.payment_date %>
+</p>
+
+<p>
+  <strong>Payment type:</strong>
+  <%= @fee.payment_type %>
+</p>
+
+<p>
+  <strong>Payment method:</strong>
+  <%= @fee.payment_method %>
+</p>
+
+<%= link_to 'Edit', edit_member_fee_path(@member, @fee), role:'button', class:'btn btn-info' %>
+<%= link_to 'Back', member_fees_path(@member), role:'button', class:'btn btn-default'  %>

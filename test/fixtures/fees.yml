@@ -1,0 +1,65 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+DEFAULTS: &DEFAULTS
+  payment_method: cash
+  receiver: addy
+
+fee1:
+  <<: *DEFAULTS
+  payment_type: membership
+  payment_date: 2014-06-19
+  amount: 1.5
+  member: member1
+
+fee2:
+  <<: *DEFAULTS
+  payment_type: membership
+  payment_date: 2014-06-19
+  amount: 1.5
+  member: member2
+
+john_investment_fee:
+  <<: *DEFAULTS
+  payment_type: investment
+  payment_date: <%= Date.yesterday %>
+  amount: 25
+  member: john
+
+john_membership_fee:
+  <<: *DEFAULTS
+  payment_type: membership
+  payment_date: <%= Date.yesterday-1.year %>
+  amount: 50
+  member: john
+
+# suzy has paid incrementally in full
+<% 5.times do |i| %>
+suzy_membership_fee_<%=i%>w:
+  <<: *DEFAULTS
+  payment_type: membership
+  payment_date: <%= Date.current-i.week %>
+  amount: 10
+  member: suzy
+<% end %>
+
+# morton has paid incrementally, but is still paying
+<% 3.times do |i| %>
+morton_membership_fee_<%=i%>w:
+  <<: *DEFAULTS
+  payment_type: membership
+  payment_date: <%= Date.current-i.week %>
+  amount: 10
+  member: morton
+<% end %>
+
+# gus paid discounted incrementally and has fallen behind
+<% 2.times do |i| %>
+gus_membership_fee_<%=i%>w:
+  <<: *DEFAULTS
+  payment_type: membership
+  payment_date: <%= Date.current-i.week %>
+  amount: 5
+  member: gus
+<% end %>
+

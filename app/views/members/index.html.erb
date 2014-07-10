@@ -1,4 +1,6 @@
+<div class="page-header">
 <h1>Listing members</h1>
+</div>
 
 <table>
   <thead>
@@ -16,13 +18,16 @@
       <th>State</th>
       <th>Country</th>
       <th>Zip</th>
-      <th>Sex</th>
+      <th>Contact preference</th>
+      <th>Gender</th>
       <th>Status</th>
       <th>Join date</th>
+      <th>Date of birth</th>
+      <th>On hold until</th>
       <th>Admin</th>
       <th>Membership agreement</th>
       <th>Monthly hours</th>
-      <th>Fee discount</th>
+      <th>Membership discount</th>
       <th>Investment discount</th>
       <th colspan="3"></th>
     </tr>
@@ -44,17 +49,20 @@
         <td><%= member.state %></td>
         <td><%= member.country %></td>
         <td><%= member.zip %></td>
-        <td><%= member.sex %></td>
+        <td><%= member.contact_preference %></td>
+        <td><%= member.gender %></td>
         <td><%= member.status %></td>
         <td><%= member.join_date %></td>
+        <td><%= member.date_of_birth %></td>
+        <td><%= member.on_hold_until %></td>
         <td><%= member.admin %></td>
         <td><%= member.membership_agreement %></td>
         <td><%= member.monthly_hours %></td>
-        <td><%= member.fee_discount %></td>
+        <td><%= member.membership_discount %></td>
         <td><%= member.investment_discount %></td>
-        <td><%= link_to 'Show', member %></td>
-        <td><%= link_to 'Edit', edit_member_path(member) %></td>
-        <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', member, role:'button', class:'btn btn-info'  %></td>
+        <td><%= link_to 'Edit', edit_member_path(member), role:'button', class:'btn btn-primary'  %></td>
+        <td><%= link_to 'Destroy', member, role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -62,4 +70,4 @@
 
 <br>
 
-<%= link_to 'New Member', new_member_path %>
+<%= link_to 'New Member', new_member_path, role:'button', class:'btn btn-success'  %>

@@ -15,7 +15,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">
     <![endif]-->
   </head>
-  <body>
+  <body role=document>
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -30,15 +30,34 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li class="<%= 'active' if is_controller?('committees') %>">
+              <%= link_to 'Committees', committees_path %>
+            </li>
+            <li class="<%= 'active' if is_controller?('time_banks') %>">
+              <%= link_to 'Time Bank', time_banks_path %>
+            </li>
+            <li class="<%= 'active' if is_controller?('members', 'members/fees') %>">
+              <%= link_to 'Members', members_path %>
+            </li>
+            <%- if @member && @member.id? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Member <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><%= link_to 'Show', member_path(@member) %> </li>
+                <li><%= link_to 'Edit', edit_member_path(@member) %> </li>
+                <li class="divider"></li>
+                <li><%= link_to 'Committees', member_committees_path(@member) %> </li>
+                <li><%= link_to 'Fees', member_fees_path(@member) %> </li>
+                <li><%= link_to 'Time Bank', member_time_banks_path(@member) %> </li>
+              </ul>
+            </li>
+            <%- end %>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
-    <div class="container">
+    <div class="container theme-showcase" role="main">
       <section class="flash">
   
         <%- if flash[:notice] %>
@@ -54,12 +73,14 @@
         <%- end%>
   
       </section>
+  
+      <section class="main">
+        <div class="<%= controller_name %>">
+          <%= yield %>
+        </div>
+      </section>
     </div>
   
-    <div class="container">
-      <%= yield %>
-    </div>
-  
-		<script src="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/js/bootstrap.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/js/bootstrap.min.js"></script>
   </body>
 </html>

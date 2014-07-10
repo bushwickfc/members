@@ -1,0 +1,25 @@
+td,
+th {
+  padding: 5px;
+}
+
+tr > th {
+  background-color: #d0d0d0;
+  border: 1px solid #a0a0a0;
+}
+
+tr > th.borderless {
+  background-color: #F0F0F0;
+  border: 0px solid #000;
+}
+
+tbody > tr:nth-child(odd) {
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+

@@ -66,8 +66,13 @@
 </p>
 
 <p>
-  <strong>Sex:</strong>
-  <%= @member.sex %>
+  <strong>Contact presence:</strong>
+  <%= @member.contact_preference %>
+</p>
+
+<p>
+  <strong>Gender:</strong>
+  <%= @member.gender %>
 </p>
 
 <p>
@@ -78,6 +83,16 @@
 <p>
   <strong>Join date:</strong>
   <%= @member.join_date %>
+</p>
+
+<p>
+  <strong>Date of birth:</strong>
+  <%= @member.date_of_birth %>
+</p>
+
+<p>
+  <strong>On hold until:</strong>
+  <%= @member.on_hold_until %>
 </p>
 
 <p>
@@ -96,8 +111,8 @@
 </p>
 
 <p>
-  <strong>Fee discount:</strong>
-  <%= @member.fee_discount %>
+  <strong>Membership discount:</strong>
+  <%= @member.membership_discount %>
 </p>
 
 <p>
@@ -105,5 +120,5 @@
   <%= @member.investment_discount %>
 </p>
 
-<%= link_to 'Edit', edit_member_path(@member) %> |
-<%= link_to 'Back', members_path %>
+<%= link_to 'Edit', edit_member_path(@member), role:'button', class:'btn btn-primary'  %>
+<%= link_to 'Back', members_path, role:'button', class:'btn btn-default'  %>

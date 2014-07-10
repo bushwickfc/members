@@ -9,6 +9,7 @@ require "action_view/railtie"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 if defined?(Rake.application) && Rake.application.top_level_tasks.grep(/^test(?::|$)/).any?
+  require "minitest"
   require "minitest/rails/railtie"
 end
 
@@ -18,6 +19,7 @@ Bundler.require(*Rails.groups)
 
 module BfcMembers
   class Application < Rails::Application
+    #config.active_record.schema_format = :sql
     config.generators do |g|
       g.test_framework :minitest, spec: true, fixture: true
       g.stylesheets false

@@ -1,6 +1,8 @@
+<div class="page-header">
 <h1>Editing member</h1>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @member %> |
-<%= link_to 'Back', members_path %>
+<%= link_to 'Show', @member, role:'button', class:'btn btn-info' %>
+<%= link_to 'Back', members_path, role:'button', class:'btn btn-default'  %>

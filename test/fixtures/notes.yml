@@ -1,0 +1,12 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+john_note:
+  member: john
+  receiver: addy
+  note: blah blah blah
+
+suzy_note:
+  member: suzy
+  receiver: addy
+  note: foo foo foo

@@ -1,4 +1,5 @@
 class MembersController < ApplicationController
+  before_action :set_selects, only: [:new, :edit]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   # GET /members
@@ -67,8 +68,39 @@ class MembersController < ApplicationController
       @member = Member.find(params[:id])
     end
 
+    def set_selects
+      @genders  = Member.genders
+      @statuses = Member.statuses
+      @contact_preferences = Member.contact_preferences
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
-      params.require(:member).permit(:first_name, :middle_name, :last_name, :email, :phone, :phone2, :fax, :address, :address2, :city, :state, :country, :zip, :sex, :status, :join_date, :admin, :membership_agreement, :monthly_hours, :fee_discount, :investment_discount)
+      params.require(:member).permit(
+        :first_name,
+        :middle_name, 
+        :last_name, 
+        :email, 
+        :phone, 
+        :phone2, 
+        :fax, 
+        :address, 
+        :address2, 
+        :city, 
+        :state, 
+        :country, 
+        :zip, 
+        :contact_preference,
+        :gender, 
+        :status, 
+        :join_date, 
+        :date_of_birth, 
+        :on_hold_until, 
+        :admin, 
+        :membership_agreement, 
+        :monthly_hours, 
+        :membership_discount, 
+        :investment_discount
+      )
     end
 end

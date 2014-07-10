@@ -1,0 +1,25 @@
+<%= form_for(@committee) do |f| %>
+  <% if @committee.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@committee.errors.count, "error") %> prohibited this committee from being saved:</h2>
+
+      <ul>
+      <% @committee.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :member_id %><br>
+    <%= f.select :member_id, @members, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit role:'button', class:'btn btn-success' %>
+  </div>
+<% end %>

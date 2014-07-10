@@ -2,8 +2,6 @@ require "test_helper"
 
 describe MembersController do
 
-  let(:member) { members :member1 }
-
   it "gets index" do
     get :index
     assert_response :success
@@ -13,39 +11,108 @@ describe MembersController do
   it "gets new" do
     get :new
     assert_response :success
+    assert_not_nil assigns(:genders)
+    assert_not_nil assigns(:member)
+    assert_not_nil assigns(:statuses)
+    assert_not_nil assigns(:contact_preferences)
   end
 
   it "creates member" do
-    @member = member
     assert_difference('Member.count') do
-      post :create, member: { address2: @member.address2, address: @member.address, admin: @member.admin, city: @member.city, country: @member.country, email: @member.email, fax: @member.fax, fee_discount: @member.fee_discount, first_name: @member.first_name+"1", investment_discount: @member.investment_discount, join_date: @member.join_date, last_name: @member.last_name, membership_agreement: @member.membership_agreement, middle_name: @member.middle_name, monthly_hours: @member.monthly_hours, phone2: @member.phone2, phone: @member.phone, sex: @member.sex, state: @member.state, status: @member.status, zip: @member.zip }
+      post :create, member: { 
+        address2: @member1.address2,
+        address: @member1.address,
+        admin: @member1.admin,
+        city: @member1.city,
+        contact_preference: @member1.contact_preference,
+        country: @member1.country,
+        date_of_birth: @member1.date_of_birth,
+        email: @member1.email,
+        fax: @member1.fax,
+        membership_discount: @member1.membership_discount,
+        first_name: @member1.first_name+"1",
+        investment_discount: @member1.investment_discount,
+        join_date: @member1.join_date,
+        last_name: @member1.last_name,
+        membership_agreement: @member1.membership_agreement,
+        middle_name: @member1.middle_name,
+        monthly_hours: @member1.monthly_hours,
+        on_hold_until: @member1.on_hold_until,
+        phone2: @member1.phone2,
+        phone: @member1.phone,
+        gender: @member1.gender,
+        state: @member1.state,
+        status: @member1.status,
+        zip: @member1.zip 
+      }
     end
 
     assert_redirected_to member_path(assigns(:member))
   end
 
   it "shows member" do
-    get :show, id: member
+    get :show, id: @member1
     assert_response :success
+    assert_not_nil assigns(:member)
   end
 
   it "gets edit" do
-    get :edit, id: member
+    get :edit, id: @member1
     assert_response :success
+    assert_not_nil assigns(:genders)
+    assert_not_nil assigns(:member)
+    assert_not_nil assigns(:statuses)
+    assert_not_nil assigns(:contact_preferences)
   end
 
   it "updates member" do
-    @member = member
-    put :update, id: member, member: { address2: @member.address2, address: @member.address, admin: @member.admin, city: @member.city, country: @member.country, email: @member.email, fax: @member.fax, fee_discount: @member.fee_discount, first_name: @member.first_name, investment_discount: @member.investment_discount, join_date: @member.join_date, last_name: @member.last_name, membership_agreement: @member.membership_agreement, middle_name: @member.middle_name, monthly_hours: @member.monthly_hours, phone2: @member.phone2, phone: @member.phone, sex: @member.sex, state: @member.state, status: @member.status, zip: @member.zip }
+    put :update, id: @member1, member: { 
+      address2: @member1.address2,
+      address: @member1.address,
+      admin: @member1.admin,
+      city: @member1.city,
+      contact_preference: @member1.contact_preference,
+      country: @member1.country,
+      date_of_birth: @member1.date_of_birth,
+      email: @member1.email,
+      fax: @member1.fax,
+      membership_discount: @member1.membership_discount,
+      first_name: @member1.first_name,
+      investment_discount: @member1.investment_discount,
+      join_date: @member1.join_date,
+      last_name: @member1.last_name,
+      membership_agreement: @member1.membership_agreement,
+      middle_name: @member1.middle_name,
+      monthly_hours: @member1.monthly_hours,
+      on_hold_until: @member1.on_hold_until,
+      phone2: @member1.phone2,
+      phone: @member1.phone,
+      gender: @member1.gender,
+      state: @member1.state,
+      status: @member1.status,
+      zip: @member1.zip 
+    }
     assert_redirected_to member_path(assigns(:member))
   end
 
   it "destroys member" do
     assert_difference('Member.count', -1) do
-      delete :destroy, id: member
+      delete :destroy, id: @safe_delete
     end
 
     assert_redirected_to members_path
+  end
+
+  it "does not destroy member with fees" do
+    assert_difference('Member.count', 0) do
+      assert_raise(ActiveRecord::DeleteRestrictionError, 
+                   "Cannot delete record because of dependent fees") do
+        delete :destroy, id: @john
+      end
+    end
+
+    assert_response :success
+    assert_not_nil assigns(:member)
   end
 
 end

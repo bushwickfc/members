@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby "2.1.2"
 
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.4'
 gem 'unicorn'
 gem 'mysql', require: nil
 gem 'mysql2'
@@ -15,10 +15,12 @@ gem 'sinatra', '>= 1.3.0', require: nil
 gem 'redis-namespace'
 ########
 
+gem 'valid_email'
 #gem 'twitter-bootstrap-rails'
 gem 'bootstrap-datetimepicker-rails'
 
 gem 'sass-rails', '~> 4.0.3'
+gem 'coffee-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer',  platforms: :ruby
 gem 'jquery-rails'
@@ -38,6 +40,7 @@ end
 
 group :development, :test do
   gem 'pry-nav'
+  gem 'pry-stack_explorer'
   gem 'minitest-rails'
 end
 

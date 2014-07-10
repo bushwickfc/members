@@ -1,34 +1,6 @@
 # Read about fixtures at
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
-
-addy:
-  first_name: Addy
-  middle_name: min
-  last_name: admin
-  email: admin@b.com
-  phone: MyString
-  phone2: MyString
-  fax: MyString
-  address: MyString
-  address2: MyString
-  city: MyString
-  state: MyString
-  country: MyString
-  zip: MyString
-  sex: M
-  status: MyString
-  join_date: 2014-06-17
-  admin: true
-  membership_agreement: true
-  monthly_hours: 4.0
-  fee_discount: 0.0
-  investment_discount: 0.0
-
-john:
-  first_name: John
-  middle_name: J
-  last_name: Jingleheimer
-  email: a@example.com
+DEFAULTS: &DEFAULTS
   phone: 800-555-1212
   phone2: 
   fax: 
@@ -38,57 +10,120 @@ john:
   state: NY
   country: US
   zip: 11221
-  sex: M
-  status: active
+  contact_preference: email
+  date_of_birth: 1980-01-01
+
+addy:
+  <<: *DEFAULTS
+  first_name: Addy
+  middle_name: min
+  last_name: admin
+  email: admin@b.com
   join_date: 2014-06-17
-  admin: false
+  admin: true
+  status: active
   membership_agreement: true
   monthly_hours: 4.0
-  fee_discount: 0.0
+  membership_discount: 0.0
+  investment_discount: 0.0
+
+john:
+  <<: *DEFAULTS
+  first_name: John
+  middle_name: J
+  last_name: Jingleheimer
+  email: j@gmail.com
+  admin: false
+  status: active
+  join_date: <%= Date.current - 1.year %>
+  status: active
+  membership_agreement: true
+  monthly_hours: 4.0
+  membership_discount: 0.0
+  investment_discount: 0.0
+
+morton:
+  <<: *DEFAULTS
+  first_name: Morton
+  middle_name: Incomplete
+  last_name: Zzz
+  email: m@gmail.com
+  admin: false
+  join_date: <%= Date.current - 3.weeks %>
+  status: active
+  membership_agreement: true
+  monthly_hours: 4.0
+  membership_discount: 0.0
+  investment_discount: 0.0
+
+gus:
+  <<: *DEFAULTS
+  first_name: Gus
+  middle_name: Unpaid
+  last_name: Zzz
+  email: g@gmail.com
+  admin: false
+  status: 
+  join_date: <%= Date.current - 3.weeks %>
+  membership_agreement: true
+  monthly_hours: 4.0
+  membership_discount: 50.0
+  investment_discount: 0.0
+
+suzy:
+  <<: *DEFAULTS
+  first_name: Suzy
+  middle_name: Paid
+  last_name: Zzz
+  email: s@gmail.com
+  admin: false
+  gender: F
+  status: 
+  join_date: <%= Date.current - 5.weeks %>
+  membership_agreement: true
+  monthly_hours: 4.0
+  membership_discount: 0.0
+  investment_discount: 0.0
+
+safe_delete:
+  <<: *DEFAULTS
+  first_name: Alex
+  middle_name: P
+  last_name: Keaton
+  email: a@gmail.com
+  admin: false
+  join_date: 2014-06-17
+  status: 
+  membership_agreement: true
+  monthly_hours: 4.0
+  membership_discount: 0.0
   investment_discount: 0.0
 
 member1:
+  <<: *DEFAULTS
   first_name: First1
   middle_name: Middle1
   last_name: Last1
-  email: a@b.com
-  phone: MyString
-  phone2: MyString
-  fax: MyString
-  address: MyString
-  address2: MyString
-  city: MyString
-  state: MyString
-  country: MyString
-  zip: MyString
-  sex: M
-  status: MyString
-  join_date: 2014-06-17
+  email: a@gmail.com
   admin: false
-  membership_agreement: false
+  join_date: 2014-06-17
+  status: active
+  membership_agreement: true
   monthly_hours: 4.0
-  fee_discount: 0.0
+  membership_discount: 0.0
   investment_discount: 0.0
 
 member2:
+  <<: *DEFAULTS
   first_name: First2
   middle_name: Middle2
   last_name: Last2
-  email: b@a.com
-  phone: MyString
-  phone2: MyString
-  fax: MyString
-  address: MyString
-  address2: MyString
-  city: MyString
-  state: MyString
-  country: MyString
-  zip: MyString
-  sex: F
-  status: MyString
-  join_date: 2014-06-17
+  email: b@gmail.com
   admin: false
+  join_date: <%= Date.current - 5.years %>
+  status: active
   membership_agreement: true
   monthly_hours: 4.0
-  fee_discount: 50.0
-  investment_discount: 50.0
+  membership_discount: 0.0
+  investment_discount: 0.0
+

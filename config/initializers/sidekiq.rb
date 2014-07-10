@@ -1,7 +1,7 @@
 require 'uri'
 require 'redis'
 
-SIDEKIQ_REDIS_NAMESPACE = 'applifier'
+SIDEKIQ_REDIS_NAMESPACE = Rails.application.class.parent.to_s
 
 if ENV['RACK_ENV'] == 'production' || ENV['RACK_ENV'] == 'staging'
   redis_url = URI.parse(ENV['REDISTOGO_URL'])
@@ -22,8 +22,8 @@ Sidekiq.configure_client do |config|
 end
 
 Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-  username == 'adaptly' && password == 'nospecialcharacters'
+  username == 'bfc' && password == 'c@rr0tBFC'
 end
 
-$redis = Redis.new(redis_config)
-$redis_ns = Redis::Namespace.new(SIDEKIQ_REDIS_NAMESPACE, redis: $redis)
+redis = Redis.new(redis_config)
+redis_ns = Redis::Namespace.new(SIDEKIQ_REDIS_NAMESPACE, redis: redis)

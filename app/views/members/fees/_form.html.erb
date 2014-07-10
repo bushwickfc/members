@@ -1,0 +1,40 @@
+<%= form_for([@member, @fee]) do |f| %>
+  <% if @fee.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@fee.errors.count, "error") %> prohibited this fee from being saved:</h2>
+
+      <ul>
+      <% @fee.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.hidden_field :member_id %>
+  </div>
+  <div class="field">
+    <%= f.label :receiver_id %><br>
+    <%= f.select :receiver_id, @receivers, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :amount %><br>
+    <%= f.text_field :amount %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_date %><br>
+    <%= f.date_select :payment_date %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_type %><br>
+    <%= f.select :payment_type, @payment_types, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :payment_method %><br>
+    <%= f.select :payment_method, @payment_methods, include_blank: true %>
+  </div>
+  <div class="actions">
+    <%= f.submit role:'button', class:'btn btn-success' %>
+  </div>
+<% end %>
