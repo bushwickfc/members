@@ -31,7 +31,8 @@ class Member < ActiveRecord::Base
 
   validate  :on_hold_until_valid
 
-  scope     :form_select, -> { select(FULL_NAME, :id) }
+  scope     :form_select, -> { full_name.select(:id) }
+  scope     :full_name,   -> { select(FULL_NAME) }
 
   # do not validate if +on_hold_until+ is nil
   def on_hold_until_valid
@@ -69,6 +70,10 @@ class Member < ActiveRecord::Base
 
   def full_name
     read_attribute(:full_name) || [first_name, middle_name, last_name].join(' ')
+  end
+
+  def as_csv
+    attributes
   end
 
 end

@@ -1,42 +1,40 @@
-class Members::FeesController < ApplicationController
-  before_action :set_member
+class FeesController < ApplicationController
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit]
 
-  # GET /members/:member_id/fees
-  # GET /members/:member_id/fees.json
-  # GET /members/:member_id/fees.csv
+  # GET /fees
+  # GET /fees.json
+  # GET /fees.csv
   def index
-    @fees = @member.fees.where(params[:search])
+    @fees = Fee.where(params[:search])
     @receiver = Receiver.new
     respond_with(@fees)
   end
 
-  # GET /members/:member_id/fees/1
-  # GET /members/:member_id/fees/1.json
-  # GET /members/:member_id/fees/1.csv
+  # GET /fees/1
+  # GET /fees/1.csv
   def show
     respond_with(@fee)
   end
 
-  # GET /members/:member_id/fees/new
+  # GET /fees/new
   def new
     @receiver = Receiver.new
-    @fee = @member.fees.new
+    @fee = Fee.new
   end
 
-  # GET /members/:member_id/fees/1/edit
+  # GET /fees/1/edit
   def edit
   end
 
-  # POST /members/:member_id/fees
-  # POST /members/:member_id/fees.json
+  # POST /fees
+  # POST /fees.json
   def create
-    @fee = @member.fees.new(fee_params)
+    @fee = Fee.new(fee_params)
 
     respond_to do |format|
       if @fee.save
-        format.html { redirect_to member_fee_path(@member, @fee), notice: 'Fee was successfully created.' }
+        format.html { redirect_to fee_path(@fee), notice: 'Fee was successfully created.' }
         format.json { render :show, status: :created, location: @fee }
       else
         format.html { render :new }
@@ -45,12 +43,12 @@ class Members::FeesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /members/:member_id/fees/1
-  # PATCH/PUT /members/:member_id/fees/1.json
+  # PATCH/PUT /fees/1
+  # PATCH/PUT /fees/1.json
   def update
     respond_to do |format|
       if @fee.update(fee_params)
-        format.html { redirect_to member_fee_path(@member, @fee), notice: 'Fee was successfully updated.' }
+        format.html { redirect_to fee_path(@fee), notice: 'Fee was successfully updated.' }
         format.json { render :show, status: :ok, location: @fee }
       else
         format.html { render :edit }
@@ -59,22 +57,18 @@ class Members::FeesController < ApplicationController
     end
   end
 
-  # DELETE /members/:member_id/fees/1
-  # DELETE /members/:member_id/fees/1.json
+  # DELETE /fees/1
+  # DELETE /fees/1.json
   def destroy
     @fee.destroy
     respond_to do |format|
-      format.html { redirect_to member_fees_url(@member), notice: 'Fee was successfully destroyed.' }
+      format.html { redirect_to fees_url, notice: 'Fee was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_member
-      @member = Member.find(params[:member_id])
-    end
-
     def set_fee
       @fee = Fee.find(params[:id])
       @receiver = @fee.receiver
@@ -86,6 +80,7 @@ class Members::FeesController < ApplicationController
     end
 
     def set_selects
+      @members = Member.form_select.collect{|r| [r.full_name, r.id]}
       @receivers = Receiver.form_select.collect{|r| [r.full_name, r.id]}
       @payment_types = Fee.payment_types
       @payment_methods = Fee.payment_methods

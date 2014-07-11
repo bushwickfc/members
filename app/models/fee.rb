@@ -19,6 +19,10 @@ class Fee < ActiveRecord::Base
   scope :membership_payment, -> { where(payment_type: "membership") }
   scope :investment_payment, -> { where(payment_type: "investment") }
 
+  def as_csv
+    attributes
+  end
+
   module MemberProxy
     def membership_payment_total
       where(payment_type: "membership").
@@ -38,7 +42,7 @@ class Fee < ActiveRecord::Base
 
     def membership_payment_overdue?
       weeks = proxy_association.owner.membership_in(:weeks)
-      !membership_paid_full? && weeks >= WEEKS_TO_PAY_MEMBERSHIP * 2
+      !membership_paid_full? && weeks >= WEEKS_TO_PAY_MEMBERSHIP
     end
 
     def membership_paid?

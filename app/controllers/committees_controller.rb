@@ -4,8 +4,10 @@ class CommitteesController < ApplicationController
 
   # GET /committees
   # GET /committees.json
+  # GET /committees.csv
   # GET /members/:member_id/committees
   # GET members/:member_id/committees.json
+  # GET members/:member_id/committees.csv
   def index
     if params[:member_id]
       @member = Member.find(params[:member_id])
@@ -13,11 +15,15 @@ class CommitteesController < ApplicationController
     else
       @committees = Committee.all
     end
+    @committees = @committees.where(params[:search])
+    respond_with(@committees)
   end
 
   # GET /committees/1
   # GET /committees/1.json
+  # GET /committees/1.csv
   def show
+    respond_with(@committee)
   end
 
   # GET /committees/new

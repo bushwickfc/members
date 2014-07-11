@@ -2,38 +2,45 @@
 <h1>Listing Time bank</h1>
 </div>
 
-<table>
+<%= link_to 'New time_bank', new_member_time_bank_path(@member), role:'button', class:'btn btn-success' %>
+<%= render 'shared/csv' %>
+<%= render 'shared/breadcrumbs' %>
+
+<table class="data-table">
   <thead>
     <tr>
       <th>Member</th>
       <th>Admin</th>
       <th>Committee</th>
-      <th>Start</th>
-      <th>Finish</th>
+      <th>Hours</th>
       <th>Time type</th>
       <th>Approved</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @time_banks.each do |time_bank| %>
       <tr>
-        <td><%= member_name(time_bank, :member) %></td>
-        <td><%= member_name(time_bank, :admin) %></td>
-        <td><%= committee_name(time_bank) %></td>
-        <td><%= time_bank.start %></td>
-        <td><%= time_bank.finish %></td>
-        <td><%= time_bank.time_type %></td>
-        <td><%= time_bank.approved %></td>
-        <td><%= link_to 'Show', member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-info'  %></td>
-        <td><%= link_to 'Edit', edit_member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-primary'  %></td>
-        <td><%= link_to 'Destroy', member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{time_bank.member.full_name}"), member_path(time_bank.member) %>&nbsp;
+          <%= link_to member_name(time_bank, :member), member_path(time_bank.member) %>
+        </td>
+        <td>
+          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{time_bank.admin.full_name}"), member_path(time_bank.admin.id) %>&nbsp;
+          <%= link_to member_name(time_bank, :admin), member_path(time_bank.admin.id) %>
+        </td>
+        <td><%= link_to committee_name(time_bank), committee_path(time_bank.committee) if time_bank.committee %></td>
+        <td><%= time_bank.hours %></td>
+        <td><%= search_link(time_bank, :time_type) %></td>
+        <td><%= search_link(time_bank, :approved) %></td>
+        <td>
+          <%= link_to 'Show', member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-info'  %>&nbsp;
+          <%= link_to 'Edit', edit_member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-primary'  %>&nbsp;
+          <%= link_to 'Destroy', member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New time_bank', new_member_time_bank_path(@member), role:'button', class:'btn btn-success' %>

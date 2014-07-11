@@ -1,9 +1,9 @@
-td,
-th {
+table.dataTable td,
+table.dataTable th {
   padding: 5px;
 }
 
-tr > th {
+table.dataTable tr > th {
   background-color: #d0d0d0;
   border: 1px solid #a0a0a0;
 }
@@ -13,13 +13,27 @@ tr > th.borderless {
   border: 0px solid #000;
 }
 
-tbody > tr:nth-child(odd) {
+table.dataTable tbody > tr:nth-child(odd) {
   background-color: #fff;
   border: 1px solid #ccc;
 }
 
-tbody > tr:nth-child(even) {
+table.dataTable tbody > tr:nth-child(even) {
   background-color: #eee;
   border: 1px solid #ccc;
+}
+
+table.dataTable thead > tr > th {
+  padding-left: 3px;
+  padding-right: 13px;
+}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+  padding: 2px 5px;
+}
+
+table.dataTable tbody tr:hover {
+  background-color: rgb(254,255,237);
 }
 

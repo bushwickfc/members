@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<%= render 'shared/csv' %>
 
 <p>
   <strong>Member:</strong>
@@ -13,6 +14,11 @@
 <p>
   <strong>Committee:</strong>
   <%= committee_name(@time_bank) %>
+</p>
+
+<p>
+  <strong>Hours:</strong>
+  <%= @time_bank.hours %>
 </p>
 
 <p>

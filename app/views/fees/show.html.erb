@@ -3,17 +3,17 @@
 
 <p>
   <strong>Member:</strong>
-  <%= @member.id %>
+  <%= member_name(@fee, :member) %>
 </p>
 
 <p>
   <strong>Receiver:</strong>
-  <%= @receiver.id %>
+  <%= member_name(@fee, :receiver) %>
 </p>
 
 <p>
   <strong>Amount:</strong>
-  <%= @fee.amount %>
+  <%= as_money @fee.amount %>
 </p>
 
 <p>
@@ -31,5 +31,5 @@
   <%= @fee.payment_method %>
 </p>
 
-<%= link_to 'Edit', edit_member_fee_path(@member, @fee), role:'button', class:'btn btn-info' %>
-<%= link_to 'Back', member_fees_path(@member), role:'button', class:'btn btn-default'  %>
+<%= link_to 'Edit', edit_fee_path(@fee), role:'button', class:'btn btn-info' %>
+<%= link_to 'Back', fees_path, role:'button', class:'btn btn-default'  %>

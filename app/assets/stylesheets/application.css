@@ -31,3 +31,16 @@ body {
 .theme-showcase .navbar .container {
   width: auto;
 }
+
+.fee-risk {
+  background-color: #00f;
+}
+
+.fee-overdue {
+  background-color: #0ff;
+}
+
+.fee-risk {
+  background-color: #fff;
+}
+

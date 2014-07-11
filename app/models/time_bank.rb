@@ -7,6 +7,7 @@ class TimeBank < ActiveRecord::Base
     cashier
     close
     committee
+    facilities
     gift_given
     gift_received
     greeter
@@ -67,7 +68,7 @@ class TimeBank < ActiveRecord::Base
 
   # only check for negative times when it's for penalty
   def validate_negative_times
-    return true if time_type != "penalty" || start.nil? || finish.nil?
+    return true if (time_type != "penalty" && time_type != "gift_given") || start.nil? || finish.nil?
     if r = start <= finish
       errors.add(:start, "must come after finish, for penalties")
     end
@@ -76,7 +77,7 @@ class TimeBank < ActiveRecord::Base
 
   # only check for positive times when it's not for penalty
   def validate_positive_times
-    return true if time_type == "penalty" || start.nil? || finish.nil?
+    return true if (time_type == "gift_given" || time_type == "penalty") || start.nil? || finish.nil?
     if r = start >= finish
       errors.add(:start, "must come before finish")
     end
@@ -84,11 +85,17 @@ class TimeBank < ActiveRecord::Base
   end
 
   private def swap_start_finish(&block)
-    return true if time_type != "penalty" || start.nil? || finish.nil?
+    return true if (time_type != "gift_given" && time_type != "penalty") || start.nil? || finish.nil?
+    return true if (time_type == "gift_given" || time_type == "penalty") && start > finish
+    #puts "SWAP #{start} #{finish} // #{self.inspect}"
     s = start
     write_attribute(:start, finish)
     write_attribute(:finish, s)
     block_given? ? yield : true
+  end
+
+  def as_csv
+    attributes
   end
 
   module TimeBank::MemberProxy

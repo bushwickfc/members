@@ -4,13 +4,17 @@ class MembersController < ApplicationController
 
   # GET /members
   # GET /members.json
+  # GET /members.csv
   def index
-    @members = Member.all
+    @members = Member.where(params[:search])
+    respond_with(@members)
   end
 
   # GET /members/1
   # GET /members/1.json
+  # GET /members/1.csv
   def show
+    respond_with(@member)
   end
 
   # GET /members/new

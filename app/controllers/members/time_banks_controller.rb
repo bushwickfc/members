@@ -5,13 +5,17 @@ class Members::TimeBanksController < ApplicationController
 
   # GET /members/:member_id/time_banks
   # GET /members/:member_id/time_banks.json
+  # GET /members/:member_id/time_banks.csv
   def index
-    @time_banks = @member.time_banks.all
+    @time_banks = @member.time_banks.where(params[:search])
+    respond_with(@time_banks)
   end
 
   # GET /members/:member_id/time_banks/1
   # GET /members/:member_id/time_banks/1.json
+  # GET /members/:member_id/time_banks/1.csv
   def show
+    respond_with(@time_bank)
   end
 
   # GET /members/:member_id/time_banks/new
@@ -66,7 +70,7 @@ class Members::TimeBanksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_time_bank
-      @time_bank = TimeBank.find(params[:id])
+      @time_bank = TimeBank.select("time_banks.*").hours.find(params[:id])
     end
 
     def set_member
@@ -82,6 +86,6 @@ class Members::TimeBanksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def time_bank_params
-      params.require(:time_bank).permit(:member_id, :admin_id, :time_bank_id, :start, :finish, :time_type, :approved)
+      params.require(:time_bank).permit(:member_id, :admin_id, :committee_id, :start, :finish, :time_type, :approved)
     end
 end

@@ -12,4 +12,5 @@ Rails.application.routes.draw do
 
   resources :committees
   resources :time_banks
+  resources :fees
 end

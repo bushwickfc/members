@@ -2,7 +2,7 @@
 <h1>Listing fees</h1>
 </div>
 
-<%= link_to 'New Fee', new_member_fee_path(@member), role:'button', class:'btn btn-success' %>
+<%= link_to 'New Fee', new_fee_path, role:'button', class:'btn btn-success' %>
 <%= render 'shared/csv' %>
 <%= render 'shared/breadcrumbs' %>
 
@@ -21,10 +21,10 @@
 
   <tbody>
     <% @fees.each do |fee| %>
-      <tr>
-        <td>
+      <tr >
+        <td class="<%= fee_table_tr_class(fee) %>">
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.member.full_name}"), member_path(fee.member) %>&nbsp;
-          <%= link_to member_name(fee, :member), member_path(fee.member) %>
+          <%= link_to member_name(fee, :member), member_fees_path(fee.member) %>
         </td>
         <td>
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.receiver.full_name}"), member_path(fee.receiver.id) %>&nbsp;
@@ -35,9 +35,9 @@
         <td><%= search_link(fee, :payment_type) %></td>
         <td><%= search_link(fee, :payment_method) %></td>
         <td>
-          <%= link_to 'Show', member_fee_path(@member, fee), role:'button', class:'btn btn-info'  %>&nbsp;
-          <%= link_to 'Edit', edit_member_fee_path(@member, fee), role:'button', class:'btn btn-primary'  %>&nbsp;
-          <%= link_to 'Destroy', member_fee_path(@member, fee), role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Show', fee_path(fee), role:'button', class:'btn btn-info'  %>&nbsp;
+          <%= link_to 'Edit', edit_fee_path(fee), role:'button', class:'btn btn-primary'  %>&nbsp;
+          <%= link_to 'Destroy', fee_path(fee), role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
