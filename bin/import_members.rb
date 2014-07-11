@@ -87,7 +87,7 @@ class MemberCsv
   end
 
   def create_committees
-    %w[Outreach Sourcing Finance Communications Orientations Governance Technology].each do |comm|
+    %w[Outreach Sourcing Finance Communications Facilities Membership Orientations Governance Technology].each do |comm|
       Committee.create!(
         member: @member,
         name: comm
@@ -118,6 +118,9 @@ class MemberCsv
       when /comm(s|unications?)/i
         @committee = Committee.find_by(name: "Communications")
         "committee"
+      when /facilities/i, /paint/i
+        @committee = Committee.find_by(name: "Facilities")
+        "committee"
       when /finance/i
         @committee = Committee.find_by(name: "Finance")
         "committee"
@@ -126,6 +129,9 @@ class MemberCsv
         "committee"
       when /membership/i
         @committee = Committee.find_by(name: "Membership")
+        "committee"
+      when /orientations/i
+        @committee = Committee.find_by(name: "Orientations")
         "committee"
       when /outreach/i
         @committee = Committee.find_by(name: "Outreach")

@@ -72,8 +72,4 @@ class Member < ActiveRecord::Base
     read_attribute(:full_name) || [first_name, middle_name, last_name].join(' ')
   end
 
-  def as_csv
-    attributes
-  end
-
 end

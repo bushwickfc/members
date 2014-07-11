@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     resources :committees, only: [:index]
   end
 
-  resources :committees
+  resources :committees do
+    resources :time_banks, module: :committees
+  end
   resources :time_banks
   resources :fees
 end

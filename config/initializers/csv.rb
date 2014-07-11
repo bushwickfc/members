@@ -18,6 +18,10 @@ class ActiveRecord::Base
     out = attributes.keys.to_csv(options)
     out << attributes.values.to_csv(options)
   end
+
+  def as_csv
+    attributes
+  end
 end
 
 ActionController::Renderers.add :csv do |csv, options|

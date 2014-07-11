@@ -23,7 +23,10 @@
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{committee.member.full_name}"), member_path(committee.member) %>&nbsp;
           <%= link_to member_name(committee, :member), member_committees_path(committee.member) %>
         </td>
-        <td><%= committee.name %></td>
+        <td>
+          <%= link_to image_tag(image_path("clock.png"), size: "15x15", alt: "time bank for #{committee.name}"), committee_time_banks_path(committee) %>&nbsp;
+          <%= committee.name %>
+        </td>
         <td>
           <%= link_to 'Show', committee, role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_committee_path(committee), role:'button', class:'btn btn-primary'  %>&nbsp;
@@ -33,5 +36,4 @@
     <% end %>
   </tbody>
 </table>
-
 

@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+<%= render 'shared/csv' %>
+
+<p>
+  <strong>Member:</strong>
+  <%= member_name(@time_bank, :member) %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= member_name(@time_bank, :admin) %>
+</p>
+
+<p>
+  <strong>Committee:</strong>
+  <%= committee_name(@time_bank) %>
+</p>
+
+<p>
+  <strong>Hours:</strong>
+  <%= @time_bank.hours %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @time_bank.start %>
+</p>
+
+<p>
+  <strong>Finish:</strong>
+  <%= @time_bank.finish %>
+</p>
+
+<p>
+  <strong>Time type:</strong>
+  <%= @time_bank.time_type %>
+</p>
+
+<p>
+  <strong>Approved:</strong>
+  <%= @time_bank.approved %>
+</p>
+
+<%= link_to 'Edit', edit_committee_time_bank_path(@committee, @time_bank), role:'button', class:'btn btn-info' %>
+<%= link_to 'Back', committee_time_banks_path(@committee), role:'button', class:'btn btn-default'  %>

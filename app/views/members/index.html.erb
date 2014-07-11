@@ -21,8 +21,6 @@
       <th>Status</th>
       <th>Join date</th>
       <th>Membership agreement</th>
-      <th>Membership discount</th>
-      <th>Investment discount</th>
       <th></th>
     </tr>
   </thead>
@@ -50,8 +48,6 @@
         <td><%= search_link(member, :status) %></td>
         <td><%= search_link(member, :join_date) %></td>
         <td><%= search_link(member, :membership_agreement) %></td>
-        <td><%= search_link(member, :membership_discount) %></td>
-        <td><%= search_link(member, :investment_discount) %></td>
         <td>
           <%= link_to 'Show', member, role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_member_path(member), role:'button', class:'btn btn-primary'  %>&nbsp;

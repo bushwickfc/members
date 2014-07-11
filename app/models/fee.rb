@@ -19,10 +19,6 @@ class Fee < ActiveRecord::Base
   scope :membership_payment, -> { where(payment_type: "membership") }
   scope :investment_payment, -> { where(payment_type: "investment") }
 
-  def as_csv
-    attributes
-  end
-
   module MemberProxy
     def membership_payment_total
       where(payment_type: "membership").
