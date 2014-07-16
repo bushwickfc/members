@@ -84,6 +84,7 @@ class MembersController < ApplicationController
         :first_name,
         :middle_name, 
         :last_name, 
+        :opt_out, 
         :email, 
         :phone, 
         :phone2, 

@@ -1,6 +1,6 @@
 class TimeBank < ActiveRecord::Base
   # format string used to insert SUM or nothing
-  HOURS_SELECT = "IFNULL(CAST(%s(UNIX_TIMESTAMP(finish)-UNIX_TIMESTAMP(start))/60/60 AS DECIMAL), 0) AS hours"
+  HOURS_SELECT = "IFNULL(CAST(%s(UNIX_TIMESTAMP(finish)-UNIX_TIMESTAMP(start))/60.0/60.0 AS DECIMAL(10,2)), 0.0) AS hours"
   HOURS_SUSPENDED = -4
   cattr_reader :time_types
   @@time_types = %w[
@@ -42,7 +42,13 @@ class TimeBank < ActiveRecord::Base
   scope :hours_summed,    -> { select(HOURS_SELECT % "SUM") }
 
   def hours
-    read_attribute(:hours) || ((finish - start)/60/60).to_f rescue 0
+    if attributes["hours"]
+      read_attribute(:hours).to_f 
+    else
+      ((finish - start)/60.0/60.0).to_f
+    end
+  rescue NoMethodError
+    0.0
   end
 
   # ensure that penalties create negative time for the member

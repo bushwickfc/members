@@ -11,6 +11,7 @@
     <tr>
       <th>First name</th>
       <th>Last name</th>
+      <th>Opt Out</th>
       <th>Email</th>
       <th>Phone</th>
       <th>Phone2</th>
@@ -35,6 +36,7 @@
         <td>
           <%= search_link(member, :last_name) %>
         </td>
+        <td><%= search_link(member, :opt_out) %></td>
         <td>
           <%= link_to image_tag(image_path("mail_appt.png"), size: "15x15", alt: "email #{member.email}"), "mailto:#{member.email}" %>&nbsp;
           <%= search_link(member, :email) %>

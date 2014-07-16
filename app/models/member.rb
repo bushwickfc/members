@@ -3,7 +3,7 @@ class Member < ActiveRecord::Base
   MEMBERSHIP_FEE = 50
   INVESTMENT_FEE = 25
   MINIMUM_HOLD   = 1.month
-  FULL_NAME      = 'CONCAT_WS(" ", first_name, middle_name, last_name) AS full_name'
+  FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, middle_name, last_name)) AS full_name'
   cattr_reader :genders, :statuses, :contact_preferences
   @@genders  = %w[Male Female]
   @@statuses = %w[active inactive suspended hold maternity canceled interested volunteer]
@@ -23,8 +23,6 @@ class Member < ActiveRecord::Base
   validates :gender, inclusion: { in: @@genders }, allow_nil: true, allow_blank: true
   validates :status, inclusion: { in: @@statuses }, allow_nil: true, allow_blank: true
   validates :contact_preference, inclusion: { in: @@contact_preferences }, allow_nil: true, allow_blank: true
-  validates :join_date, presence: true
-  validates :date_of_birth, presence: true
   validates :monthly_hours, numericality: { greater_than: 0.0 }
   validates :membership_discount, numericality: { greater_than_or_equal_to: 0.0 }
   validates :investment_discount, numericality: { greater_than_or_equal_to: 0.0 }
@@ -55,13 +53,15 @@ class Member < ActiveRecord::Base
   end
 
   def membership_in(type = :weeks)
-    since = (Date.current - join_date).to_i
+    return 0.0 unless join_date?
+
+    since = (Date.current - join_date).to_f
     case type
     when :days    then since
-    when :weeks   then since / 7
-    when :months  then since / 30
-    when :years   then since / 365
-    end
+    when :weeks   then since / 7.0
+    when :months  then since / 30.0
+    when :years   then since / 365.0
+    end.floor
   end
 
   def hours_owed

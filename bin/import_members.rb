@@ -1,12 +1,22 @@
+#!/usr/bin/env rails runner
 require 'csv'
 class MemberCsv
   ADMINS = [
     "Amanda  Pitts",
-    "Philip  Champon"
+    "Philip  Champon",
+    "Rachel  Garcia-Grossman",
+    "Karim  Tabbaa",
+    "Maggie  Herskovits",
+    "Christina  Robertson",
+    "Kira  Josefsson",
+    "Gwen  Schantz",
+    "Kristin  Caringer",
+    "Leighton  Edmondson",
+    "Mark  Gering",
   ]
   
   def initialize(opts)
-    @csv_file = opts[:csv_file] || "tmp/members-no-nl.csv"
+    @csv_file = opts[:csv_file] || "tmp/members-0715-nonl.csv"
   end
 
   def csv
@@ -22,7 +32,7 @@ class MemberCsv
 
   def first_work_shift
     (30..142).select{|i|i%2==0}.each do |i|
-      if @row[i].to_i > 0 && (date=Date.strptime(csv.headers[i], "%m/%d/%y") rescue false)
+      if @row[i].to_i != 0 && (date=Date.strptime(csv.headers[i], "%m/%d/%y") rescue false)
         return date
       end
     end
@@ -44,7 +54,12 @@ class MemberCsv
 
   def import_members
       each_with_index do |member,i|
-        last_name, first_name = member[0].split(/,\s+/)
+        last_name, first_name = member[0].split(/[,;]\s+/)
+        join_date = (
+           (strptime("JOIN/WF Date (work cycle count start date)").split(/,\s*/)[-1].split('-')[-1]  rescue false) || 
+          (strptime("Join Date") rescue false) || 
+          first_work_shift
+        )
         @member = m = Member.new(
           first_name: member["First Name"] || first_name.gsub(/[^-_A-za-z].*/, ''),
           last_name: member["Last Name"] || last_name.gsub(/[^-_A-za-z].*/, ''),
@@ -60,23 +75,24 @@ class MemberCsv
           contact_preference: member["Contact Preference"] =~ /[Pp]hone/ ? "phone" : "email",
           date_of_birth: (strptime("DOB") rescue '0003-03-03'),
           gender: member["Sex"] =~ /F/i ? "Female" : "Male",
-          join_date: ((strptime("Join Date") rescue false) || first_work_shift),
+          join_date: join_date,
           status: member["Member Status"].downcase.strip,
           membership_agreement: member["Membership Agreement"] =~ /y/i ? true : false,
           membership_discount: member["Low Income Verified"] =~ /y/i ? 50.0 : 0.0,
           investment_discount: member["Low Income Verified"] =~ /y/i ? 30.0 : 0.0,
         )
-        m.admin = true if i==0 || ADMINS.include?(m.full_name)
-        m.valid?
+        m[:admin] = ADMINS.include?(m.full_name)
+        m[:created_at] = m.join_date
+        m[:join_date] = nil if m.status == 'interested' || m.status == 'volunteer'
+        m.valid? || puts("ERROR MEMBER #{m.full_name} #{m.status}: #{m.errors.full_messages}")
         if m.errors[:status].any?
-          puts "#{m.full_name} #{m.status}: #{m.errors[:status]}"
           m.status = nil
         end
         if m.errors[:email].any?
-          puts "#{m.full_name} #{m.email}: #{m.errors[:email]}"
           m.email = "invalid@bushwickfoodcoop.com"
         end
         m.save!
+        puts "MEMBER SAVED #{m.inspect}"
         if i == 0
           @admin = Admin.first
           create_committees
@@ -96,12 +112,11 @@ class MemberCsv
 
   end
 
-  def s2time_type(h)
+  def s2time_type(hr_string, hours)
     @committee = nil
-    str = h.sub(/.*\(([^)]+)/, '\1').split(/,\s*/)[0].strip.downcase
-    hours = h.to_f
-    #puts "STR #{str} // hours #{hours} // #{h}"
-    if hours < 0
+    str = hr_string.sub(/.*\(([^)]+)/, '\1').split(/,\s*/)[0].strip.downcase
+    #puts "STR #{str} // hours #{hours} // #{hr_string}"
+    if hours < 0.0
       if str =~ /gift/
         "gift_given"
       else
@@ -149,6 +164,7 @@ class MemberCsv
   end
 
   def convert_date(date)
+    return date if date.respond_to?(:day)
     date.match %r{(\d+([./-])\d+([./-])\d+)}
     d = $1
     if d =~ %r{\d+([-/.])\d+([-/.])\d{4}}
@@ -156,55 +172,72 @@ class MemberCsv
     elsif d =~ %r{\d+([-/.])\d+([-/.])\d{2}}
       DateTime.strptime(d, "%%m%s%%d%s%%y" % [$1,$2])
     else
+      puts "ERROR DIFFERENT DATE #{date} // #{d}"
       DateTime.parse(d)
     end
+  rescue TypeError, NoMethodError
+    nil
   end
 
   def import_fees
-    @row["Dates Paid (amount) mm/dd/yy"].to_s.split(/,\s*/).each do |fee|
+    @row["Dates Paid (amount) mm/dd/yy"].to_s.split(/[,;]\s*/).each do |fee|
       amt, date = fee.split(/\s+/)
       #puts "FEE #{fee} // #{amt} // #{date} // COL #{@row["Dates Paid (amount) mm/dd/yy"]}"
       date = date.match(/(\d+[-\/.]\d+[-\/.]\d+)/)[1] rescue nil
-      next unless amt =~ /^\(\d+\)$/ && !date.nil?
+      int_amt = amt[/\d+/].to_f
+      if int_amt == 0 || date.nil?
+        if @row["Fee Paid to Date"].to_f != 0.0 && (@row["Fee Verified"][/y/i] rescue false)
+          int_amt = @row["Fee Paid to Date"].to_f
+          date = @member.join_date
+        else
+          puts "ERROR SKIPPING FEE #{fee} // #{int_amt} // #{date}"
+          next
+        end
+      end
       f = @member.fees.new(
-        amount: amt[1..-1].to_f,
+        amount: int_amt,
         receiver_id: @admin.id,
         payment_method: @row["Method of Payment"] =~ /check/i ? "check" : "cash",
         payment_date: convert_date(date),
+        created_at: convert_date(date),
         payment_type: "membership"
       )
       if f.valid? 
         f.save!
       else
-        puts "ERROR: #{@member.full_name} #{t.errors.full_messages} FEE #{f.inspect}"
+        puts "ERROR FEE #{@member.full_name} #{f.errors.full_messages} FEE #{f.inspect}"
       end
     end
   end
 
   def import_hours
     (30..142).select{|i|i%2==0}.each do |i|
-      if @row[i].to_i > 0 
-        next unless csv.headers[i]
-        date_start=date_finish=convert_date(csv.headers[i])
-        #puts "ROW #{@row[i].split(/\)?,\s*/)}"
-        hours = @row[i].split(/\)?,\s*/)
-        hours.each do |h|
-          hours = h.to_f
-          date_start=date_finish
-          date_finish = date_start + hours.hours
-          t=@member.time_banks.new(
-            start: date_start,
-            finish: date_finish,
-            admin: @admin,
-            approved: true,
-            time_type: s2time_type(h)
-          )
-          t.committee=@committee if t.time_type=="committee"
-          if t.valid? 
-            t.save!
-          else
-            puts "ERROR: #{@member.full_name} #{t.errors.full_messages} START #{date_start} FINISH #{date_finish} HOURS #{hours} // COL #{@row[i]} // TIMEBANK #{t.inspect}"
-          end
+      next if csv.headers[i].nil? || @row[i].nil?
+      date_start=date_finish=convert_date(csv.headers[i])
+      #puts "ROW #{@row[i].split(/\)?,\s*/)}"
+      hours_split = @row[i].split(/\)?,\s*/)
+      hours_split.each do |h|
+        hours = h.to_f
+        if hours == 0.0
+          puts "ERROR SKIPPING TIME_BANK: #{@member.full_name} // COL #{@row[i]} // HOURS #{hours} // h #{h}"
+          next
+        end
+        #puts "HH #{h} // #{hours}"
+        date_start=date_finish
+        date_finish = (date_start + hours.hours rescue date_start)
+        t=@member.time_banks.new(
+          start: date_start,
+          created_at: date_start,
+          finish: date_finish,
+          admin: @admin,
+          approved: true,
+          time_type: s2time_type(h, hours)
+        )
+        t.committee=@committee if t.time_type=="committee"
+        if t.valid? 
+          t.save!
+        else
+          puts "ERROR TIME_BANK: #{@member.full_name} #{t.errors.full_messages} START #{date_start} FINISH #{date_finish} HOURS #{hours} // COL #{@row[i]} // TIMEBANK #{t.inspect}"
         end
       end
     end

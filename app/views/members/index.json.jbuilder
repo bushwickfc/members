@@ -4,6 +4,7 @@ json.array!(@members) do |member|
     :first_name,
     :middle_name,
     :last_name,
+    :opt_out,
     :email,
     :phone,
     :phone2,

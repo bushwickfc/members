@@ -17,11 +17,12 @@ class CreateMembers < ActiveRecord::Migration
       t.string :contact_preference, default: "email"
       t.string :gender
       t.string :status
-      t.date :join_date, null: false
+      t.date :join_date
       t.date :date_of_birth
       t.date :on_hold_until
       t.boolean :admin, default: false
       t.boolean :membership_agreement, default: false
+      t.boolean :opt_out, default: false
       t.float :monthly_hours, default: 4.0
       t.float :membership_discount, default: 0.0
       t.float :investment_discount, default: 0.0

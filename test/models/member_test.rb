@@ -56,18 +56,6 @@ describe Member do
       subject.errors[:investment_discount].must_equal ["must be greater than or equal to 0.0"]
     end
 
-    it "join_date" do
-      subject.join_date = "invalid"
-      subject.wont_be :valid?
-      subject.errors[:join_date].must_equal ["can't be blank"]
-    end
-
-    it "date_of_birth" do
-      subject.date_of_birth = "invalid"
-      subject.wont_be :valid?
-      subject.errors[:date_of_birth].must_equal ["can't be blank"]
-    end
-
     it "on_hold_until" do
       subject.on_hold_until = Date.yesterday
       subject.wont_be :valid?
