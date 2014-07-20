@@ -1,0 +1,44 @@
+<div class="page-header">
+  <h1>Furloughs for <%= @member.full_name %></h1>
+</div>
+
+<%= link_to 'New Hold', new_member_hold_path(@member), role: "button", class: "btn btn-success" %>
+<%= link_to 'New Parental Hold', new_member_parental_path(@member), role: "button", class: "btn btn-success" %>
+<%= render 'shared/csv' %>
+<%= render 'shared/breadcrumbs' %>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Receiver</th>
+      <th>Type</th>
+      <th>Start</th>
+      <th>Finish</th>
+			<th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @furloughs.each do |furlough| %>
+      <tr>
+        <td>
+          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{furlough.member.full_name}"), member_path(furlough.member) %>&nbsp;
+          <%= link_to member_name(furlough, :member), member_path(furlough.member) %>
+        </td>
+        <td>
+          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{furlough.receiver.full_name}"), member_path(furlough.receiver.id) %>&nbsp;
+          <%= link_to member_name(furlough, :receiver), member_path(furlough.receiver.id) %>
+        </td>
+        <td><%= furlough.type %></td>
+        <td><%= furlough.start %></td>
+        <td><%= furlough.finish %></td>
+				<td>
+					<%= link_to "Show", furlough_show(@member, furlough), role: "button", class: "btn btn-info" %>
+					<%= link_to "Edit", furlough_edit(@member, furlough), role: "button", class: "btn btn-primary" %>
+				</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

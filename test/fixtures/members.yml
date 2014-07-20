@@ -20,6 +20,7 @@ addy:
   last_name: admin
   email: admin@b.com
   join_date: 2014-06-17
+  work_date: 2014-06-17
   admin: true
   status: active
   membership_agreement: true
@@ -36,6 +37,7 @@ john:
   admin: false
   status: active
   join_date: <%= Date.current - 1.year %>
+  work_date: <%= Date.current - 1.year %>
   status: active
   membership_agreement: true
   monthly_hours: 4.0
@@ -50,6 +52,7 @@ morton:
   email: m@gmail.com
   admin: false
   join_date: <%= Date.current - 3.weeks %>
+  work_date: <%= Date.current - 3.weeks %>
   status: active
   membership_agreement: true
   monthly_hours: 4.0
@@ -65,6 +68,7 @@ gus:
   admin: false
   status: 
   join_date: <%= Date.current - 3.weeks %>
+  work_date: <%= Date.current - 3.weeks %>
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 50.0
@@ -80,6 +84,7 @@ suzy:
   gender: F
   status: 
   join_date: <%= Date.current - 5.weeks %>
+  work_date: <%= Date.current - 5.weeks %>
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
@@ -93,6 +98,7 @@ safe_delete:
   email: a@gmail.com
   admin: false
   join_date: 2014-06-17
+  work_date: 2014-06-17
   status: 
   membership_agreement: true
   monthly_hours: 4.0
@@ -107,6 +113,7 @@ member1:
   email: a@gmail.com
   admin: false
   join_date: 2014-06-17
+  work_date: 2014-06-17
   status: active
   membership_agreement: true
   monthly_hours: 4.0
@@ -121,6 +128,7 @@ member2:
   email: b@gmail.com
   admin: false
   join_date: <%= Date.current - 5.years %>
+  work_date: <%= Date.current - 5.years %>
   status: active
   membership_agreement: true
   monthly_hours: 4.0

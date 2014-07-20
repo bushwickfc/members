@@ -1,12 +1,12 @@
 class FeesController < ApplicationController
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
-  before_action :set_selects, only: [:new, :edit]
+  before_action :set_selects, only: [:new, :edit, :create, :update]
 
   # GET /fees
   # GET /fees.json
   # GET /fees.csv
   def index
-    @fees = Fee.where(params[:search])
+    @fees = Fee.include_parents.where(params[:search])
     @receiver = Receiver.new
     respond_with(@fees)
   end
@@ -70,7 +70,7 @@ class FeesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fee
-      @fee = Fee.find(params[:id])
+      @fee = Fee.include_parents.find(params[:id])
       @receiver = @fee.receiver
     end
 

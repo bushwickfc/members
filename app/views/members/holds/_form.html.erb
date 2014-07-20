@@ -1,0 +1,39 @@
+<%= form_for([@member, @hold]) do |f| %>
+  <% if @hold.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(@hold.errors.count, "error") %> prohibited this hold from being saved:</h2>
+
+      <ul>
+      <% @hold.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :member_id %><br>
+		<%= member_name(@hold, :member) %>
+    <%= f.hidden_field :member_id %>
+  </div>
+  <div class="field">
+    <%= f.label :receiver_id %><br>
+    <%= f.select :receiver_id, @receivers, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+		<%= @hold.type %>
+    <%= f.hidden_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :start %><br>
+    <%= f.date_select :start %>
+  </div>
+  <div class="field">
+    <%= f.label :finish %><br>
+    <%= f.date_select :finish %>
+  </div>
+  <div class="actions">
+    <%= f.submit role:'button', class:'btn btn-success' %>
+  </div>
+<% end %>

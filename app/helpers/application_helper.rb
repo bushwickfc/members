@@ -61,11 +61,11 @@ module ApplicationHelper
   def print_crumbs
     uri = URI.parse(request.url)
     return [] unless uri.query
-    queries = uri.query.split('&')
+    queries = uri.query.split('&').reject{|u|u[-1]=='='}
     queries.map do |q|
       tu = uri.clone
       tu.query = (queries-[q]).join('&')
-      link_to "⟨ #{q}", tu.to_s
+      link_to "⟨ #{URI.unescape(q)}", tu.to_s
     end
   end
 
@@ -80,4 +80,19 @@ module ApplicationHelper
     end
     uri.to_s
   end
+
+  def furlough_show(member, furlough, opts=Hash.new)
+    case furlough.type
+    when "Hold" then member_hold_url(member, furlough, opts)
+    when "Parental" then member_parental_url(member, furlough, opts)
+    end
+  end
+
+  def furlough_edit(member, furlough, opts=Hash.new)
+    case furlough.type
+    when "Hold" then edit_member_hold_url(member, furlough, opts)
+    when "Parental" then edit_member_parental_url(member, furlough, opts)
+    end
+  end
+
 end

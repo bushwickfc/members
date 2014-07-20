@@ -1,0 +1,24 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+john_one_month_hold:
+  member: john
+  receiver: john
+  type: "Hold"
+  start: <%= Date.current - 1.month %>
+  finish: <%= Date.current + 2.days %>
+
+john_one_year_parental:
+  member: john
+  receiver: john
+  type: "Parental"
+  start: <%= Date.current - 2.years %>
+  finish: <%= Date.current - 1.year %>
+
+suzy_one_month_parental:
+  member: suzy
+  receiver: john
+  type: "Hold"
+  start: <%= Date.current - 4.month %>
+  finish: <%= Date.current - 2.month %>
+

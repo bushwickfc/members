@@ -1,12 +1,12 @@
 class MembersController < ApplicationController
-  before_action :set_selects, only: [:new, :edit]
+  before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   # GET /members
   # GET /members.json
   # GET /members.csv
   def index
-    @members = Member.where(params[:search])
+    @members = Member.where(valid_search_params)
     respond_with(@members)
   end
 
@@ -99,8 +99,8 @@ class MembersController < ApplicationController
         :gender, 
         :status, 
         :join_date, 
+        :work_date,
         :date_of_birth, 
-        :on_hold_until, 
         :admin, 
         :membership_agreement, 
         :monthly_hours, 

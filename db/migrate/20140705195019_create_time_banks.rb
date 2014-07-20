@@ -7,10 +7,12 @@ class CreateTimeBanks < ActiveRecord::Migration
       t.datetime :start, null: false
       t.datetime :finish, null: false
       t.string :time_type, null: false
-      t.boolean :approved, default: false
+      t.boolean :approved, default: false, index: true
 
       t.timestamps
     end
+
+    add_index :time_banks, [:start, :finish]
     execute %Q{ ALTER TABLE time_banks ADD FOREIGN KEY (member_id) REFERENCES members (id) ON DELETE RESTRICT ON UPDATE CASCADE }
     execute %Q{ ALTER TABLE time_banks ADD FOREIGN KEY (admin_id) REFERENCES members (id) ON DELETE RESTRICT ON UPDATE CASCADE }
     execute %Q{ ALTER TABLE time_banks ADD FOREIGN KEY (committee_id) REFERENCES committees (id) ON DELETE RESTRICT ON UPDATE CASCADE }

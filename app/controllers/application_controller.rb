@@ -3,4 +3,13 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   respond_to :html, :json, :csv
+
+  private
+  def valid_search_params
+    if params[:search].nil?
+      {}
+    else
+      params[:search].reject{|s,v| v.blank?}
+    end
+  end
 end

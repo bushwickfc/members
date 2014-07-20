@@ -1,13 +1,13 @@
 class Members::TimeBanksController < ApplicationController
   before_action :set_member
-  before_action :set_selects, only: [:new, :edit]
+  before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_time_bank, only: [:show, :edit, :update, :destroy]
 
   # GET /members/:member_id/time_banks
   # GET /members/:member_id/time_banks.json
   # GET /members/:member_id/time_banks.csv
   def index
-    @time_banks = @member.time_banks.where(params[:search])
+    @time_banks = @member.time_banks.include_parents.select_all.where(params[:search])
     respond_with(@time_banks)
   end
 
@@ -34,7 +34,7 @@ class Members::TimeBanksController < ApplicationController
 
     respond_to do |format|
       if @time_bank.save
-        format.html { redirect_to @time_bank, notice: 'TimeBank was successfully created.' }
+        format.html { redirect_to member_time_bank_path(@member, @time_bank), notice: 'TimeBank was successfully created.' }
         format.json { render :show, status: :created, location: @time_bank }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class Members::TimeBanksController < ApplicationController
   def update
     respond_to do |format|
       if @time_bank.update(time_bank_params)
-        format.html { redirect_to @time_bank, notice: 'TimeBank was successfully updated.' }
+        format.html { redirect_to member_time_bank_path(@member, @time_bank), notice: 'TimeBank was successfully updated.' }
         format.json { render :show, status: :ok, location: @time_bank }
       else
         format.html { render :edit }
@@ -70,7 +70,7 @@ class Members::TimeBanksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_time_bank
-      @time_bank = TimeBank.select("time_banks.*").hours.find(params[:id])
+      @time_bank = @member.time_banks.include_parents.select_all.find(params[:id])
     end
 
     def set_member

@@ -46,12 +46,6 @@ describe TimeBank do
       subject.errors[:time_type].must_equal ["is not included in the list"]
     end
 
-    it "approved" do
-      subject.approved = "invalid"
-      subject.wont_be :valid?
-      subject.errors[:approved].must_equal ["can't be blank"]
-    end
-
   end
 
   describe "time_type" do
@@ -115,15 +109,15 @@ describe TimeBank do
 
     describe "#balance" do
       it "calculates the difference between worked and owed" do
-        @john.join_date = DateTime.current - 3.months
+        @john.work_date = DateTime.current - 3.months
         @john.time_banks.balance.must_equal -4
       end
       it "calculates the difference between worked and owed" do
-        @john.join_date = DateTime.current - 2.months
+        @john.work_date = DateTime.current - 2.months
         @john.time_banks.balance.must_equal 0
       end
       it "calculates the difference between worked and owed" do
-        @john.join_date = DateTime.current - 1.months
+        @john.work_date = DateTime.current - 1.months
         @john.time_banks.balance.must_equal 4
       end
     end
@@ -187,6 +181,15 @@ describe TimeBank do
         end
       end
 
+    end
+  end
+
+  describe "#hours_between" do
+    it "returns hours for a range" do
+      start = DateTime.current.beginning_of_month
+      finish = start.end_of_month
+      hours = @john.time_banks.hours_between(start, finish).hours_worked
+      hours.must_equal 4.0
     end
   end
 

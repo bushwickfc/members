@@ -6,6 +6,17 @@ default: &default
   password:
   socket: /tmp/mysql.sock
 
+pos_development:
+  <<: *default
+  database: pos_development
+
+pos_test:
+  <<: *default
+  database: pos_test
+
+production:
+  url: <%= ENV['POS_DATABASE_URL'] %>
+
 development:
   <<: *default
   database: bfc-members_development

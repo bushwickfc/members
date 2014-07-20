@@ -1,12 +1,15 @@
 class TimeBanksController < ApplicationController
-  before_action :set_selects, only: [:new, :edit]
+  before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_time_bank, only: [:show, :edit, :update, :destroy]
 
   # GET /time_banks
   # GET /time_banks.json
   # GET /time_banks.csv
   def index
-    @time_banks = TimeBank.select("time_banks.*").hours.where(params[:search])
+    @time_banks = TimeBank.select_all.
+      where('start >= ?', Date.current-12.months).
+      include_parents.
+      where(params[:search])
     respond_with(@time_banks)
   end
 
@@ -68,7 +71,7 @@ class TimeBanksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_time_bank
-      @time_bank = TimeBank.select("time_banks.*").hours.find(params[:id])
+      @time_bank = TimeBank.select_all.include_parents.find(params[:id])
     end
 
     def set_selects

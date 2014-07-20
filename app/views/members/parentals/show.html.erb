@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+<%= render 'shared/csv' %>
+
+<p>
+  <strong>Member:</strong>
+  <%= member_name(@parental, :member) %>
+</p>
+
+<p>
+  <strong>Receiver:</strong>
+  <%= member_name(@parental, :receiver) %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @parental.type %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @parental.start %>
+</p>
+
+<p>
+  <strong>Finish:</strong>
+  <%= @parental.finish %>
+</p>
+
+<%= link_to 'Edit', edit_member_parental_path(@member, @parental), role:'button', class:'btn btn-primary' %>
+<%= link_to 'Back', member_furloughs_path(@member), role:'button', class:'btn btn-default'  %>

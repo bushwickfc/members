@@ -4,8 +4,8 @@ ruby "2.1.2"
 
 gem 'rails', '4.1.4'
 gem 'unicorn'
-gem 'mysql', require: nil
 gem 'mysql2'
+gem 'foreman'
 
 # Jobs #
 gem 'sidekiq'

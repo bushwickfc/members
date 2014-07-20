@@ -5,5 +5,6 @@ class Committee < ActiveRecord::Base
   validates :member_id, presence: true
   validates :name, presence: true
 
-  scope     :form_select, -> { select :name, :id }
+  scope     :form_select,     -> { select :name, :id }
+  scope     :include_parents, -> { includes :member }
 end

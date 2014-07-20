@@ -11,7 +11,6 @@
     <tr>
       <th>First name</th>
       <th>Last name</th>
-      <th>Opt Out</th>
       <th>Email</th>
       <th>Phone</th>
       <th>Phone2</th>
@@ -21,6 +20,7 @@
       <th>Gender</th>
       <th>Status</th>
       <th>Join date</th>
+      <th>Work date</th>
       <th>Membership agreement</th>
       <th></th>
     </tr>
@@ -36,9 +36,10 @@
         <td>
           <%= search_link(member, :last_name) %>
         </td>
-        <td><%= search_link(member, :opt_out) %></td>
         <td>
-          <%= link_to image_tag(image_path("mail_appt.png"), size: "15x15", alt: "email #{member.email}"), "mailto:#{member.email}" %>&nbsp;
+          <%- unless member.opt_out %>
+            <%= link_to image_tag(image_path("mail_appt.png"), size: "15x15", alt: "email #{member.email}"), "mailto:#{member.email}" %>&nbsp;
+          <%- end %>
           <%= search_link(member, :email) %>
         </td>
         <td><%= search_link(member, :phone) %></td>
@@ -49,11 +50,13 @@
         <td><%= search_link(member, :gender) %></td>
         <td><%= search_link(member, :status) %></td>
         <td><%= search_link(member, :join_date) %></td>
+        <td><%= search_link(member, :work_date) %></td>
         <td><%= search_link(member, :membership_agreement) %></td>
         <td>
-          <%= link_to 'Show', member, role:'button', class:'btn btn-info'  %>&nbsp;
+          <%= link_to 'Show', member_path(member), role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_member_path(member), role:'button', class:'btn btn-primary'  %>&nbsp;
-          <%= link_to 'Destroy', member, role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'Destroy', member_path(member), role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+
         </td>
       </tr>
     <% end %>

@@ -56,12 +56,6 @@ describe Member do
       subject.errors[:investment_discount].must_equal ["must be greater than or equal to 0.0"]
     end
 
-    it "on_hold_until" do
-      subject.on_hold_until = Date.yesterday
-      subject.wont_be :valid?
-      subject.errors[:on_hold_until].must_equal ["Hold is not long enough"]
-    end
-
   end
 
   [:days, :weeks, :months, :years].each do |gauge|

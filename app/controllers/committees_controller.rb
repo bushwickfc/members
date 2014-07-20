@@ -1,5 +1,5 @@
 class CommitteesController < ApplicationController
-  before_action :set_selects, only: [:new, :edit]
+  before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_committee, only: [:show, :edit, :update, :destroy]
 
   # GET /committees
@@ -15,7 +15,7 @@ class CommitteesController < ApplicationController
     else
       @committees = Committee.all
     end
-    @committees = @committees.where(params[:search])
+    @committees = @committees.include_parents.where(params[:search])
     respond_with(@committees)
   end
 
@@ -78,7 +78,7 @@ class CommitteesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_committee
-      @committee = Committee.find(params[:id])
+      @committee = Committee.include_parents.find(params[:id])
     end
 
     def set_selects

@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <%= f.label :opt_out %><br>
-    <%= f.text_field :opt_out %>
+    <%= f.check_box :opt_out %>
   </div>
   <div class="field">
     <%= f.label :email %><br>
@@ -84,12 +84,12 @@
     <%= f.date_select :join_date %>
   </div>
   <div class="field">
-    <%= f.label :date_of_birth %><br>
-    <%= f.date_select :date_of_birth %>
+    <%= f.label :work_date %><br>
+    <%= f.date_select :work_date %>
   </div>
   <div class="field">
-    <%= f.label :on_hold_until %><br>
-    <%= f.date_select :on_hold_until, include_blank: true %>
+    <%= f.label :date_of_birth %><br>
+    <%= f.date_select :date_of_birth %>
   </div>
   <div class="field">
     <%= f.label :admin %><br>

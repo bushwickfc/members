@@ -7,10 +7,9 @@
     <title>Bushwick Food Coop Members</title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/css/bootstrap.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="//cdn.datatables.net/<%= datatables_version %>/css/jquery.dataTables.css" rel="stylesheet">
     <link href="//cdn.datatables.net/plug-ins/<%= datatables_bootstrap_version %>/integration/bootstrap/<%= bootstrap_version[0] %>/dataTables.bootstrap.css" rel="stylesheet">
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => false %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
     <%= csrf_meta_tags %>
     <script src="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/js/bootstrap.min.js"></script>
     <script src="//cdn.datatables.net/<%= datatables_version %>/js/jquery.dataTables.js"></script>
@@ -40,14 +39,17 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 
-            <li class="dropdown <%= active_class('committees') %>">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Committees <span class="caret"></span></a>
+            <li class="dropdown <%= active_class('time_banks') %>">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Bank <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <%= link_to 'All', committees_path %>
+                  <%= link_to 'All', time_banks_path %>
                 </li>
                 <li>
-                  <%= link_to 'New', new_committee_path %>
+                  <%= link_to 'New', new_time_bank_path %>
+                </li>
+                <li>
+									<%= link_to 'Unapproved', time_banks_path(search: {approved: 0}) %>
                 </li>
               </ul>
             </li>
@@ -64,14 +66,14 @@
               </ul>
             </li>
 
-            <li class="dropdown <%= active_class('time_banks') %>">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Banks <span class="caret"></span></a>
+            <li class="dropdown <%= active_class('committees') %>">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Committees <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <%= link_to 'All', time_banks_path %>
+                  <%= link_to 'All', committees_path %>
                 </li>
                 <li>
-                  <%= link_to 'New', new_time_bank_path %>
+                  <%= link_to 'New', new_committee_path %>
                 </li>
               </ul>
             </li>
@@ -97,10 +99,20 @@
                 <li><%= link_to 'Committees', member_committees_path(@member) %> </li>
                 <li><%= link_to 'Fees', member_fees_path(@member) %> </li>
                 <li><%= link_to 'Time Bank', member_time_banks_path(@member) %> </li>
+                <li><%= link_to 'Furloughs', member_furloughs_path(@member) %> </li>
               </ul>
             </li>
             <%- end %>
           </ul>
+          <form class="navbar-form navbar-right" role="form" action="<%= members_path %>">
+            <div class="form-group">
+              <input type="text" placeholder="First Name" name="search[first_name]" value="<%= params[:search][:first_name] rescue nil %>" class="form-control">
+            </div>
+            <div class="form-group">
+              <INPUT TYPE="text" placeholder="Last Name" name="search[last_name]" value="<%= params[:search][:last_name] rescue nil %>" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+          </form>
         </div><!--/.nav-collapse -->
       </div>
     </div>
@@ -108,21 +120,26 @@
     <div class="container theme-showcase" role="main">
       <section class="flash">
   
-        <%- if flash[:notice] %>
+        <% if flash[:notice] %>
           <div class="notice alert-info">
-            <%= flash[:notice] %>
+            <%= h flash[:notice] %>
           </div>
-        <%- end%>
+        <% end%>
   
-        <%- if flash[:alert] %>
+        <% if flash[:alert] %>
           <div class="alert alert-danger">
-            <%= flash[:alert] %>
+            <%= h flash[:alert] %>
           </div>
-        <%- end%>
+        <% end%>
   
       </section>
   
       <section class="main">
+        <%- unless Rails.env.production? %>
+        <a class="button" href="javascript:(function()%20{var%20url%20=%20'//debug.datatables.net/bookmarklet/DT_Debug.js';if(%20typeof%20DT_Debug!='undefined'%20)%20{if%20(%20DT_Debug.instance%20!==%20null%20)%20{DT_Debug.close();}else%20{new%20DT_Debug();}}else%20{var%20n=document.createElement('script');n.setAttribute('language','JavaScript');n.setAttribute('src',url+'?rand='+new%20Date().getTime());document.body.appendChild(n);}})();">
+                        DataTables debug
+        </a>
+        <%- end %>
         <div class="<%= controller_name %>">
           <%= yield %>
         </div>

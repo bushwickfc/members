@@ -1,13 +1,13 @@
 class Members::FeesController < ApplicationController
   before_action :set_member
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
-  before_action :set_selects, only: [:new, :edit]
+  before_action :set_selects, only: [:new, :edit, :create, :update]
 
   # GET /members/:member_id/fees
   # GET /members/:member_id/fees.json
   # GET /members/:member_id/fees.csv
   def index
-    @fees = @member.fees.where(params[:search])
+    @fees = @member.fees.include_parents.where(params[:search])
     @receiver = Receiver.new
     respond_with(@fees)
   end
@@ -76,7 +76,7 @@ class Members::FeesController < ApplicationController
     end
 
     def set_fee
-      @fee = Fee.find(params[:id])
+      @fee = Fee.include_parents.find(params[:id])
       @receiver = @fee.receiver
     end
 

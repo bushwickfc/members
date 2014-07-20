@@ -2,18 +2,20 @@
 class Member < ActiveRecord::Base
   MEMBERSHIP_FEE = 50
   INVESTMENT_FEE = 25
-  MINIMUM_HOLD   = 1.month
   FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, middle_name, last_name)) AS full_name'
   cattr_reader :genders, :statuses, :contact_preferences
   @@genders  = %w[Male Female]
-  @@statuses = %w[active inactive suspended hold maternity canceled interested volunteer]
+  @@statuses = %w[active inactive suspended hold parental canceled interested volunteer]
   @@contact_preferences = %w[email phone]
 
-  has_many :committees, dependent: :restrict_with_exception
-  has_many :fees, dependent: :restrict_with_exception do
+  has_many :committees,   dependent: :restrict_with_exception
+  has_many :fees,         dependent: :restrict_with_exception do
     include Fee::MemberProxy
   end
-  has_many :time_banks, dependent: :restrict_with_exception do
+  has_many :furloughs,    dependent: :restrict_with_exception
+  has_many :holds,        dependent: :restrict_with_exception
+  has_many :parentals,    dependent: :restrict_with_exception
+  has_many :time_banks,   dependent: :restrict_with_exception do
     include TimeBank::MemberProxy
   end
 
@@ -27,22 +29,8 @@ class Member < ActiveRecord::Base
   validates :membership_discount, numericality: { greater_than_or_equal_to: 0.0 }
   validates :investment_discount, numericality: { greater_than_or_equal_to: 0.0 }
 
-  validate  :on_hold_until_valid
-
   scope     :form_select, -> { full_name.select(:id) }
   scope     :full_name,   -> { select(FULL_NAME) }
-
-  # do not validate if +on_hold_until+ is nil
-  def on_hold_until_valid
-    min_hold = Date.current + MINIMUM_HOLD
-
-    if !on_hold_until? || on_hold_until >= min_hold
-      true
-    else
-      errors.add(:on_hold_until, "Hold is not long enough")
-      false
-    end
-  end
 
   def membership_rate
     MEMBERSHIP_FEE - (MEMBERSHIP_FEE * membership_discount / 100.0)
@@ -64,8 +52,20 @@ class Member < ActiveRecord::Base
     end.floor
   end
 
+  def work_in(type = :weeks)
+    return 0.0 unless work_date?
+
+    since = (Date.current - work_date).to_f
+    case type
+    when :days    then since
+    when :weeks   then since / 7.0
+    when :months  then since / 30.0
+    when :years   then since / 365.0
+    end.floor
+  end
+
   def hours_owed
-    membership_in(:months) * monthly_hours
+    work_in(:months) * monthly_hours
   end
 
   def full_name

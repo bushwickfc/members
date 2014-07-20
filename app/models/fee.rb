@@ -18,6 +18,7 @@ class Fee < ActiveRecord::Base
 
   scope :membership_payment, -> { where(payment_type: "membership") }
   scope :investment_payment, -> { where(payment_type: "investment") }
+  scope :include_parents,    -> { includes :member, :receiver }
 
   module MemberProxy
     def membership_payment_total

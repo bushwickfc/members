@@ -21,8 +21,10 @@ Sidekiq.configure_client do |config|
   config.redis = { url: redis_url, namespace: SIDEKIQ_REDIS_NAMESPACE, size: 10 }
 end
 
-Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-  username == 'bfc' && password == 'c@rr0tBFC'
+if Rails.env.production? || ENV['SIDEKIQ_USER'] && ENV['SIDEKIQ_PASSWORD']
+  Sidekiq::Web.use Rack::Auth::Basic do |username, password|
+    username == ENV['SIDEKIQ_USER'] && password == ENV['SIDEKIQ_PASSWORD']
+  end
 end
 
 redis = Redis.new(redis_config)

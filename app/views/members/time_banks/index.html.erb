@@ -13,6 +13,8 @@
       <th>Admin</th>
       <th>Committee</th>
       <th>Hours</th>
+      <th>Start</th>
+      <th>Finish</th>
       <th>Time type</th>
       <th>Approved</th>
       <th></th>
@@ -32,6 +34,8 @@
         </td>
         <td><%= link_to committee_name(time_bank), committee_path(time_bank.committee) if time_bank.committee %></td>
         <td><%= time_bank.hours %></td>
+        <td><%= time_bank.start %></td>
+        <td><%= time_bank.finish %></td>
         <td><%= search_link(time_bank, :time_type) %></td>
         <td><%= search_link(time_bank, :approved) %></td>
         <td>

@@ -5,6 +5,7 @@ headers = [
   :last_name, 
   :first_name, 
   :join_date,
+  :work_date,
   :email,
   :phone,
   #:phone2,
@@ -30,7 +31,7 @@ new_csv = headers.to_csv
 Member.all.includes(:fees, :time_banks).order(:last_name, :first_name).each do |m|
   i=0
   new_csv << headers.reduce([]) do |memo,header|
-    if i <= 9
+    if i <= 10
       memo << m.attributes[header.to_s]
     else
       memo << case header

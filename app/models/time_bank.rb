@@ -12,7 +12,7 @@ class TimeBank < ActiveRecord::Base
     gift_received
     greeter
     hold
-    maternity
+    parental
     meeting
     open
     orientation
@@ -32,7 +32,6 @@ class TimeBank < ActiveRecord::Base
   validates :start,     presence: true
   validates :finish,    presence: true
   validates :time_type, inclusion: { in: @@time_types }
-  validates :approved,  presence: true
 
   validate  :validate_positive_times, :validate_negative_times
 
@@ -40,6 +39,19 @@ class TimeBank < ActiveRecord::Base
   scope :approved_only,   -> { where(approved: true) }
   scope :hours,           -> { select(HOURS_SELECT % nil) }
   scope :hours_summed,    -> { select(HOURS_SELECT % "SUM") }
+  scope :include_parents, -> { includes(:admin, :member, :committee) }
+  scope :select_all,      -> { select("#{table_name}.*").hours }
+
+  # @params range [Array|Range|Scalar] an array or range or two date strings
+  def self.hours_between(*range)
+    if range[0].kind_of?(String)
+      start = range[0].to_datetime
+      finish = range[1].to_datetime
+      range = start..finish
+    end
+    where("start BETWEEN :start AND :finish OR finish BETWEEN :start AND :finish",
+          start: range.first, finish: range.last)
+  end
 
   def hours
     if attributes["hours"]
@@ -100,8 +112,12 @@ class TimeBank < ActiveRecord::Base
 
   module TimeBank::MemberProxy
 
+    def since_work_date
+      where("start >= ?", proxy_association.owner.work_date)
+    end
+
     def hours_worked
-      approved_only.hours_summed.first.hours
+      since_work_date.approved_only.hours_summed.first.hours
     end
 
     def balance

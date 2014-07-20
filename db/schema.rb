@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140709031218) do
+ActiveRecord::Schema.define(version: 20140718004920) do
 
   create_table "committees", force: true do |t|
     t.integer  "member_id",  null: false
@@ -38,6 +38,19 @@ ActiveRecord::Schema.define(version: 20140709031218) do
   add_index "fees", ["payment_date"], name: "index_fees_on_payment_date", using: :btree
   add_index "fees", ["receiver_id"], name: "index_fees_on_receiver_id", using: :btree
 
+  create_table "furloughs", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "receiver_id"
+    t.string   "type",        null: false
+    t.date     "start",       null: false
+    t.date     "finish",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "furloughs", ["member_id"], name: "index_furloughs_on_member_id", using: :btree
+  add_index "furloughs", ["receiver_id"], name: "index_furloughs_on_receiver_id", using: :btree
+
   create_table "members", force: true do |t|
     t.string   "first_name",                                           null: false
     t.string   "middle_name"
@@ -56,8 +69,8 @@ ActiveRecord::Schema.define(version: 20140709031218) do
     t.string   "gender"
     t.string   "status"
     t.date     "join_date"
+    t.date     "work_date"
     t.date     "date_of_birth"
-    t.date     "on_hold_until"
     t.boolean  "admin",                           default: false
     t.boolean  "membership_agreement",            default: false
     t.boolean  "opt_out",                         default: false

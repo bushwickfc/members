@@ -5,8 +5,8 @@ john_cashier_approved:
   member: john
   admin: addy
   committee: 
-  start: 2014-07-04 15:50:19
-  finish: 2014-07-04 19:50:19
+  start: <%= DateTime.current %>
+  finish: <%= DateTime.current + 4.hours %>
   time_type: cashier
   approved: true
 
@@ -14,8 +14,8 @@ john_committee_approved:
   member: john
   admin: addy
   committee: it
-  start: 2014-07-03 15:50:19
-  finish: 2014-07-03 19:50:19
+  start: <%= DateTime.current-1.month %>
+  finish: <%= DateTime.current-1.month+4.hours %>
   time_type: cashier
   approved: true
 
@@ -23,8 +23,8 @@ john_committee_unapproved:
   member: john
   admin: addy
   committee: it
-  start: 2014-07-05 15:50:19
-  finish: 2014-07-05 19:50:19
+  start: <%= DateTime.current-2.month %>
+  finish: <%= DateTime.current-2.month+4.hours %>
   time_type: cashier
   approved: false
 
@@ -32,8 +32,8 @@ morton_greeter_approved:
   member: morton
   admin: addy
   committee: 
-  start: 2014-07-04 15:50:19
-  finish: 2014-07-04 19:50:19
+  start: <%= DateTime.current %>
+  finish: <%= DateTime.current + 4.hours %>
   time_type: greeter
   approved: true
 
@@ -41,8 +41,8 @@ morton_greeter_unapproved:
   member: morton
   admin: addy
   committee: 
-  start: 2014-07-05 15:50:19
-  finish: 2014-07-05 19:50:19
+  start: <%= DateTime.current-1.month %>
+  finish: <%= DateTime.current-1.month+4.hours %>
   time_type: greeter
   approved: false
 
@@ -50,17 +50,17 @@ suzy_greeter_approved:
   member: suzy
   admin: addy
   committee: 
-  start: 2014-07-05 15:50:19
-  finish: 2014-07-05 19:50:19
   time_type: greeter
+  start: <%= DateTime.current %>
+  finish: <%= DateTime.current + 4.hours %>
   approved: true
 
 gus_greeter_approved:
   member: gus
   admin: addy
   committee: 
-  start: 2014-07-05 15:50:19
-  finish: 2014-07-05 19:50:19
+  start: <%= DateTime.current %>
+  finish: <%= DateTime.current + 4.hours %>
   time_type: greeter
   approved: true
 

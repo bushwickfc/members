@@ -1,0 +1,9 @@
+/opt/apps/bfc-members/shared/log/*.log {
+	weekly
+	missingok
+	rotate 52
+	compress
+	notifempty
+	create 0640 apps nogroup
+	truncate
+}
