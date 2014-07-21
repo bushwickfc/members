@@ -33,8 +33,12 @@ class Fee < ActiveRecord::Base
       membership_payment_total >= weeks * rate
     end
 
+    def membership_balance
+      proxy_association.owner.membership_rate - membership_payment_total
+    end
+
     def membership_paid_full?
-      membership_payment_total >= proxy_association.owner.membership_rate
+      membership_balance <= 0
     end
 
     def membership_payment_overdue?

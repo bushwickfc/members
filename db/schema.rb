@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140718004920) do
 
   add_index "furloughs", ["member_id"], name: "index_furloughs_on_member_id", using: :btree
   add_index "furloughs", ["receiver_id"], name: "index_furloughs_on_receiver_id", using: :btree
+  add_index "furloughs", ["start", "finish"], name: "index_furloughs_on_start_and_finish", using: :btree
 
   create_table "members", force: true do |t|
     t.string   "first_name",                                           null: false
@@ -81,7 +82,12 @@ ActiveRecord::Schema.define(version: 20140718004920) do
     t.datetime "updated_at"
   end
 
+  add_index "members", ["admin"], name: "index_members_on_admin", using: :btree
+  add_index "members", ["email"], name: "index_members_on_email", using: :btree
   add_index "members", ["first_name", "middle_name", "last_name"], name: "index_members_on_first_name_and_middle_name_and_last_name", unique: true, using: :btree
+  add_index "members", ["join_date"], name: "index_members_on_join_date", using: :btree
+  add_index "members", ["opt_out"], name: "index_members_on_opt_out", using: :btree
+  add_index "members", ["work_date"], name: "index_members_on_work_date", using: :btree
 
   create_table "notes", force: true do |t|
     t.integer  "member_id"
@@ -109,5 +115,6 @@ ActiveRecord::Schema.define(version: 20140718004920) do
   add_index "time_banks", ["admin_id"], name: "index_time_banks_on_admin_id", using: :btree
   add_index "time_banks", ["committee_id"], name: "index_time_banks_on_committee_id", using: :btree
   add_index "time_banks", ["member_id"], name: "index_time_banks_on_member_id", using: :btree
+  add_index "time_banks", ["start", "finish"], name: "index_time_banks_on_start_and_finish", using: :btree
 
 end

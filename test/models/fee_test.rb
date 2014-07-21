@@ -130,4 +130,19 @@ describe Fee do
     end
   end
 
+  describe "#membership_balance" do
+    it "is 0 for john" do
+      @john.fees.membership_balance.must_equal 0
+    end
+
+    it "is 0 for suzy" do
+      @suzy.fees.membership_balance.must_equal 0
+    end
+
+    it "is 15 for gus" do
+      @gus.fees.membership_balance.must_equal 15
+    end
+
+  end
+
 end

@@ -12,7 +12,7 @@ shared_dir="$app_dir/shared"
 
 if [ ! -d "$app_dir" ]; then
 	mkdir -p $app_dir/releases
-	mkdir -p $app_dir/shared/{log,pid,tmp}
+	mkdir -p $app_dir/shared/{log,pids,tmp}
 fi
 
 mkdir -p $rel_dir
@@ -23,6 +23,7 @@ cd $rel_dir
 rm -rf log tmp
 ln -s $shared_dir/log
 ln -s $shared_dir/tmp
+ln -s $shared_dir/pids
 
 bundle package
 bundle install --deployment --binstubs --without development test

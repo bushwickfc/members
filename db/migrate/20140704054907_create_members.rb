@@ -30,6 +30,10 @@ class CreateMembers < ActiveRecord::Migration
       t.timestamps
     end
 
+    %w[email work_date join_date admin opt_out].each do |col|
+      add_index :members, col
+    end
+
     add_index :members, [:first_name, :middle_name, :last_name], unique: true
 
   end

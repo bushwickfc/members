@@ -72,4 +72,36 @@ class Member < ActiveRecord::Base
     read_attribute(:full_name) || [first_name, middle_name, last_name].join(' ')
   end
 
+  def membership_status(force = false)
+    return @membership_status if @membership_status && !force
+
+    @membership_status = Struct::MembershipStatus.new(
+      status,                                     # status
+      join_date,                                  # join_date
+      false,                                      # can_shop
+      (holds.active.first.finish rescue nil),     # hold
+      fees.membership_paid?,                      # membership_fees
+      fees.membership_balance,                    # membership_fees_balance
+      fees.membership_payment_overdue?,           # membership_fees_overdue
+      (parentals.active.first.finish rescue nil), # parental
+      time_banks.balance,                         # time_bank_balance
+    )
+  end
+
+  # JSON work around
+  def can_shop
+    can_shop?
+  end
+
+  def can_shop?
+    membership_status(true).can_shop?
+  end
+
+  def can_shop_messages
+    membership_status.messages
+  end
+
+  def update_status(new_status)
+    update_columns(status: new_status) if status != new_status
+  end
 end

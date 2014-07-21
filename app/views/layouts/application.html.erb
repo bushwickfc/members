@@ -22,7 +22,16 @@
   <body role="document">
     <script>
       $(document).ready(function() {
-        $('.data-table').dataTable();
+        config = {};
+        controller = "<%= controller_name %>";
+        if (controller.match(/time_bank/)) {
+          config["order"] = [[4, "desc"]];
+        } else if (controller == "members") {
+          config["order"] = [[1, "asc"], [0, "asc"]];
+        }
+        $('.data-table').dataTable(
+          config
+        );
       });
     </script>
     <div class="navbar navbar-inverse navbar-fixed-top" id="top" role="navigation">
@@ -49,7 +58,7 @@
                   <%= link_to 'New', new_time_bank_path %>
                 </li>
                 <li>
-									<%= link_to 'Unapproved', time_banks_path(search: {approved: 0}) %>
+                  <%= link_to 'Unapproved', time_banks_path(search: {approved: 0}) %>
                 </li>
               </ul>
             </li>

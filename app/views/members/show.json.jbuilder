@@ -25,5 +25,7 @@ json.extract! @member,
   :monthly_hours,
   :membership_discount,
   :investment_discount,
+  :can_shop,
+  :can_shop_messages,
   :created_at,
   :updated_at

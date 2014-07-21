@@ -1,130 +1,149 @@
-<p id="notice"><%= notice %></p>
-<%= render 'shared/csv' %>
+<div class="col-md-3">
+  <%= render 'shared/csv' %>
+  <%= link_to 'Edit', edit_member_path(@member), role:'button', class:'btn btn-primary'  %>
+  <%= link_to 'Back', members_path, role:'button', class:'btn btn-default'  %>
+  
+  <p>
+    <strong>First name:</strong>
+    <%= @member.first_name %>
+  </p>
+  
+  <p>
+    <strong>Middle name:</strong>
+    <%= @member.middle_name %>
+  </p>
+  
+  <p>
+    <strong>Last name:</strong>
+    <%= @member.last_name %>
+  </p>
+  
+  <p>
+    <strong>Opt out:</strong>
+    <%= @member.opt_out %>
+  </p>
+  
+  <p>
+    <strong>Email:</strong>
+    <%= @member.email %>
+  </p>
+  
+  <p>
+    <strong>Phone:</strong>
+    <%= @member.phone %>
+  </p>
+  
+  <p>
+    <strong>Phone2:</strong>
+    <%= @member.phone2 %>
+  </p>
+  
+  <p>
+    <strong>Fax:</strong>
+    <%= @member.fax %>
+  </p>
+  
+  <p>
+    <strong>Address:</strong>
+    <%= @member.address %>
+  </p>
+  
+  <p>
+    <strong>Address2:</strong>
+    <%= @member.address2 %>
+  </p>
+  
+  <p>
+    <strong>City:</strong>
+    <%= @member.city %>
+  </p>
+  
+  <p>
+    <strong>State:</strong>
+    <%= @member.state %>
+  </p>
+  
+  <p>
+    <strong>Country:</strong>
+    <%= @member.country %>
+  </p>
+  
+  <p>
+    <strong>Zip:</strong>
+    <%= @member.zip %>
+  </p>
+  
+  <p>
+    <strong>Contact presence:</strong>
+    <%= @member.contact_preference %>
+  </p>
+  
+  <p>
+    <strong>Gender:</strong>
+    <%= @member.gender %>
+  </p>
+  
+  <p>
+    <strong>Status:</strong>
+    <%= @member.status %>
+  </p>
+  
+  <p>
+    <strong>Join date:</strong>
+    <%= @member.join_date %>
+  </p>
+  
+  <p>
+    <strong>Work date:</strong>
+    <%= @member.work_date %>
+  </p>
+  
+  <p>
+    <strong>Date of birth:</strong>
+    <%= @member.date_of_birth %>
+  </p>
+  
+  <p>
+    <strong>Admin:</strong>
+    <%= @member.admin %>
+  </p>
+  
+  <p>
+    <strong>Membership agreement:</strong>
+    <%= @member.membership_agreement %>
+  </p>
+  
+  <p>
+    <strong>Monthly hours:</strong>
+    <%= @member.monthly_hours %>
+  </p>
+  
+  <p>
+    <strong>Membership discount:</strong>
+    <%= @member.membership_discount %>
+  </p>
+  
+  <p>
+    <strong>Investment discount:</strong>
+    <%= @member.investment_discount %>
+  </p>
+  
+</div>
 
-<p>
-  <strong>First name:</strong>
-  <%= @member.first_name %>
-</p>
+<div class="col-md-3">
+  <% if @can_shop %>
+  <div class="notice alert-info">
+  <% else %>
+  <div class="alert alert-danger">
+  <% end %>
+    <ul>
+      <% @messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
-<p>
-  <strong>Middle name:</strong>
-  <%= @member.middle_name %>
-</p>
+<div class="col-md-6">
+</div>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @member.last_name %>
-</p>
-
-<p>
-  <strong>Opt out:</strong>
-  <%= @member.opt_out %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @member.email %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @member.phone %>
-</p>
-
-<p>
-  <strong>Phone2:</strong>
-  <%= @member.phone2 %>
-</p>
-
-<p>
-  <strong>Fax:</strong>
-  <%= @member.fax %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @member.address %>
-</p>
-
-<p>
-  <strong>Address2:</strong>
-  <%= @member.address2 %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @member.city %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @member.state %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @member.country %>
-</p>
-
-<p>
-  <strong>Zip:</strong>
-  <%= @member.zip %>
-</p>
-
-<p>
-  <strong>Contact presence:</strong>
-  <%= @member.contact_preference %>
-</p>
-
-<p>
-  <strong>Gender:</strong>
-  <%= @member.gender %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @member.status %>
-</p>
-
-<p>
-  <strong>Join date:</strong>
-  <%= @member.join_date %>
-</p>
-
-<p>
-  <strong>Work date:</strong>
-  <%= @member.work_date %>
-</p>
-
-<p>
-  <strong>Date of birth:</strong>
-  <%= @member.date_of_birth %>
-</p>
-
-<p>
-  <strong>Admin:</strong>
-  <%= @member.admin %>
-</p>
-
-<p>
-  <strong>Membership agreement:</strong>
-  <%= @member.membership_agreement %>
-</p>
-
-<p>
-  <strong>Monthly hours:</strong>
-  <%= @member.monthly_hours %>
-</p>
-
-<p>
-  <strong>Membership discount:</strong>
-  <%= @member.membership_discount %>
-</p>
-
-<p>
-  <strong>Investment discount:</strong>
-  <%= @member.investment_discount %>
-</p>
-
-<%= link_to 'Edit', edit_member_path(@member), role:'button', class:'btn btn-primary'  %>
-<%= link_to 'Back', members_path, role:'button', class:'btn btn-default'  %>

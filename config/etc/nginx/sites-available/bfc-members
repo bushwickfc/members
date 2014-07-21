@@ -5,6 +5,8 @@ upstream bfc_members {
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server ipv6only=on;
+	auth_basic "Restricted";
+	auth_basic_user_file /etc/nginx/bfc-members.htpasswd;
 
 	root /opt/apps/bfc-members/current/public;
 	index index.html index.htm;

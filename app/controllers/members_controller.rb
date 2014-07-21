@@ -6,7 +6,7 @@ class MembersController < ApplicationController
   # GET /members.json
   # GET /members.csv
   def index
-    @members = Member.where(valid_search_params)
+    @members = Member.where(valid_search_params).order(:last_name, :first_name)
     respond_with(@members)
   end
 
@@ -14,6 +14,8 @@ class MembersController < ApplicationController
   # GET /members/1.json
   # GET /members/1.csv
   def show
+    @can_shop = @member.can_shop?
+    @messages = @member.can_shop_messages
     respond_with(@member)
   end
 

@@ -188,7 +188,7 @@ class MemberCsv
       when /sourcing/i
         @committee = Committee.find_by(name: "Sourcing")
         "committee"
-      when /tech(nology)?/i
+      when /(\bit\b|tech(nology)?)/i
         @committee = Committee.find_by(name: "Technology")
         "committee"
       else
