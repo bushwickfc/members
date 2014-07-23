@@ -1,12 +1,38 @@
 # Read about fixtures at
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+john_fee_note:
+  member: john
+  creator: addy
+  type: FeeNote
+  note: aaa
+
+john_furlough_note:
+  member: john
+  creator: addy
+  type: FurloughNote
+  note: bbb
+
+john_member_note:
+  member: john
+  creator: addy
+  type: MemberNote
+  note: ccc
+
 john_note:
   member: john
-  receiver: addy
+  creator: addy
+  type: Note
   note: blah blah blah
 
-suzy_note:
+john_tim_bank_note:
+  member: john
+  creator: addy
+  type: TimeBankNote
+  note: ddd
+
+suzy_fee_note:
   member: suzy
-  receiver: addy
+  creator: addy
+  type: FeeNote
   note: foo foo foo

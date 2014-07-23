@@ -26,8 +26,8 @@ Member.create!([
 
 john=Member.first
 john.fees.create!([
-  {amount: 50, receiver_id: john.id, payment_type: "membership", payment_method: "cash", payment_date: Date.current-1.year},
-  {amount: 25, receiver_id: john.id, payment_type: "investment", payment_method: "cash", payment_date: Date.current},
+  {amount: 50, creator_id: john.id, payment_type: "membership", payment_method: "cash", payment_date: Date.current-1.year},
+  {amount: 25, creator_id: john.id, payment_type: "investment", payment_method: "cash", payment_date: Date.current},
 ])
 john.committees.create!(
   {name: "Test"}
@@ -36,7 +36,7 @@ john.time_banks.create!(generate_time_bank(john, john))
 
 jane=Member.second
 jane.fees.create!([
-  {amount: 50, receiver_id: john.id, payment_type: "membership", payment_method: "cash", payment_date: Date.current-1.year},
+  {amount: 50, creator_id: john.id, payment_type: "membership", payment_method: "cash", payment_date: Date.current-1.year},
 ])
 jane.committees.create!(
   {name: "Test2"}

@@ -17,13 +17,13 @@ describe Members::FeesController do
     assert_not_nil assigns(:member)
     assert_not_nil assigns(:payment_methods)
     assert_not_nil assigns(:payment_types)
-    assert_not_nil assigns(:receivers)
+    assert_not_nil assigns(:creators)
   end
 
   it "creates fee" do
     @fee = fee
     assert_difference('fee.member.fees.count') do
-      post :create, member_id: @fee.member, fee: { receiver_id: @fee.receiver_id, amount: @fee.amount, member_id: @fee.member_id, payment_date: @fee.payment_date, payment_method: @fee.payment_method, payment_type: @fee.payment_type }
+      post :create, member_id: @fee.member, fee: { creator_id: @fee.creator_id, amount: @fee.amount, member_id: @fee.member_id, payment_date: @fee.payment_date, payment_method: @fee.payment_method, payment_type: @fee.payment_type }
     end
 
     assert_redirected_to member_fee_path(assigns(:member), assigns(:fee))
@@ -40,12 +40,12 @@ describe Members::FeesController do
     assert_not_nil assigns(:member)
     assert_not_nil assigns(:payment_methods)
     assert_not_nil assigns(:payment_types)
-    assert_not_nil assigns(:receivers)
+    assert_not_nil assigns(:creators)
   end
 
   it "updates fee" do
     @fee = fee
-    put :update, member_id: @fee.member, id: fee, fee: { receiver_id: @fee.receiver_id, amount: @fee.amount, member_id: @fee.member_id, payment_date: @fee.payment_date, payment_method: @fee.payment_method, payment_type: @fee.payment_type }
+    put :update, member_id: @fee.member, id: fee, fee: { creator_id: @fee.creator_id, amount: @fee.amount, member_id: @fee.member_id, payment_date: @fee.payment_date, payment_method: @fee.payment_method, payment_type: @fee.payment_type }
     assert_redirected_to member_fee_path(assigns(:member), assigns(:fee))
   end
 

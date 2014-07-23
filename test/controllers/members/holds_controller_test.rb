@@ -10,7 +10,7 @@ describe Members::HoldsController do
       finish = start + 1.month
       post :create, member_id: hold.member, hold: { 
         member_id: hold.member_id, 
-        receiver_id: hold.receiver_id, 
+        creator_id: hold.creator_id, 
         type: hold.type, 
         start: start, 
         finish: finish
@@ -29,14 +29,14 @@ describe Members::HoldsController do
   it "gets edit" do
     get :edit, id: hold, member_id: hold.member
     assert_not_nil assigns(:member)
-    assert_not_nil assigns(:receivers)
+    assert_not_nil assigns(:creators)
   end
 
   it "updates hold" do
     start = Date.current - 2.months
     put :update, member_id: hold.member, id: hold, hold: { 
       member_id: hold.member_id, 
-      receiver_id: hold.receiver_id, 
+      creator_id: hold.creator_id, 
       type: hold.type, 
       start: start, 
       finish: hold.finish

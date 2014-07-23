@@ -19,6 +19,12 @@ class Member < ActiveRecord::Base
     include TimeBank::MemberProxy
   end
 
+  has_many :fee_notes
+  has_many :furlough_notes
+  has_many :member_notes
+  has_many :notes
+  has_many :time_bank_notes
+
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, email: { mx: true, message: "Host does not receive email" }, if: lambda {|m| m.contact_preference == "email" }

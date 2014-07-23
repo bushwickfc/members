@@ -10,7 +10,7 @@ describe Members::ParentalsController do
       finish = start + 1.year
       r = post :create, member_id: parental.member, parental: { 
         member_id: parental.member_id, 
-        receiver_id: parental.receiver_id, 
+        creator_id: parental.creator_id, 
         type: parental.type, 
         start: start, 
         finish: finish
@@ -30,7 +30,7 @@ describe Members::ParentalsController do
   it "gets edit" do
     get :edit, id: parental, member_id: parental.member
     assert_not_nil assigns(:member)
-    assert_not_nil assigns(:receivers)
+    assert_not_nil assigns(:creators)
   end
 
   it "updates parental" do
@@ -38,7 +38,7 @@ describe Members::ParentalsController do
     finish = start + 1.year
     r = put :update, member_id: parental.member, id: parental, parental: { 
       member_id: parental.member_id, 
-      receiver_id: parental.receiver_id, 
+      creator_id: parental.creator_id, 
       type: parental.type, 
       start: start, 
       finish: finish

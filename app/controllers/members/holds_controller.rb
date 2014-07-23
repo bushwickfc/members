@@ -8,7 +8,7 @@ class Members::HoldsController < ApplicationController
   # GET /members/:member_id/holds.csv
   def index
     @holds = @member.holds.include_parents.where(params[:search])
-    @receiver = Receiver.new
+    @creator = Member.new
     respond_with(@holds)
   end
 
@@ -21,7 +21,7 @@ class Members::HoldsController < ApplicationController
 
   # GET /members/:member_id/holds/new
   def new
-    @receiver = Receiver.new
+    @creator = Member.new
     @hold = @member.holds.new
   end
 
@@ -77,15 +77,15 @@ class Members::HoldsController < ApplicationController
 
     def set_hold
       @hold = Hold.include_parents.find(params[:id])
-      @receiver = @hold.receiver
+      @creator = @hold.creator
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def hold_params
-      params.require(:hold).permit(:member_id, :receiver_id, :type, :start, :finish)
+      params.require(:hold).permit(:member_id, :creator_id, :type, :start, :finish)
     end
 
     def set_selects
-      @receivers = Receiver.form_select.collect{|r| [r.full_name, r.id]}
+      @creators = Member.form_select.collect{|r| [r.full_name, r.id]}
     end
 end

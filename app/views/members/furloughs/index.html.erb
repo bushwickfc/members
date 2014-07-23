@@ -11,7 +11,7 @@
   <thead>
     <tr>
       <th>Member</th>
-      <th>Receiver</th>
+      <th>Creator</th>
       <th>Type</th>
       <th>Start</th>
       <th>Finish</th>
@@ -27,8 +27,8 @@
           <%= link_to member_name(furlough, :member), member_path(furlough.member) %>
         </td>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{furlough.receiver.full_name}"), member_path(furlough.receiver.id) %>&nbsp;
-          <%= link_to member_name(furlough, :receiver), member_path(furlough.receiver.id) %>
+          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{furlough.creator.full_name}"), member_path(furlough.creator.id) %>&nbsp;
+          <%= link_to member_name(furlough, :creator), member_path(furlough.creator.id) %>
         </td>
         <td><%= furlough.type %></td>
         <td><%= furlough.start %></td>

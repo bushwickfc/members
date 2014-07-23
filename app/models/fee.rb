@@ -6,10 +6,10 @@ class Fee < ActiveRecord::Base
   @@payment_methods = %w[cash check money_order debit].freeze
 
   belongs_to :member
-  belongs_to :receiver
+  belongs_to :creator, class_name: "Member"
 
   validates :member_id, presence: true
-  validates :receiver_id, presence: true
+  validates :creator_id, presence: true
 
   validates :amount, numericality: { greater_than: 0.0 }
   validates :payment_date, presence: true
@@ -18,7 +18,7 @@ class Fee < ActiveRecord::Base
 
   scope :membership_payment, -> { where(payment_type: "membership") }
   scope :investment_payment, -> { where(payment_type: "investment") }
-  scope :include_parents,    -> { includes :member, :receiver }
+  scope :include_parents,    -> { includes :member, :creator }
 
   module MemberProxy
     def membership_payment_total

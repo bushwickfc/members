@@ -4,7 +4,7 @@ class CreateMembers < ActiveRecord::Migration
       t.string :first_name, null: false
       t.string :middle_name
       t.string :last_name, null: false
-      t.string :email, null: false, index: true
+      t.string :email, index: true
       t.string :phone
       t.string :phone2
       t.string :fax

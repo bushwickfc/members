@@ -230,7 +230,7 @@ class MemberCsv
       end
       f = @member.fees.new(
         amount: int_amt,
-        receiver_id: @admin.id,
+        creator_id: @admin.id,
         payment_method: @row["Method of Payment"] =~ /check/i ? "check" : "cash",
         payment_date: convert_date(date),
         created_at: convert_date(date),
@@ -325,7 +325,7 @@ Member.joins(:time_banks).merge(TimeBank.where(time_type:"hold")).group(:member_
       if diff > -60 && diff <= 0
         finish = t.finish
       else
-        member.holds.create(start: start, finish: finish.end_of_month, receiver_id: aid)
+        member.holds.create(start: start, finish: finish.end_of_month, creator_id: aid)
         finish = start = t.start
       end
     end
@@ -336,7 +336,7 @@ Member.joins(:time_banks).merge(TimeBank.where(time_type:"hold")).group(:member_
     else
       finish = finish.end_of_month
     end
-    member.holds.create(start: start, finish: finish, receiver_id: aid)
+    member.holds.create(start: start, finish: finish, creator_id: aid)
   end
 end
 

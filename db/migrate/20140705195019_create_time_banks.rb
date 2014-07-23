@@ -1,12 +1,12 @@
 class CreateTimeBanks < ActiveRecord::Migration
   def change
     create_table :time_banks do |t|
-      t.belongs_to :member, index: true
-      t.belongs_to :admin, index: true
+      t.belongs_to :member, index: true, null: false
+      t.belongs_to :admin, index: true, null: false
       t.belongs_to :committee, index: true
-      t.datetime :start, null: false
-      t.datetime :finish, null: false
-      t.string :time_type, null: false
+      t.datetime :start, null: false, null: false
+      t.datetime :finish, null: false, null: false
+      t.string :time_type, null: false, null: false
       t.boolean :approved, default: false, index: true
 
       t.timestamps

@@ -10,7 +10,7 @@
   <thead>
     <tr>
       <th>Member</th>
-      <th>receiver</th>
+      <th>Creator</th>
       <th>Amount</th>
       <th>Payment date</th>
       <th>Payment type</th>
@@ -27,8 +27,8 @@
           <%= link_to member_name(fee, :member), member_path(fee.member) %>
         </td>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.receiver.full_name}"), member_path(fee.receiver.id) %>&nbsp;
-          <%= link_to member_name(fee, :receiver), member_path(fee.receiver.id) %>
+          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.creator.full_name}"), member_path(fee.creator.id) %>&nbsp;
+          <%= link_to member_name(fee, :creator), member_path(fee.creator.id) %>
         </td>
         <td><%= search_link(fee, :amount) %></td>
         <td><%= search_link(fee, :payment_date) %></td>

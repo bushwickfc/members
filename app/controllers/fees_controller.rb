@@ -7,7 +7,7 @@ class FeesController < ApplicationController
   # GET /fees.csv
   def index
     @fees = Fee.include_parents.where(params[:search])
-    @receiver = Receiver.new
+    @creator = Member.new
     respond_with(@fees)
   end
 
@@ -19,7 +19,7 @@ class FeesController < ApplicationController
 
   # GET /fees/new
   def new
-    @receiver = Receiver.new
+    @creator = Member.new
     @fee = Fee.new
   end
 
@@ -71,17 +71,17 @@ class FeesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_fee
       @fee = Fee.include_parents.find(params[:id])
-      @receiver = @fee.receiver
+      @creator = @fee.creator
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fee_params
-      params.require(:fee).permit(:member_id, :receiver_id, :amount, :payment_date, :payment_type, :payment_method)
+      params.require(:fee).permit(:member_id, :creator_id, :amount, :payment_date, :payment_type, :payment_method)
     end
 
     def set_selects
       @members = Member.form_select.collect{|r| [r.full_name, r.id]}
-      @receivers = Receiver.form_select.collect{|r| [r.full_name, r.id]}
+      @creators = Member.form_select.collect{|r| [r.full_name, r.id]}
       @payment_types = Fee.payment_types
       @payment_methods = Fee.payment_methods
     end

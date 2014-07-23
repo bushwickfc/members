@@ -5,7 +5,7 @@ describe Fee do
   let(:admin) { members :addy }
   let(:fee) { Fee.new(
       member_id: admin.id, 
-      receiver_id: admin.id, 
+      creator_id: admin.id, 
       amount: 10.0,
       payment_date: '2014-07-04',
       payment_method: 'cash',
@@ -68,10 +68,10 @@ describe Fee do
       subject.errors[:member_id].must_equal ["can't be blank"]
     end
 
-    it "receiver_id" do
-      subject.receiver_id = nil
+    it "creator_id" do
+      subject.creator_id = nil
       subject.wont_be :valid?
-      subject.errors[:receiver_id].must_equal ["can't be blank"]
+      subject.errors[:creator_id].must_equal ["can't be blank"]
     end
 
   end

@@ -3,7 +3,7 @@
 
 DEFAULTS: &DEFAULTS
   payment_method: cash
-  receiver: addy
+  creator: addy
 
 fee1:
   <<: *DEFAULTS

@@ -1,3 +1,0 @@
-class Receiver < Member
-
-end

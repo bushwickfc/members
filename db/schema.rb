@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20140718004920) do
   add_index "committees", ["name"], name: "index_committees_on_name", unique: true, using: :btree
 
   create_table "fees", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "receiver_id"
+    t.integer  "member_id",                 null: false
+    t.integer  "creator_id",                null: false
     t.float    "amount",         limit: 24, null: false
     t.date     "payment_date",              null: false
     t.string   "payment_type",              null: false
@@ -34,29 +34,29 @@ ActiveRecord::Schema.define(version: 20140718004920) do
     t.datetime "updated_at"
   end
 
+  add_index "fees", ["creator_id"], name: "index_fees_on_creator_id", using: :btree
   add_index "fees", ["member_id"], name: "index_fees_on_member_id", using: :btree
   add_index "fees", ["payment_date"], name: "index_fees_on_payment_date", using: :btree
-  add_index "fees", ["receiver_id"], name: "index_fees_on_receiver_id", using: :btree
 
   create_table "furloughs", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "receiver_id"
-    t.string   "type",        null: false
-    t.date     "start",       null: false
-    t.date     "finish",      null: false
+    t.integer  "member_id",  null: false
+    t.integer  "creator_id", null: false
+    t.string   "type",       null: false
+    t.date     "start",      null: false
+    t.date     "finish",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "furloughs", ["creator_id"], name: "index_furloughs_on_creator_id", using: :btree
   add_index "furloughs", ["member_id"], name: "index_furloughs_on_member_id", using: :btree
-  add_index "furloughs", ["receiver_id"], name: "index_furloughs_on_receiver_id", using: :btree
   add_index "furloughs", ["start", "finish"], name: "index_furloughs_on_start_and_finish", using: :btree
 
   create_table "members", force: true do |t|
     t.string   "first_name",                                           null: false
     t.string   "middle_name"
     t.string   "last_name",                                            null: false
-    t.string   "email",                                                null: false
+    t.string   "email"
     t.string   "phone"
     t.string   "phone2"
     t.string   "fax"
@@ -90,19 +90,21 @@ ActiveRecord::Schema.define(version: 20140718004920) do
   add_index "members", ["work_date"], name: "index_members_on_work_date", using: :btree
 
   create_table "notes", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "receiver_id"
-    t.text     "note"
+    t.integer  "member_id",  null: false
+    t.integer  "creator_id", null: false
+    t.string   "type",       null: false
+    t.text     "note",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "notes", ["creator_id"], name: "index_notes_on_creator_id", using: :btree
   add_index "notes", ["member_id"], name: "index_notes_on_member_id", using: :btree
-  add_index "notes", ["receiver_id"], name: "index_notes_on_receiver_id", using: :btree
+  add_index "notes", ["type"], name: "index_notes_on_type", using: :btree
 
   create_table "time_banks", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "admin_id"
+    t.integer  "member_id",                    null: false
+    t.integer  "admin_id",                     null: false
     t.integer  "committee_id"
     t.datetime "start",                        null: false
     t.datetime "finish",                       null: false

@@ -1,9 +1,9 @@
 class Furlough < ActiveRecord::Base
   belongs_to :member
-  belongs_to :receiver
+  belongs_to :creator, class_name: "Member"
 
   validates :member_id, presence: true
-  validates :receiver_id, presence: true
+  validates :creator_id, presence: true
   validates :start, presence: true
   validates :finish, presence: true
   validates :type, presence: true
@@ -12,7 +12,7 @@ class Furlough < ActiveRecord::Base
   scope :active,          -> { where("NOW() BETWEEN start AND finish") }
   scope :hold,            -> { where(type: :Hold) }
   scope :parental,        -> { where(type: :Parental) }
-  scope :include_parents, -> { includes(:member, :receiver) }
+  scope :include_parents, -> { includes(:member, :creator) }
 
   # @params range [Array|Range|Scalar] an array or range or two date strings
   def self.active_between(*range)

@@ -8,7 +8,7 @@ class Members::ParentalsController < ApplicationController
   # GET /members/:member_id/parentals.csv
   def index
     @parentals = @member.parentals.include_parents.where(params[:search])
-    @receiver = Receiver.new
+    @creator = Member.new
     respond_with(@parentals)
   end
 
@@ -21,7 +21,7 @@ class Members::ParentalsController < ApplicationController
 
   # GET /members/:member_id/parentals/new
   def new
-    @receiver = Receiver.new
+    @creator = Member.new
     @parental = @member.parentals.new
   end
 
@@ -77,15 +77,15 @@ class Members::ParentalsController < ApplicationController
 
     def set_parental
       @parental = Parental.include_parents.find(params[:id])
-      @receiver = @parental.receiver
+      @creator = @parental.creator
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def parental_params
-      params.require(:parental).permit(:member_id, :receiver_id, :type, :start, :finish)
+      params.require(:parental).permit(:member_id, :creator_id, :type, :start, :finish)
     end
 
     def set_selects
-      @receivers = Receiver.form_select.collect{|r| [r.full_name, r.id]}
+      @creators = Member.form_select.collect{|r| [r.full_name, r.id]}
     end
 end
