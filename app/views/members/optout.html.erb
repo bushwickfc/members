@@ -1,0 +1,32 @@
+<div class="col-md-6">
+  <% if @member.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h2>
+
+      <ul>
+      <% @member.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<%= form_tag update_optout_member_path(@member.optout_hash) do %>
+	  <%- if @member.opt_out %>
+			Optin to receive alert emails for <%= @member.full_name %>
+		  <%- text = "Optin" %>
+		<%- else %>
+			Optout to no longer receive alert emails for <%= @member.full_name %>
+		  <%- text = "Optout" %>
+		<%- end %>
+		<p>
+	  <%= submit_tag(text, role: "button", class: "btn btn-success") %>
+	</p>
+	<% end %>
+</div>
+
+<div class="col-md-3">
+</div>
+
+<div class="col-md-3">
+</div>
+

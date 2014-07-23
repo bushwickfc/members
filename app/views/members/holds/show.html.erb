@@ -1,29 +1,40 @@
-<%= render 'shared/csv' %>
+<div class="col-md-3">
+  <h3>Hold for <%= member_name(@hold, :member) %></h3>
+  <%= render 'shared/csv' %>
+  <%= link_to 'Edit', edit_member_hold_path(@member, @hold), role:'button', class:'btn btn-primary' %>
+  <%= link_to 'Back', member_furloughs_path(@member), role:'button', class:'btn btn-default'  %>
+  
+  <p>
+    <strong>Member:</strong>
+    <%= member_name(@hold, :member) %>
+  </p>
+  
+  <p>
+    <strong>Creator:</strong>
+    <%= member_name(@hold, :creator) %>
+  </p>
+  
+  <p>
+    <strong>Type:</strong>
+    <%= @hold.type %>
+  </p>
+  
+  <p>
+    <strong>Start:</strong>
+    <%= @hold.start %>
+  </p>
+  
+  <p>
+    <strong>Finish:</strong>
+    <%= @hold.finish %>
+  </p>
+</div>
 
-<p>
-  <strong>Member:</strong>
-  <%= member_name(@hold, :member) %>
-</p>
+<div class="col-md-3">
+</div>
 
-<p>
-  <strong>Creator:</strong>
-  <%= member_name(@hold, :creator) %>
-</p>
+<div class="col-md-6">
+  <%= render 'shared/notes' %>
+</div>
 
-<p>
-  <strong>Type:</strong>
-  <%= @hold.type %>
-</p>
 
-<p>
-  <strong>Start:</strong>
-  <%= @hold.start %>
-</p>
-
-<p>
-  <strong>Finish:</strong>
-  <%= @hold.finish %>
-</p>
-
-<%= link_to 'Edit', edit_member_hold_path(@member, @hold), role:'button', class:'btn btn-primary' %>
-<%= link_to 'Back', member_furloughs_path(@member), role:'button', class:'btn btn-default'  %>

@@ -1,44 +1,54 @@
-<%= render 'shared/csv' %>
+<div class="col-md-3">
+  <h3>Time bank entry for <%= member_name(@time_bank, :member) %></h3>
+  <%= render 'shared/csv' %>
+  <%= link_to 'Edit', edit_member_time_bank_path(@member, @time_bank), role:'button', class:'btn btn-primary' %>
+  <%= link_to 'Back', member_time_banks_path(@member), role:'button', class:'btn btn-default'  %>
+  
+  <p>
+    <strong>Member:</strong>
+    <%= member_name(@time_bank, :member) %>
+  </p>
+  
+  <p>
+    <strong>Admin:</strong>
+    <%= member_name(@time_bank, :admin) %>
+  </p>
+  
+  <p>
+    <strong>Committee:</strong>
+    <%= committee_name(@time_bank) %>
+  </p>
+  
+  <p>
+    <strong>Hours:</strong>
+    <%= @time_bank.hours %>
+  </p>
+  
+  <p>
+    <strong>Start:</strong>
+    <%= @time_bank.start %>
+  </p>
+  
+  <p>
+    <strong>Finish:</strong>
+    <%= @time_bank.finish %>
+  </p>
+  
+  <p>
+    <strong>Time type:</strong>
+    <%= @time_bank.time_type %>
+  </p>
+  
+  <p>
+    <strong>Approved:</strong>
+    <%= @time_bank.approved %>
+  </p>
+</div>
 
-<p>
-  <strong>Member:</strong>
-  <%= member_name(@time_bank, :member) %>
-</p>
+<div class="col-md-3">
+</div>
 
-<p>
-  <strong>Admin:</strong>
-  <%= member_name(@time_bank, :admin) %>
-</p>
-
-<p>
-  <strong>Committee:</strong>
-  <%= committee_name(@time_bank) %>
-</p>
-
-<p>
-  <strong>Hours:</strong>
-  <%= @time_bank.hours %>
-</p>
-
-<p>
-  <strong>Start:</strong>
-  <%= @time_bank.start %>
-</p>
-
-<p>
-  <strong>Finish:</strong>
-  <%= @time_bank.finish %>
-</p>
-
-<p>
-  <strong>Time type:</strong>
-  <%= @time_bank.time_type %>
-</p>
-
-<p>
-  <strong>Approved:</strong>
-  <%= @time_bank.approved %>
-</p>
-
-<%= link_to 'Edit', edit_member_time_bank_path(@member, @time_bank), role:'button', class:'btn btn-primary' %>
-<%= link_to 'Back', member_time_banks_path(@member), role:'button', class:'btn btn-default'  %>
+<div class="col-md-6">
+  <%= render 'shared/notes' %>
+</div>
+  

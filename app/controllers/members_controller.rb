@@ -1,12 +1,20 @@
 class MembersController < ApplicationController
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_hashed_member, only: [:optout, :optout_update]
 
   # GET /members
   # GET /members.json
   # GET /members.csv
   def index
-    @members = Member.where(valid_search_params).order(:last_name, :first_name)
+    if params[:inactive]
+      @members = Member.where(status: %w[canceled inactive])
+    elsif params[:interested]
+      @members = Member.where(status: %w[volunteer interested])
+    else
+      @members = Member.cached_can_shop
+    end
+    @members = @members.where(valid_search_params).order(:last_name, :first_name)
     respond_with(@members)
   end
 
@@ -16,6 +24,7 @@ class MembersController < ApplicationController
   def show
     @can_shop = @member.can_shop?
     @messages = @member.can_shop_messages
+    @notes = @member.all_notes
     respond_with(@member)
   end
 
@@ -68,10 +77,28 @@ class MembersController < ApplicationController
     end
   end
 
+  # GET /optout/:sha1_hash
+  def optout
+  end
+
+  # POST /optout/:sha1_hash
+  def optout_update
+    @member.opt_out = !@member.opt_out
+    if @member.save
+      redirect_to :back
+    else
+      render :optout
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
       @member = Member.find(params[:id])
+    end
+
+    def set_hashed_member
+      @member = Member.by_email_hash(params[:hash])
     end
 
     def set_selects
@@ -88,6 +115,7 @@ class MembersController < ApplicationController
         :last_name, 
         :opt_out, 
         :email, 
+        :hash,
         :phone, 
         :phone2, 
         :fax, 
@@ -107,7 +135,8 @@ class MembersController < ApplicationController
         :membership_agreement, 
         :monthly_hours, 
         :membership_discount, 
-        :investment_discount
+        :investment_discount,
+        notes_attributes: note_params
       )
     end
 end

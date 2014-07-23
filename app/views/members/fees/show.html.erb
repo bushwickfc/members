@@ -1,34 +1,44 @@
-<%= render 'shared/csv' %>
+<div class="col-md-3">
+  <h3>Fee for <%= @member.full_name %></h3>
+  <%= render 'shared/csv' %>
+  <%= link_to 'Edit', edit_member_fee_path(@member, @fee), role:'button', class:'btn btn-primary' %>
+  <%= link_to 'Back', member_fees_path(@member), role:'button', class:'btn btn-default'  %>
+  
+  <p>
+    <strong>Member:</strong>
+    <%= @member.full_name %>
+  </p>
+  
+  <p>
+    <strong>Creator:</strong>
+    <%= @creator.full_name %>
+  </p>
+  
+  <p>
+    <strong>Amount:</strong>
+    <%= @fee.amount %>
+  </p>
+  
+  <p>
+    <strong>Payment date:</strong>
+    <%= @fee.payment_date %>
+  </p>
+  
+  <p>
+    <strong>Payment type:</strong>
+    <%= @fee.payment_type %>
+  </p>
+  
+  <p>
+    <strong>Payment method:</strong>
+    <%= @fee.payment_method %>
+  </p>
+</div>
 
-<p>
-  <strong>Member:</strong>
-  <%= @member.full_name %>
-</p>
+<div class="col-md-3">
+</div>
 
-<p>
-  <strong>Creator:</strong>
-  <%= @creator.full_name %>
-</p>
+<div class="col-md-6">
+  <%= render 'shared/notes' %>
+</div>
 
-<p>
-  <strong>Amount:</strong>
-  <%= @fee.amount %>
-</p>
-
-<p>
-  <strong>Payment date:</strong>
-  <%= @fee.payment_date %>
-</p>
-
-<p>
-  <strong>Payment type:</strong>
-  <%= @fee.payment_type %>
-</p>
-
-<p>
-  <strong>Payment method:</strong>
-  <%= @fee.payment_method %>
-</p>
-
-<%= link_to 'Edit', edit_member_fee_path(@member, @fee), role:'button', class:'btn btn-primary' %>
-<%= link_to 'Back', member_fees_path(@member), role:'button', class:'btn btn-default'  %>

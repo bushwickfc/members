@@ -1,0 +1,2 @@
+class TimeBankNote < Note
+end

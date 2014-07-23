@@ -4,7 +4,7 @@ class CreateMembers < ActiveRecord::Migration
       t.string :first_name, null: false
       t.string :middle_name
       t.string :last_name, null: false
-      t.string :email, index: true
+      t.string :email
       t.string :phone
       t.string :phone2
       t.string :fax
@@ -17,12 +17,12 @@ class CreateMembers < ActiveRecord::Migration
       t.string :contact_preference, default: "email"
       t.string :gender
       t.string :status
-      t.date :join_date, index: true
-      t.date :work_date, index: true
+      t.date :join_date
+      t.date :work_date
       t.date :date_of_birth
-      t.boolean :admin, default: false, index: true
+      t.boolean :admin, default: false
       t.boolean :membership_agreement, default: false
-      t.boolean :opt_out, default: false, index: true
+      t.boolean :opt_out, default: false
       t.float :monthly_hours, default: 4.0
       t.float :membership_discount, default: 0.0
       t.float :investment_discount, default: 0.0
@@ -30,7 +30,7 @@ class CreateMembers < ActiveRecord::Migration
       t.timestamps
     end
 
-    %w[email work_date join_date admin opt_out].each do |col|
+    %w[email work_date join_date admin status opt_out].each do |col|
       add_index :members, col
     end
 

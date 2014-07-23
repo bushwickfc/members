@@ -35,6 +35,11 @@
     <%= f.label :payment_method %><br>
     <%= f.select :payment_method, @payment_methods, include_blank: true %>
   </div>
+
+  <%= f.fields_for :notes, [@fee.notes.build] do |builder| %>
+    <%= render "shared/note", f: builder %>
+  <% end %>
+
   <div class="actions">
     <%= f.submit role:'button', class:'btn btn-success' %>
   </div>

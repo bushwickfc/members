@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Listing <%= (params[:interested] && "interested") || (params[:inactive] && "inactive") || "active" %> members</h1>
+<h1>Listing members</h1>
 </div>
 
 <%= link_to 'New Member', new_member_path, role:'button', class:'btn btn-success'  %>
@@ -19,7 +19,7 @@
       <th>Status</th>
       <th>Join date</th>
       <th>Work date</th>
-      <th>Membership<br>agreement</th>
+      <th>Membership agreement</th>
       <th></th>
     </tr>
   </thead>

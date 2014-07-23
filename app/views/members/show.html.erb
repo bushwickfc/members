@@ -1,4 +1,5 @@
 <div class="col-md-3">
+  <h3><%= @member.full_name %></h3>
   <%= render 'shared/csv' %>
   <%= link_to 'Edit', edit_member_path(@member), role:'button', class:'btn btn-primary'  %>
   <%= link_to 'Back', members_path, role:'button', class:'btn btn-default'  %>
@@ -25,7 +26,7 @@
   
   <p>
     <strong>Email:</strong>
-    <%= @member.email %>
+    <%= link_to @member.email, "mailto:#{@member.email}" %>
   </p>
   
   <p>
@@ -131,6 +132,7 @@
 </div>
 
 <div class="col-md-3">
+  <h3>Status</h3>
   <% if @can_shop %>
   <div class="notice alert-info">
   <% else %>
@@ -145,5 +147,7 @@
 </div>
 
 <div class="col-md-6">
+  <%= render 'shared/notes' %>
+
 </div>
 

@@ -1,3 +1,8 @@
+td,
+th {
+  white-space: nowrap;
+}
+
 table.dataTable td,
 table.dataTable th {
   padding: 5px;

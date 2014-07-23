@@ -16,6 +16,7 @@ class Members::HoldsController < ApplicationController
   # GET /members/:member_id/holds/1.json
   # GET /members/:member_id/holds/1.csv
   def show
+    @notes = @hold.notes
     respond_with(@hold)
   end
 
@@ -82,7 +83,14 @@ class Members::HoldsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def hold_params
-      params.require(:hold).permit(:member_id, :creator_id, :type, :start, :finish)
+      params.require(:hold).permit(
+        :member_id,
+        :creator_id,
+        :type,
+        :start,
+        :finish,
+        notes_attributes: note_params
+      )
     end
 
     def set_selects

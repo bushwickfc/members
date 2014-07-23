@@ -52,13 +52,16 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Bank <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <%= link_to 'All', time_banks_path %>
-                </li>
-                <li>
-                  <%= link_to 'New', new_time_bank_path %>
+                  <%= link_to 'Past 4 months', time_banks_path %>
                 </li>
                 <li>
                   <%= link_to 'Unapproved', time_banks_path(search: {approved: 0}) %>
+                </li>
+                <li>
+                  <%= link_to 'All', time_banks_path(all: 1) %>
+                </li>
+                <li>
+                  <%= link_to 'New', new_time_bank_path %>
                 </li>
               </ul>
             </li>
@@ -91,7 +94,13 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Members <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li>
-                  <%= link_to 'All', members_path %>
+                  <%= link_to 'Active', members_path %>
+                </li>
+                <li>
+                  <%= link_to 'Interested', members_path(interested: 1) %>
+                </li>
+                <li>
+                  <%= link_to 'Inactive', members_path(inactive: 1) %>
                 </li>
                 <li>
                   <%= link_to 'New', new_member_path %>

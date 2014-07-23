@@ -95,4 +95,14 @@ module ApplicationHelper
     end
   end
 
+
+  def commentable_link(member, note)
+    case note.commentable_type
+    when "Fee" then member_fee_path(member, note.commentable_id)
+    when "Hold" then member_hold_path(member, note.commentable_id)
+    when "Parental" then member_parental_path(member, note.commentable_id)
+    when "TimeBank" then member_time_bank_path(member, note.commentable_id)
+    when "Member" then member_path(member)
+    end
+  end
 end

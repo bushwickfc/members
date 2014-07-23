@@ -87,20 +87,20 @@ ActiveRecord::Schema.define(version: 20140718004920) do
   add_index "members", ["first_name", "middle_name", "last_name"], name: "index_members_on_first_name_and_middle_name_and_last_name", unique: true, using: :btree
   add_index "members", ["join_date"], name: "index_members_on_join_date", using: :btree
   add_index "members", ["opt_out"], name: "index_members_on_opt_out", using: :btree
+  add_index "members", ["status"], name: "index_members_on_status", using: :btree
   add_index "members", ["work_date"], name: "index_members_on_work_date", using: :btree
 
   create_table "notes", force: true do |t|
-    t.integer  "member_id",  null: false
-    t.integer  "creator_id", null: false
-    t.string   "type",       null: false
-    t.text     "note",       null: false
+    t.integer  "creator_id",       null: false
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.text     "note",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "notes", ["commentable_id", "commentable_type"], name: "index_notes_on_commentable_id_and_commentable_type", using: :btree
   add_index "notes", ["creator_id"], name: "index_notes_on_creator_id", using: :btree
-  add_index "notes", ["member_id"], name: "index_notes_on_member_id", using: :btree
-  add_index "notes", ["type"], name: "index_notes_on_type", using: :btree
 
   create_table "time_banks", force: true do |t|
     t.integer  "member_id",                    null: false

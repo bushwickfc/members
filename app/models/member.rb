@@ -1,4 +1,5 @@
-# TODO: Add job which puts time into time_banks for maternity and hold members
+require 'digest/sha1'
+
 class Member < ActiveRecord::Base
   MEMBERSHIP_FEE = 50
   INVESTMENT_FEE = 25
@@ -19,11 +20,9 @@ class Member < ActiveRecord::Base
     include TimeBank::MemberProxy
   end
 
-  has_many :fee_notes
-  has_many :furlough_notes
-  has_many :member_notes
-  has_many :notes
-  has_many :time_bank_notes
+  has_many :notes, as: :commentable
+
+  accepts_nested_attributes_for :notes
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -37,6 +36,26 @@ class Member < ActiveRecord::Base
 
   scope     :form_select, -> { full_name.select(:id) }
   scope     :full_name,   -> { select(FULL_NAME) }
+  scope     :cached_cant_shop, -> { where(status: %w[inactive canceled volunteer interested hold]) }
+  scope     :cached_can_shop, -> { where(status: [nil, "suspended", "active", "parental"]) }
+
+  def self.by_email_hash(hash)
+    find_by!("SHA1(email) = ?", hash)
+  end
+
+  def all_notes
+    Note.union_scope(
+      Note.commentable(fee_ids, "Fee"),
+      Note.commentable(hold_ids, "Hold"),
+      Note.commentable(id, "Member"),
+      Note.commentable(parental_ids, "Parental"),
+      Note.commentable(time_bank_ids, "TimeBank"),
+    ).order(updated_at: :desc)
+  end
+
+  def optout_hash
+    Digest::SHA1.hexdigest email
+  end
 
   def membership_rate
     MEMBERSHIP_FEE - (MEMBERSHIP_FEE * membership_discount / 100.0)

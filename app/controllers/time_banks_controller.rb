@@ -7,9 +7,10 @@ class TimeBanksController < ApplicationController
   # GET /time_banks.csv
   def index
     @time_banks = TimeBank.select_all.
-      where('start >= ?', Date.current-12.months).
       include_parents.
-      where(params[:search])
+      where(params[:search]).
+      order(:start, :member_id)
+    @time_banks = @time_banks.where('start >= ?', Date.current-4.months) unless params[:all]
     respond_with(@time_banks)
   end
 
@@ -83,6 +84,15 @@ class TimeBanksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def time_bank_params
-      params.require(:time_bank).permit(:member_id, :admin_id, :committee_id, :start, :finish, :time_type, :approved)
+      params.require(:time_bank).permit(
+        :member_id,
+        :admin_id,
+        :committee_id,
+        :start,
+        :finish,
+        :time_type,
+        :approved,
+        notes_attributes: note_params
+      )
     end
 end

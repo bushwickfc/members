@@ -24,16 +24,16 @@
       <tr>
         <td>
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.member.full_name}"), member_path(fee.member) %>&nbsp;
-          <%= link_to member_name(fee, :member), member_path(fee.member) %>
+          <%= member_name(fee, :member) %>
         </td>
         <td>
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.creator.full_name}"), member_path(fee.creator.id) %>&nbsp;
-          <%= link_to member_name(fee, :creator), member_path(fee.creator.id) %>
+          <%= member_name(fee, :creator) %>
         </td>
-        <td><%= search_link(fee, :amount) %></td>
-        <td><%= search_link(fee, :payment_date) %></td>
-        <td><%= search_link(fee, :payment_type) %></td>
-        <td><%= search_link(fee, :payment_method) %></td>
+        <td><%= fee.amount %></td>
+        <td><%= fee.payment_date %></td>
+        <td><%= fee.payment_type %></td>
+        <td><%= fee.payment_method %></td>
         <td>
           <%= link_to 'Show', member_fee_path(@member, fee), role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_member_fee_path(@member, fee), role:'button', class:'btn btn-primary'  %>&nbsp;

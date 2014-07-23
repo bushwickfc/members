@@ -2,10 +2,25 @@ require "test_helper"
 
 describe MembersController do
 
-  it "gets index" do
+  it "gets active index" do
     get :index
     assert_response :success
     assert_not_nil assigns(:members)
+    assert_equal assigns(:members).to_a.count, 7
+  end
+
+  it "gets interested index" do
+    get :index, interested: 1
+    assert_response :success
+    assert_not_nil assigns(:members)
+    assert_equal assigns(:members).to_a.count, 1
+  end
+
+  it "gets inactive index" do
+    get :index, inactive: 1
+    assert_response :success
+    assert_not_nil assigns(:members)
+    assert_equal assigns(:members).to_a.count, 1
   end
 
   it "gets new" do

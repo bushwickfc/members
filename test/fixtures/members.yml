@@ -90,6 +90,22 @@ suzy:
   membership_discount: 0.0
   investment_discount: 0.0
 
+slim:
+  <<: *DEFAULTS
+  first_name: Slim
+  middle_name: Unpaid
+  last_name: Zzz
+  email: sl@gmail.com
+  admin: false
+  gender: M
+  status: inactive
+  join_date: <%= Date.current - 5.weeks %>
+  work_date: <%= Date.current - 5.weeks %>
+  membership_agreement: true
+  monthly_hours: 4.0
+  membership_discount: 0.0
+  investment_discount: 0.0
+
 safe_delete:
   <<: *DEFAULTS
   first_name: Alex
@@ -99,7 +115,7 @@ safe_delete:
   admin: false
   join_date: 2014-06-17
   work_date: 2014-06-17
-  status: 
+  status: interested
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0

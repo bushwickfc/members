@@ -39,6 +39,11 @@
     <%= f.label :finish %><br>
     <%= f.datetime_select :finish %>
   </div>
+
+  <%= f.fields_for :notes, [@time_bank.notes.build] do |builder| %>
+    <%= render "shared/note", f: builder %>
+  <% end %>
+
   <div class="actions">
     <%= f.submit role:'button', class:'btn btn-success' %>
   </div>

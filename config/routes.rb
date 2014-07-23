@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   root to: 'members#index'
 
+  get '/optout/:hash', to: 'members#optout', as: :optout_member
+  post '/optout/:hash', to: 'members#optout_update', as: :update_optout_member
+
   resources :members do
     resources :furloughs, module: :members, only: [:index]
     resources :holds, module: :members, except: [:destroy, :index]

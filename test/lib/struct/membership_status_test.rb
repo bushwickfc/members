@@ -160,14 +160,14 @@ describe Struct::MembershipStatus do
       end
     end
 
-    it "is false if membership_fees_overdue" do
+    it "is true if membership_fees_overdue" do
       attrs = member_hash.values
       attrs[5] = 1.0
       attrs[6] = true
       status = Struct::MembershipStatus.new(*attrs)
-      status.check_membership_fees.must_equal false
+      status.check_membership_fees.must_equal true
       status.messages.must_equal ["Membership fees not paid in 2 months, balance $1.0"]
-      status.status.must_equal "suspended"
+      status.status.must_equal ""
     end
 
     it "is true if membership_fees_balance" do
@@ -201,8 +201,8 @@ describe Struct::MembershipStatus do
       attrs[8] = -16
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
-      status.messages.must_equal ["Suspended, owes 16 hours"]
-      status.status.must_equal "suspended"
+      status.messages.must_equal ["Inactive, owes 16 hours"]
+      status.status.must_equal "inactive"
     end
 
     it "is true for balances > -16 && <= -8" do
@@ -211,7 +211,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal true
       status.messages.must_equal ["Work alert, owes 8 hours"]
-      status.status.must_equal ""
+      status.status.must_equal "suspended"
     end
 
     it "is true for balances < 0" do

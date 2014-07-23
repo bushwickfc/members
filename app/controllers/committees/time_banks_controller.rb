@@ -84,6 +84,15 @@ class Committees::TimeBanksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def time_bank_params
-      params.require(:time_bank).permit(:member_id, :admin_id, :committee_id, :start, :finish, :time_type, :approved)
+      params.require(:time_bank).permit(
+        :member_id,
+        :admin_id,
+        :committee_id,
+        :start,
+        :finish,
+        :time_type,
+        :approved,
+        notes_attributes: note_params
+      )
     end
 end

@@ -106,4 +106,26 @@ describe Member do
     @john.hours_owed.must_equal 48
   end
 
+  it 'generates a hashed email' do
+    hash = Digest::SHA1.hexdigest @john.email
+    @john.optout_hash.must_equal hash
+  end
+
+  it 'finds hashed emails' do
+    member = Member.by_email_hash(@john.optout_hash)
+    member.id.must_equal @john.id
+  end
+
+  it 'finds current users who can\'t shop' do
+    Member.cached_cant_shop.count.must_equal 2
+  end
+
+  it 'finds current users who can shop' do
+    Member.cached_can_shop.count.must_equal 7
+  end
+
+  it 'finds all notes' do
+    @john.all_notes.count.must_equal 5
+  end
+
 end

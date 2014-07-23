@@ -24,11 +24,11 @@
       <tr>
         <td>
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{furlough.member.full_name}"), member_path(furlough.member) %>&nbsp;
-          <%= link_to member_name(furlough, :member), member_path(furlough.member) %>
+          <%= member_name(furlough, :member) %>
         </td>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{furlough.creator.full_name}"), member_path(furlough.creator.id) %>&nbsp;
-          <%= link_to member_name(furlough, :creator), member_path(furlough.creator.id) %>
+          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{member_name(furlough, :creator)}"), member_path(furlough.creator.id) %>&nbsp;
+          <%= member_name(furlough, :creator) %>
         </td>
         <td><%= furlough.type %></td>
         <td><%= furlough.start %></td>

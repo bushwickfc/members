@@ -76,7 +76,15 @@ class FeesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def fee_params
-      params.require(:fee).permit(:member_id, :creator_id, :amount, :payment_date, :payment_type, :payment_method)
+      params.require(:fee).permit(
+        :member_id,
+        :creator_id,
+        :amount,
+        :payment_date,
+        :payment_type,
+        :payment_method,
+        notes_attributes: note_params
+      )
     end
 
     def set_selects

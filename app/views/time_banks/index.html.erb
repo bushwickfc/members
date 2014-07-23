@@ -26,11 +26,12 @@
       <tr>
         <td>
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{member_name(time_bank, :member)}"), member_path(time_bank.member) %>&nbsp;
-          <%= link_to member_name(time_bank, :member), member_time_banks_path(time_bank.member) %>
+					<%= link_to image_tag(image_path("clock.png"), size: "15x15", alt: "time bank #{member_name(time_bank, :member)}"), member_time_banks_path(time_bank.member) %>&nbsp;
+          <%= member_name(time_bank, :member) %>
         </td>
         <td>
           <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{member_name(time_bank, :admin)}"), member_path(time_bank.admin_id) %>&nbsp;
-          <%= link_to member_name(time_bank, :admin), member_time_banks_path(time_bank.admin_id) %>
+          <%= member_name(time_bank, :admin) %>
         </td>
         <td><%= link_to committee_name(time_bank), committee_path(time_bank.committee) if time_bank.committee %></td>
         <td><%= time_bank.hours %></td>

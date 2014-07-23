@@ -1,0 +1,3 @@
+class FeeNote < Note
+
+end

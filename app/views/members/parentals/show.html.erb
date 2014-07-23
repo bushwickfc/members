@@ -1,29 +1,39 @@
-<%= render 'shared/csv' %>
+<div class="col-md-3">
+  <h3>Parental hold for <%= member_name(@parental, :member) %></h3>
+  <%= render 'shared/csv' %>
+  <%= link_to 'Edit', edit_member_parental_path(@member, @parental), role:'button', class:'btn btn-primary' %>
+  <%= link_to 'Back', member_furloughs_path(@member), role:'button', class:'btn btn-default'  %>
+  
+  <p>
+    <strong>Member:</strong>
+    <%= member_name(@parental, :member) %>
+  </p>
+  
+  <p>
+    <strong>Creator:</strong>
+    <%= member_name(@parental, :creator) %>
+  </p>
+  
+  <p>
+    <strong>Type:</strong>
+    <%= @parental.type %>
+  </p>
+  
+  <p>
+    <strong>Start:</strong>
+    <%= @parental.start %>
+  </p>
+  
+  <p>
+    <strong>Finish:</strong>
+    <%= @parental.finish %>
+  </p>
+</div>
 
-<p>
-  <strong>Member:</strong>
-  <%= member_name(@parental, :member) %>
-</p>
+<div class="col-md-3">
+</div>
 
-<p>
-  <strong>Creator:</strong>
-  <%= member_name(@parental, :creator) %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @parental.type %>
-</p>
-
-<p>
-  <strong>Start:</strong>
-  <%= @parental.start %>
-</p>
-
-<p>
-  <strong>Finish:</strong>
-  <%= @parental.finish %>
-</p>
-
-<%= link_to 'Edit', edit_member_parental_path(@member, @parental), role:'button', class:'btn btn-primary' %>
-<%= link_to 'Back', member_furloughs_path(@member), role:'button', class:'btn btn-default'  %>
+<div class="col-md-6">
+  <%= render 'shared/notes' %>
+</div>
+  

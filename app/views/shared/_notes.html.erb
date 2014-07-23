@@ -1,0 +1,12 @@
+<h3>Notes</h3>
+<ol>
+<%- @notes.each do |note| %>
+  <li>
+    <strong>
+      <%= note.created_at %> <%= member_name(note, :creator) %>
+    </strong><br>
+    Regarding: <%= link_to note.commentable_type, commentable_link(@member, note) %><br>
+    <%= note.note %>
+  </li>
+<% end %>
+</ol>

@@ -2,37 +2,31 @@
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 john_fee_note:
-  member: john
+  commentable: john_membership_fee (Fee)
   creator: addy
-  type: FeeNote
   note: aaa
 
-john_furlough_note:
-  member: john
+john_hold_note:
+  commentable: john_one_month_hold (Hold)
   creator: addy
-  type: FurloughNote
   note: bbb
 
-john_member_note:
-  member: john
+john_parental_note:
+  commentable: john_one_year_parental (Parental)
   creator: addy
-  type: MemberNote
-  note: ccc
-
-john_note:
-  member: john
-  creator: addy
-  type: Note
-  note: blah blah blah
-
-john_tim_bank_note:
-  member: john
-  creator: addy
-  type: TimeBankNote
   note: ddd
 
-suzy_fee_note:
-  member: suzy
+john_member_note:
+  commentable: john (Member)
   creator: addy
-  type: FeeNote
+  note: ccc
+
+john_time_bank_note:
+  commentable: john_cashier_approved (TimeBank)
+  creator: addy
+  note: zzz
+
+suzy_fee_note:
+  commentable: suzy_membership_fee_1 (Fee)
+  creator: addy
   note: foo foo foo

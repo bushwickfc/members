@@ -1,4 +1,6 @@
 class Note < ActiveRecord::Base
-  belongs_to :member
+  include ActiveRecord::UnionScope
   belongs_to :creator, class_name: "Member"
+  belongs_to :commentable, polymorphic: true
+  scope :commentable, Proc.new {|ids,type| where(commentable_id: ids, commentable_type: type) }
 end

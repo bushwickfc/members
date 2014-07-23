@@ -21,7 +21,7 @@ Struct.new("MembershipStatus",
     s_ok = check_status
     m_ok = check_membership_fees
     h_ok = check_hours
-    @can_shop_bool = s_ok && m_ok && h_ok
+    self.can_shop = @can_shop_bool = s_ok && m_ok && h_ok
     if @can_shop_bool
       messages << "Member in good standing"
       self.status = "active"
@@ -81,8 +81,8 @@ Struct.new("MembershipStatus",
     return false unless a_member?
 
     if membership_fees_overdue
-      self.status = "suspended"
-      @fees_ok = false
+      #self.status = "inactive"
+      @fees_ok = true
       messages << "Membership fees not paid in 2 months, balance $#{membership_fees_balance}"
     elsif membership_fees_balance > 0
       @fees_ok = true
@@ -100,10 +100,11 @@ Struct.new("MembershipStatus",
 
     if time_bank_balance <= -16
       @hours_ok = false
-      self.status = "suspended"
-      messages << "Suspended, owes 16 hours"
+      self.status = "inactive"
+      messages << "Inactive, owes 16 hours"
     elsif time_bank_balance > -16 && time_bank_balance <= -8
       @hours_ok = true
+      self.status = "suspended"
       messages << "Work alert, owes #{time_bank_balance.abs} hours"
     elsif time_bank_balance < 0
       @hours_ok = true

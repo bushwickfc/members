@@ -1,0 +1,3 @@
+class FurloughNote < Note
+
+end

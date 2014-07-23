@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   respond_to :html, :json, :csv
 
   private
+  def note_params
+    [:commentable_id, :commentable_type, :creator_id, :note]
+  end
+
   def valid_search_params
     if params[:search].nil?
       {}

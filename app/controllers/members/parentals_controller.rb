@@ -16,6 +16,7 @@ class Members::ParentalsController < ApplicationController
   # GET /members/:member_id/parentals/1.json
   # GET /members/:member_id/parentals/1.csv
   def show
+    @notes = @parental.notes
     respond_with(@parental)
   end
 
@@ -82,7 +83,14 @@ class Members::ParentalsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def parental_params
-      params.require(:parental).permit(:member_id, :creator_id, :type, :start, :finish)
+      params.require(:parental).permit(
+        :member_id,
+        :creator_id,
+        :type,
+        :start,
+        :finish,
+        notes_attributes: note_params
+      )
     end
 
     def set_selects

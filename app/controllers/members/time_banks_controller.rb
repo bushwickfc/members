@@ -15,6 +15,7 @@ class Members::TimeBanksController < ApplicationController
   # GET /members/:member_id/time_banks/1.json
   # GET /members/:member_id/time_banks/1.csv
   def show
+    @notes = @time_bank.notes
     respond_with(@time_bank)
   end
 
@@ -86,6 +87,15 @@ class Members::TimeBanksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def time_bank_params
-      params.require(:time_bank).permit(:member_id, :admin_id, :committee_id, :start, :finish, :time_type, :approved)
+      params.require(:time_bank).permit(
+        :member_id,
+        :admin_id,
+        :committee_id,
+        :start,
+        :finish,
+        :time_type,
+        :approved,
+        notes_attributes: note_params
+      )
     end
 end

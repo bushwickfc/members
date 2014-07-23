@@ -24,6 +24,9 @@ class TimeBank < ActiveRecord::Base
   belongs_to :member
   belongs_to :admin
   belongs_to :committee
+  has_many :notes, as: :commentable
+
+  accepts_nested_attributes_for :notes
 
   before_validation :penalty_swap
 
