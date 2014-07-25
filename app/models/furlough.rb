@@ -3,7 +3,7 @@ class Furlough < ActiveRecord::Base
   belongs_to :creator, class_name: "Member"
   has_many :notes, as: :commentable
 
-  accepts_nested_attributes_for :notes
+  accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
   validates :member_id, presence: true
   validates :creator_id, presence: true

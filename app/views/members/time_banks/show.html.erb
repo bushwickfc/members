@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-md-6">
   <h3>Time bank entry for <%= member_name(@time_bank, :member) %></h3>
   <%= render 'shared/csv' %>
   <%= link_to 'Edit', edit_member_time_bank_path(@member, @time_bank), role:'button', class:'btn btn-primary' %>
@@ -43,9 +43,6 @@
     <strong>Approved:</strong>
     <%= @time_bank.approved %>
   </p>
-</div>
-
-<div class="col-md-3">
 </div>
 
 <div class="col-md-6">

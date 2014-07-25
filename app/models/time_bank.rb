@@ -26,7 +26,7 @@ class TimeBank < ActiveRecord::Base
   belongs_to :committee
   has_many :notes, as: :commentable
 
-  accepts_nested_attributes_for :notes
+  accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
   before_validation :penalty_swap
 

@@ -22,7 +22,7 @@ class Member < ActiveRecord::Base
 
   has_many :notes, as: :commentable
 
-  accepts_nested_attributes_for :notes
+  accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
   validates :first_name, presence: true
   validates :last_name, presence: true

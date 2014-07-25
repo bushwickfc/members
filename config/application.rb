@@ -19,6 +19,7 @@ Bundler.require(*Rails.groups)
 
 module BfcMembers
   class Application < Rails::Application
+    config.middleware.use Rack::Deflater
     #config.active_record.schema_format = :sql
     config.generators do |g|
       g.test_framework :minitest, spec: true, fixture: true
