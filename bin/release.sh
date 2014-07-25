@@ -1,5 +1,4 @@
 #!/bin/bash
-# apt-get install libssl-dev libxml2-dev libxslt1-dev libreadline-dev nodejs
 set -e
 set -x
 app=${1:?Missing app}

@@ -1,28 +1,45 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A membership and status application for Bushwick Food Co-Op members. Used to
+track fee payments, hours, etc. Uses sidekiq to run some jobs...
 
-Things you may want to cover:
+Foreman will spawn unicorn, a clockwork process, and sidekiq to process jobs.
 
-* Ruby version
+## Requirements
 
-* System dependencies
+* Ruby 2.1.2
+* apt-get install libssl-dev libxml2-dev libxslt1-dev libreadline-dev nodejs mysql-server nginx redis-server
+  * `cp -R config/etc /`
+* `useradd -d /opt/apps -r -m apps`
+* `cp bin/release.sh /opt/apps`
+* `useradd -d /opt/git -r -m -s /usr/bin/git-shell git`
+* `sudo -u git -c 'cd /opt/git; mkdir bfc-members; cd bfc-members; git init --bare'`
+  * add the machine as a remote to your repo
+  * push master to the repo
+* create ~apps/bfc-members/shared/config/env.sh
+```
+export SECRET_KEY_BASE=
+export LANG="en_US.UTF-8"
+export RACK_ENV="prodcution"
+export RAILS_ENV="prodcution"
+export DATABASE_URL=
+export REDISTOGO_URL="redis://localhost:6379/10"
+```
+* `sudo -u apps 'cd ~apps; ./release bfc-members`
 
-* Configuration
+## Development
 
-* Database creation
+* **DO NOT USE db:setup**
+* `rake db:create db:migrate`
+* `rake test`
 
-* Database initialization
+## Deployment
 
-* How to run the test suite
+* `git remote add ov git@db.ov.bushwickfoodcoop.org:bfc-members.git`
+* `git push ov master:master`
+* `ssh db.ov.bushwickfoodcoop.org`
+  * `su - apps`
+    * `./release.sh bfc-members`
+    * `cd bfc-members/current; rake db:migrate`
+  * `restart bfc-members`
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
