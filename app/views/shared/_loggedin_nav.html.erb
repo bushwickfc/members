@@ -1,0 +1,91 @@
+<ul class="nav navbar-nav">
+
+  <li class="dropdown <%= active_class('time_banks') %>">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Bank <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li>
+        <%= link_to 'Past 4 months', time_banks_path %>
+      </li>
+      <li>
+        <%= link_to 'Unapproved', time_banks_path(search: {approved: 0}) %>
+      </li>
+      <li>
+        <%= link_to 'All', time_banks_path(all: 1) %>
+      </li>
+      <li>
+        <%= link_to 'New', new_time_bank_path %>
+      </li>
+    </ul>
+  </li>
+
+  <li class="dropdown <%= active_class('fees') %>">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fees <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li>
+        <%= link_to 'All', fees_path %>
+      </li>
+      <li>
+        <%= link_to 'New', new_fee_path %>
+      </li>
+    </ul>
+  </li>
+
+  <li class="dropdown <%= active_class('committees') %>">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Committees <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li>
+        <%= link_to 'All', committees_path %>
+      </li>
+      <li>
+        <%= link_to 'New', new_committee_path %>
+      </li>
+    </ul>
+  </li>
+
+  <li class="dropdown <%= active_class('members') %>">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Members <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li>
+        <%= link_to 'Active', members_path %>
+      </li>
+      <li>
+        <%= link_to 'Interested', members_path(interested: 1) %>
+      </li>
+      <li>
+        <%= link_to 'Inactive', members_path(inactive: 1) %>
+      </li>
+      <li>
+        <%= link_to 'New', new_member_path %>
+      </li>
+    </ul>
+  </li>
+
+  <%- if @member && @member.persisted? %>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Member <span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu">
+      <li><%= link_to 'Show', member_path(@member) %> </li>
+      <li><%= link_to 'Edit', edit_member_path(@member) %> </li>
+      <li><%= link_to 'Committees', member_committees_path(@member) %> </li>
+      <li><%= link_to 'Fees', member_fees_path(@member) %> </li>
+      <li><%= link_to 'Time Bank', member_time_banks_path(@member) %> </li>
+      <li><%= link_to 'Furloughs', member_furloughs_path(@member) %> </li>
+    </ul>
+  </li>
+  <%- end %>
+</ul>
+
+<ul class="nav navbar-nav navbar-right navbar-padded">
+  <li><%= link_to "Logout", destroy_member_session_path, method: :delete %>
+</ul>
+
+<form class="navbar-form navbar-right" role="form" action="<%= members_path %>">
+  <div class="form-group">
+    <input type="text" placeholder="First Name" name="search[first_name]" value="<%= params[:search][:first_name] rescue nil %>" class="form-control">
+  </div>
+  <div class="form-group">
+    <INPUT TYPE="text" placeholder="Last Name" name="search[last_name]" value="<%= params[:search][:last_name] rescue nil %>" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-default">Search</button>
+</form>
+

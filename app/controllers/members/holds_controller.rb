@@ -2,6 +2,7 @@ class Members::HoldsController < ApplicationController
   before_action :set_member
   before_action :set_hold, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
+  before_action :build_note, only: [:show, :edit, :update, :destroy]
 
   # GET /members/:member_id/holds
   # GET /members/:member_id/holds.json
@@ -24,6 +25,7 @@ class Members::HoldsController < ApplicationController
   def new
     @creator = Member.new
     @hold = @member.holds.new
+    build_note
   end
 
   # GET /members/:member_id/holds/1/edit
@@ -81,6 +83,10 @@ class Members::HoldsController < ApplicationController
       @creator = @hold.creator
     end
 
+    def build_note
+      @note = Note.new(commentable_id: @hold.id, commentable_type: @hold.class.to_s, creator_id: current_member.id)
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def hold_params
       params.require(:hold).permit(
@@ -94,6 +100,5 @@ class Members::HoldsController < ApplicationController
     end
 
     def set_selects
-      @creators = Member.form_select.collect{|r| [r.full_name, r.id]}
     end
 end

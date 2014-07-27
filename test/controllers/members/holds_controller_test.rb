@@ -29,7 +29,6 @@ describe Members::HoldsController do
   it "gets edit" do
     get :edit, id: hold, member_id: hold.member
     assert_not_nil assigns(:member)
-    assert_not_nil assigns(:creators)
   end
 
   it "updates hold" do

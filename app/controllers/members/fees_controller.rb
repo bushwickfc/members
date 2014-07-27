@@ -2,6 +2,7 @@ class Members::FeesController < ApplicationController
   before_action :set_member
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
+  before_action :build_note, only: [:show, :edit, :update, :destroy]
 
   # GET /members/:member_id/fees
   # GET /members/:member_id/fees.json
@@ -24,6 +25,7 @@ class Members::FeesController < ApplicationController
   def new
     @creator = Member.new
     @fee = @member.fees.new
+    build_note
   end
 
   # GET /members/:member_id/fees/1/edit
@@ -81,6 +83,10 @@ class Members::FeesController < ApplicationController
       @creator = @fee.creator
     end
 
+    def build_note
+      @note = Note.new(commentable_id: @fee.id, commentable_type: @fee.class.to_s, creator_id: current_member.id)
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def fee_params
       params.require(:fee).permit(
@@ -95,7 +101,6 @@ class Members::FeesController < ApplicationController
     end
 
     def set_selects
-      @creators = Member.form_select.collect{|r| [r.full_name, r.id]}
       @payment_types = Fee.payment_types
       @payment_methods = Fee.payment_methods
     end

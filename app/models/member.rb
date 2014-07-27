@@ -1,9 +1,13 @@
 require 'digest/sha1'
 
 class Member < ActiveRecord::Base
+  devise :database_authenticatable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         authentication_keys: [:login], password_length: 3..128
+
   MEMBERSHIP_FEE = 50
   INVESTMENT_FEE = 25
-  FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, middle_name, last_name)) AS full_name'
+  FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, last_name)) AS full_name'
   cattr_reader :genders, :statuses, :contact_preferences
   @@genders  = %w[Male Female]
   @@statuses = %w[active inactive suspended hold parental canceled interested volunteer]
@@ -41,6 +45,51 @@ class Member < ActiveRecord::Base
 
   def self.by_email_hash(hash)
     find_by!("SHA1(email) = ?", hash)
+  end
+
+  def self.permitted_params
+    [
+      :first_name,
+      :last_name, 
+      :opt_out, 
+      :email, 
+      :hash,
+      :phone, 
+      :phone2, 
+      :fax, 
+      :address, 
+      :address2, 
+      :city, 
+      :state, 
+      :country, 
+      :zip, 
+      :contact_preference,
+      :gender, 
+      :status, 
+      :join_date, 
+      :work_date,
+      :date_of_birth, 
+      :admin, 
+      :membership_agreement, 
+      :monthly_hours, 
+      :membership_discount, 
+      :investment_discount,
+      :password,
+      :password_confirmation,
+      :remember_me,
+      :current_password,
+      notes_attributes: [:commentable_id, :commentable_type, :creator_id, :note],
+    ]
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      fname, lname = login.split(/\s+/, 2)
+      where(conditions).find_by("first_name = ? AND last_name = ? OR email = ?", fname, lname, login)
+    else
+      where(conditions).first
+    end
   end
 
   def all_notes
@@ -94,7 +143,7 @@ class Member < ActiveRecord::Base
   end
 
   def full_name
-    read_attribute(:full_name) || [first_name, middle_name, last_name].join(' ')
+    read_attribute(:full_name) || [first_name, last_name].join(' ').strip.gsub(/\s+/, ' ')
   end
 
   def membership_status(force = false)
@@ -129,4 +178,25 @@ class Member < ActiveRecord::Base
   def update_status(new_status)
     update_columns(status: new_status) if status != new_status
   end
+
+  def email_required?
+    false
+  end
+
+  def email_changed?
+    false
+  end
+
+  def login=(login)
+    @login = login
+  end
+
+  def login
+    @login || self.full_name || self.email
+  end
+
+  def password_required?
+    false
+  end
+
 end

@@ -2,18 +2,18 @@
 require 'csv'
 class MemberCsv
   ADMINS = [
-    "Amanda  Pitts",
-    "Philip  Champon",
-    "Rachel  Garcia-Grossman",
-    "Karim  Tabbaa",
-    "Maggie  Herskovits",
-    "Christina  Robertson",
-    "Kira  Josefsson",
-    "Gwen  Schantz",
-    "Kristin  Caringer",
-    "Valerie  Di Veglio",
-    "Leighton  Edmondson",
-    "Mark  Gering",
+    "Amanda Pitts",
+    "Philip Champon",
+    "Rachel Garcia-Grossman",
+    "Karim Tabbaa",
+    "Maggie Herskovits",
+    "Christina Robertson",
+    "Kira Josefsson",
+    "Gwen Schantz",
+    "Kristin Caringer",
+    "Valerie Di veglio",
+    "Leighton Edmondson",
+    "Mark Gering",
   ]
   COMMITTEES = %w[
     Outreach
@@ -114,6 +114,8 @@ class MemberCsv
         membership_agreement: member["Membership Agreement"] =~ /y/i ? true : false,
         membership_discount: member["Low Income Verified"] =~ /y/i ? 50.0 : 0.0,
         investment_discount: member["Low Income Verified"] =~ /y/i ? 30.0 : 0.0,
+        password: "pickleBFC",
+        password_confirmation: "pickleBFC",
       )
       m[:admin] = ADMINS.include?(m.full_name)
       m[:created_at] = m.join_date

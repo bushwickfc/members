@@ -16,8 +16,7 @@
     <%= f.select :member_id, @members, include_blank: true %>
   </div>
   <div class="field">
-    <%= f.label :creator_id %><br>
-    <%= f.select :creator_id, @creators, include_blank: true %>
+    <%= f.hidden_field :creator_id %>
   </div>
   <div class="field">
     <%= f.label :amount %><br>
@@ -36,7 +35,7 @@
     <%= f.select :payment_method, @payment_methods, include_blank: true %>
   </div>
 
-  <%= f.fields_for :notes, [@fee.notes.build] do |builder| %>
+  <%= f.fields_for :notes, [@note] do |builder| %>
     <%= render "shared/note", f: builder %>
   <% end %>
 

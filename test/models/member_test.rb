@@ -99,7 +99,11 @@ describe Member do
   end
 
   it "concatenates the name fields" do
-    @john.full_name.must_equal "John J Jingleheimer"
+    @john.full_name.must_equal "John Jingleheimer"
+  end
+
+  it "concatenates the name fields without middle name" do
+    @slim.full_name.must_equal "Slim Zzz"
   end
 
   it "calculates hours owed" do
@@ -128,4 +132,29 @@ describe Member do
     @john.all_notes.count.must_equal 5
   end
 
+  # devise
+  it 'does not update email' do
+    @john.wont_be :email_changed?
+  end
+
+  it 'does not require email' do
+    @john.wont_be :email_required?
+  end
+
+  it 'does not require password' do
+    @john.wont_be :password_required?
+  end
+
+  it 'requires a password length of 3..128' do
+    Member.password_length.must_equal 3..128
+  end
+
+  it 'sets login' do
+    @john.login.must_equal "John Jingleheimer"
+  end
+
+  it 'changes login' do
+    @john.login = 'foo'
+    @john.login.must_equal 'foo'
+  end
 end

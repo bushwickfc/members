@@ -20,8 +20,8 @@ TimeBank.destroy_all
 Member.destroy_all
 
 Member.create!([
-  {first_name: "John", middle_name: "Current", last_name: "Jay", email: "jj@yahoo.com", status: "active", join_date: Date.current-1.year, admin: true, date_of_birth: "1980-01-01"},
-  {first_name: "Jane", middle_name: "Current", last_name: "Doe", email: "jd@gmail.com", status: "active", join_date: Date.current-1.year, admin: false, date_of_birth: "1980-02-02"},
+  {first_name: "John", last_name: "Jay", email: "jj@yahoo.com", status: "active", join_date: Date.current-1.year, admin: true, date_of_birth: "1980-01-01"},
+  {first_name: "Jane", last_name: "Doe", email: "jd@gmail.com", status: "active", join_date: Date.current-1.year, admin: false, date_of_birth: "1980-02-02"},
 ])
 
 john=Member.first

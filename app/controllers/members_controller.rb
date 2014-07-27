@@ -2,6 +2,7 @@ class MembersController < ApplicationController
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
   before_action :set_hashed_member, only: [:optout, :optout_update]
+  before_action :build_note, only: [:show, :edit, :update, :destroy]
 
   # GET /members
   # GET /members.json
@@ -31,6 +32,7 @@ class MembersController < ApplicationController
   # GET /members/new
   def new
     @member = Member.new
+    build_note
   end
 
   # GET /members/1/edit
@@ -101,6 +103,10 @@ class MembersController < ApplicationController
       @member = Member.by_email_hash(params[:hash])
     end
 
+    def build_note
+      @note = Note.new(commentable_id: @member.id, commentable_type: @member.class.to_s, creator_id: current_member.id)
+    end
+
     def set_selects
       @genders  = Member.genders
       @statuses = Member.statuses
@@ -109,34 +115,12 @@ class MembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
-      params.require(:member).permit(
-        :first_name,
-        :middle_name, 
-        :last_name, 
-        :opt_out, 
-        :email, 
-        :hash,
-        :phone, 
-        :phone2, 
-        :fax, 
-        :address, 
-        :address2, 
-        :city, 
-        :state, 
-        :country, 
-        :zip, 
-        :contact_preference,
-        :gender, 
-        :status, 
-        :join_date, 
-        :work_date,
-        :date_of_birth, 
-        :admin, 
-        :membership_agreement, 
-        :monthly_hours, 
-        :membership_discount, 
-        :investment_discount,
-        notes_attributes: note_params
-      )
+      pws = %w[password password_confirmation]
+      attrs = params.require(:member).permit Member.permitted_params
+      attrs.reject! do |k,v| 
+        (current_member.id != @member.id && !current_member.admin?) ||
+          pws.include?(k) && v.blank?
+      end
+      attrs
     end
 end

@@ -1,6 +1,7 @@
 class TimeBanksController < ApplicationController
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_time_bank, only: [:show, :edit, :update, :destroy]
+  before_action :build_note, only: [:show, :edit, :update, :destroy]
 
   # GET /time_banks
   # GET /time_banks.json
@@ -23,6 +24,7 @@ class TimeBanksController < ApplicationController
   # GET /time_banks/new
   def new
     @time_bank = TimeBank.new
+    build_note
   end
 
   # GET /time_banks/1/edit
@@ -80,6 +82,10 @@ class TimeBanksController < ApplicationController
       @admins = Admin.form_select.collect{|m| [m.full_name, m.id]}
       @committees = Committee.form_select.collect{|m| [m.name, m.id]}
       @time_types = TimeBank.time_types
+    end
+
+    def build_note
+      @note = Note.new(commentable_id: @time_bank.id, commentable_type: @time_bank.class.to_s, creator_id: current_member.id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

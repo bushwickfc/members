@@ -53,40 +53,50 @@ ActiveRecord::Schema.define(version: 20140718004920) do
   add_index "furloughs", ["start", "finish"], name: "index_furloughs_on_start_and_finish", using: :btree
 
   create_table "members", force: true do |t|
-    t.string   "first_name",                                           null: false
+    t.string   "first_name",                                             null: false
     t.string   "middle_name"
-    t.string   "last_name",                                            null: false
+    t.string   "last_name",                                              null: false
     t.string   "email"
     t.string   "phone"
     t.string   "phone2"
     t.string   "fax"
     t.string   "address"
     t.string   "address2"
-    t.string   "city",                            default: "Brooklyn"
-    t.string   "state",                           default: "NY"
-    t.string   "country",                         default: "US"
+    t.string   "city",                              default: "Brooklyn"
+    t.string   "state",                             default: "NY"
+    t.string   "country",                           default: "US"
     t.string   "zip"
-    t.string   "contact_preference",              default: "email"
+    t.string   "contact_preference",                default: "email"
     t.string   "gender"
     t.string   "status"
     t.date     "join_date"
     t.date     "work_date"
     t.date     "date_of_birth"
-    t.boolean  "admin",                           default: false
-    t.boolean  "membership_agreement",            default: false
-    t.boolean  "opt_out",                         default: false
-    t.float    "monthly_hours",        limit: 24, default: 4.0
-    t.float    "membership_discount",  limit: 24, default: 0.0
-    t.float    "investment_discount",  limit: 24, default: 0.0
+    t.boolean  "admin",                             default: false
+    t.boolean  "membership_agreement",              default: false
+    t.boolean  "opt_out",                           default: false
+    t.float    "monthly_hours",          limit: 24, default: 4.0
+    t.float    "membership_discount",    limit: 24, default: 0.0
+    t.float    "investment_discount",    limit: 24, default: 0.0
+    t.string   "encrypted_password",                default: "",         null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                     default: 0,          null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "members", ["admin"], name: "index_members_on_admin", using: :btree
   add_index "members", ["email"], name: "index_members_on_email", using: :btree
-  add_index "members", ["first_name", "middle_name", "last_name"], name: "index_members_on_first_name_and_middle_name_and_last_name", unique: true, using: :btree
+  add_index "members", ["first_name", "last_name"], name: "index_members_on_first_name_and_last_name", unique: true, using: :btree
   add_index "members", ["join_date"], name: "index_members_on_join_date", using: :btree
   add_index "members", ["opt_out"], name: "index_members_on_opt_out", using: :btree
+  add_index "members", ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true, using: :btree
   add_index "members", ["status"], name: "index_members_on_status", using: :btree
   add_index "members", ["work_date"], name: "index_members_on_work_date", using: :btree
 

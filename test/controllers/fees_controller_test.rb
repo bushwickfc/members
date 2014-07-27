@@ -16,7 +16,6 @@ describe FeesController do
     assert_not_nil assigns(:members)
     assert_not_nil assigns(:payment_methods)
     assert_not_nil assigns(:payment_types)
-    assert_not_nil assigns(:creators)
   end
 
   it "creates fee" do
@@ -38,7 +37,6 @@ describe FeesController do
     assert_not_nil assigns(:members)
     assert_not_nil assigns(:payment_methods)
     assert_not_nil assigns(:payment_types)
-    assert_not_nil assigns(:creators)
   end
 
   it "updates fee" do

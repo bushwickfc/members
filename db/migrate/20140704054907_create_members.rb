@@ -2,7 +2,6 @@ class CreateMembers < ActiveRecord::Migration
   def change
     create_table :members do |t|
       t.string :first_name, null: false
-      t.string :middle_name
       t.string :last_name, null: false
       t.string :email
       t.string :phone
@@ -27,14 +26,44 @@ class CreateMembers < ActiveRecord::Migration
       t.float :membership_discount, default: 0.0
       t.float :investment_discount, default: 0.0
 
+      ## Database authenticatable
+      #t.string :email,              null: false, default: ""
+      t.string :encrypted_password, null: false, default: ""
+
+      ## Recoverable
+      t.string   :reset_password_token
+      t.datetime :reset_password_sent_at
+
+      ## Rememberable
+      t.datetime :remember_created_at
+
+      ## Trackable
+      t.integer  :sign_in_count, default: 0, null: false
+      t.datetime :current_sign_in_at
+      t.datetime :last_sign_in_at
+      t.string   :current_sign_in_ip
+      t.string   :last_sign_in_ip
+
+      ## Confirmable
+      # t.string   :confirmation_token
+      # t.datetime :confirmed_at
+      # t.datetime :confirmation_sent_at
+      # t.string   :unconfirmed_email # Only if using reconfirmable
+
+      ## Lockable
+      # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
+      # t.string   :unlock_token # Only if unlock strategy is :email or :both
+      # t.datetime :locked_at
+
       t.timestamps
     end
 
     %w[email work_date join_date admin status opt_out].each do |col|
       add_index :members, col
     end
+    add_index :members, :reset_password_token, unique: true
 
-    add_index :members, [:first_name, :middle_name, :last_name], unique: true
+    add_index :members, [:first_name, :last_name], unique: true
 
   end
 end

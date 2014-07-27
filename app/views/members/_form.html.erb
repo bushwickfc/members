@@ -16,13 +16,21 @@
     <%= f.text_field :first_name %>
   </div>
   <div class="field">
-    <%= f.label :middle_name %><br>
-    <%= f.text_field :middle_name %>
-  </div>
-  <div class="field">
     <%= f.label :last_name %><br>
     <%= f.text_field :last_name %>
   </div>
+	<% if member_admin? || is_current_member? %>
+  <div class="field">
+    <%= f.label :password %><br>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %><br>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+	<% end %>
+
   <div class="field">
     <%= f.label :opt_out %><br>
     <%= f.check_box :opt_out %>
@@ -112,7 +120,7 @@
     <%= f.text_field :investment_discount %>
   </div>
 
-  <%= f.fields_for :notes, [@member.notes.build] do |builder| %>
+  <%= f.fields_for :notes, [@note] do |builder| %>
     <%= render "shared/note", f: builder %>
   <% end %>
 
