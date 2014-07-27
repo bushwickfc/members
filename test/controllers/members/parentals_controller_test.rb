@@ -30,7 +30,6 @@ describe Members::ParentalsController do
   it "gets edit" do
     get :edit, id: parental, member_id: parental.member
     assert_not_nil assigns(:member)
-    assert_not_nil assigns(:creators)
   end
 
   it "updates parental" do

@@ -12,11 +12,11 @@
       <th>Member</th>
       <th>Admin</th>
       <th>Committee</th>
+      <th>Time type</th>
+      <th>Approved</th>
       <th>Hours</th>
       <th>Start</th>
       <th>Finish</th>
-      <th>Time type</th>
-      <th>Approved</th>
       <th></th>
     </tr>
   </thead>
@@ -32,12 +32,12 @@
 					<%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{member_name(time_bank, :admin)}"), member_path(time_bank.admin_id) %>&nbsp;
           <%= link_to member_name(time_bank, :admin), member_path(time_bank.admin_id) %>
         </td>
-        <td><%= link_to committee_name(time_bank), committee_path(time_bank.committee) if time_bank.committee %></td>
+        <td><%= search_link(time_bank, :committee_id){time_bank.committee.name} %></td>
+        <td><%= search_link(time_bank, :time_type) %></td>
+        <td><%= search_link(time_bank, :approved) %></td>
         <td><%= time_bank.hours %></td>
         <td><%= time_bank.start %></td>
         <td><%= time_bank.finish %></td>
-        <td><%= search_link(time_bank, :time_type) %></td>
-        <td><%= search_link(time_bank, :approved) %></td>
         <td>
           <%= link_to 'Show', member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_member_time_bank_path(@member, time_bank), role:'button', class:'btn btn-primary'  %>&nbsp;

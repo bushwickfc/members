@@ -1,7 +1,11 @@
 worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 timeout 60
 preload_app true
-listen '/tmp/bfc_members.sock' if ENV['RAILS_ENV'] == 'production'
+if ENV['RAILS_ENV'] == 'production'
+  listen '/tmp/bfc_members.sock'
+else
+  listen '3000'
+end
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do

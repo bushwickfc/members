@@ -10,6 +10,13 @@ require "minitest/rails"
 # Uncomment for awesome colorful output
 require "minitest/pride"
 
+class ActionController::TestCase
+  include Devise::TestHelpers
+  def setup
+    sign_in :member, @john
+  end
+end
+
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 
@@ -22,3 +29,4 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+

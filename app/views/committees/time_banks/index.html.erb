@@ -12,11 +12,11 @@
       <th>Member</th>
       <th>Admin</th>
       <th>Committee</th>
+      <th>Time type</th>
+      <th>Approved</th>
       <th>Hours</th>
       <th>Start</th>
       <th>Finish</th>
-      <th>Time type</th>
-      <th>Approved</th>
       <th></th>
     </tr>
   </thead>
@@ -35,11 +35,11 @@
           <%= member_name(time_bank, :admin) %>
         </td>
         <td><%= committee_name(time_bank) %></td>
+        <td><%= time_bank.time_type %></td>
+        <td><%= search_link(time_bank, :approved) %></td>
         <td><%= time_bank.hours %></td>
         <td><%= time_bank.start %></td>
         <td><%= time_bank.finish %></td>
-        <td><%= time_bank.time_type %></td>
-        <td><%= search_link(time_bank, :approved) %></td>
         <td>
           <%= link_to 'Show', committee_time_bank_path(@committee, time_bank), role:'button', class:'btn btn-info' %>
           <%= link_to 'Edit', edit_committee_time_bank_path(@committee, time_bank), role:'button', class:'btn btn-primary' %>

@@ -41,7 +41,7 @@
     <%= f.datetime_select :finish %>
   </div>
 
-  <%= f.fields_for :notes, [@time_bank.notes.build] do |builder| %>
+  <%= f.fields_for :notes, [@note] do |builder| %>
     <%= render "shared/note", f: builder %>
   <% end %>
 

@@ -16,7 +16,6 @@ DEFAULTS: &DEFAULTS
 addy:
   <<: *DEFAULTS
   first_name: Addy
-  middle_name: min
   last_name: admin
   email: admin@b.com
   join_date: 2014-06-17
@@ -31,7 +30,6 @@ addy:
 john:
   <<: *DEFAULTS
   first_name: John
-  middle_name: J
   last_name: Jingleheimer
   email: j@gmail.com
   admin: false
@@ -47,7 +45,6 @@ john:
 morton:
   <<: *DEFAULTS
   first_name: Morton
-  middle_name: Incomplete
   last_name: Zzz
   email: m@gmail.com
   admin: false
@@ -62,7 +59,6 @@ morton:
 gus:
   <<: *DEFAULTS
   first_name: Gus
-  middle_name: Unpaid
   last_name: Zzz
   email: g@gmail.com
   admin: false
@@ -77,7 +73,6 @@ gus:
 suzy:
   <<: *DEFAULTS
   first_name: Suzy
-  middle_name: Paid
   last_name: Zzz
   email: s@gmail.com
   admin: false
@@ -93,7 +88,6 @@ suzy:
 slim:
   <<: *DEFAULTS
   first_name: Slim
-  middle_name: Unpaid
   last_name: Zzz
   email: sl@gmail.com
   admin: false
@@ -109,7 +103,6 @@ slim:
 safe_delete:
   <<: *DEFAULTS
   first_name: Alex
-  middle_name: P
   last_name: Keaton
   email: a@gmail.com
   admin: false
@@ -124,7 +117,6 @@ safe_delete:
 member1:
   <<: *DEFAULTS
   first_name: First1
-  middle_name: Middle1
   last_name: Last1
   email: a@gmail.com
   admin: false
@@ -139,7 +131,6 @@ member1:
 member2:
   <<: *DEFAULTS
   first_name: First2
-  middle_name: Middle2
   last_name: Last2
   email: b@gmail.com
   admin: false

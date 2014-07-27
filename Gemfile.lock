@@ -28,6 +28,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    bcrypt (3.1.7)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-datetimepicker-rails (0.0.11)
@@ -47,6 +48,12 @@ GEM
     coffee-script-source (1.7.0)
     connection_pool (2.0.0)
     debug_inspector (0.0.2)
+    devise (3.2.4)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.2.1)
     foreman (0.60.2)
@@ -72,6 +79,7 @@ GEM
       railties (~> 4.1)
     multi_json (1.10.1)
     mysql2 (0.3.16)
+    orm_adapter (0.5.0)
     polyglot (0.3.5)
     pry (0.9.12.6)
       coderay (~> 1.0)
@@ -161,6 +169,8 @@ GEM
     valid_email (0.0.5)
       activemodel
       mail
+    warden (1.2.3)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -169,6 +179,7 @@ DEPENDENCIES
   bootstrap-datetimepicker-rails
   clockwork
   coffee-rails (~> 4.0.0)
+  devise
   foreman
   jbuilder (~> 2.0)
   jquery-rails

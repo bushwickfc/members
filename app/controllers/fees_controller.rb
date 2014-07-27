@@ -1,6 +1,7 @@
 class FeesController < ApplicationController
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
+  before_action :build_note, only: [:show, :edit, :update, :destroy]
 
   # GET /fees
   # GET /fees.json
@@ -21,6 +22,7 @@ class FeesController < ApplicationController
   def new
     @creator = Member.new
     @fee = Fee.new
+    build_note
   end
 
   # GET /fees/1/edit
@@ -72,6 +74,10 @@ class FeesController < ApplicationController
     def set_fee
       @fee = Fee.include_parents.find(params[:id])
       @creator = @fee.creator
+    end
+
+    def build_note
+      @note = Note.new(commentable_id: @fee.id, commentable_type: @fee.class.to_s, creator_id: current_member.id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -35,30 +35,31 @@ describe MembersController do
   it "creates member" do
     assert_difference('Member.count') do
       post :create, member: { 
-        address2: @member1.address2,
-        address: @member1.address,
-        admin: @member1.admin,
-        city: @member1.city,
-        contact_preference: @member1.contact_preference,
-        country: @member1.country,
-        date_of_birth: @member1.date_of_birth,
-        email: @member1.email,
-        fax: @member1.fax,
-        membership_discount: @member1.membership_discount,
-        first_name: @member1.first_name+"1",
-        investment_discount: @member1.investment_discount,
-        join_date: @member1.join_date,
-        work_date: @member1.work_date,
-        last_name: @member1.last_name,
-        membership_agreement: @member1.membership_agreement,
-        middle_name: @member1.middle_name,
-        monthly_hours: @member1.monthly_hours,
-        phone2: @member1.phone2,
-        phone: @member1.phone,
-        gender: @member1.gender,
-        state: @member1.state,
-        status: @member1.status,
-        zip: @member1.zip 
+        address2: @john.address2,
+        address: @john.address,
+        admin: @john.admin,
+        city: @john.city,
+        password: "abc",
+        password_confirmation: "abc",
+        contact_preference: @john.contact_preference,
+        country: @john.country,
+        date_of_birth: @john.date_of_birth,
+        email: @john.email,
+        fax: @john.fax,
+        membership_discount: @john.membership_discount,
+        first_name: @john.first_name+"1",
+        investment_discount: @john.investment_discount,
+        join_date: @john.join_date,
+        work_date: @john.work_date,
+        last_name: @john.last_name,
+        membership_agreement: @john.membership_agreement,
+        monthly_hours: @john.monthly_hours,
+        phone2: @john.phone2,
+        phone: @john.phone,
+        gender: @john.gender,
+        state: @john.state,
+        status: @john.status,
+        zip: @john.zip 
       }
     end
 
@@ -66,13 +67,13 @@ describe MembersController do
   end
 
   it "shows member" do
-    get :show, id: @member1
+    get :show, id: @john
     assert_response :success
     assert_not_nil assigns(:member)
   end
 
   it "gets edit" do
-    get :edit, id: @member1
+    get :edit, id: @john
     assert_response :success
     assert_not_nil assigns(:genders)
     assert_not_nil assigns(:member)
@@ -81,31 +82,30 @@ describe MembersController do
   end
 
   it "updates member" do
-    put :update, id: @member1, member: { 
-      address2: @member1.address2,
-      address: @member1.address,
-      admin: @member1.admin,
-      city: @member1.city,
-      contact_preference: @member1.contact_preference,
-      country: @member1.country,
-      date_of_birth: @member1.date_of_birth,
-      email: @member1.email,
-      fax: @member1.fax,
-      membership_discount: @member1.membership_discount,
-      first_name: @member1.first_name,
-      investment_discount: @member1.investment_discount,
-      join_date: @member1.join_date,
-      work_date: @member1.work_date,
-      last_name: @member1.last_name,
-      membership_agreement: @member1.membership_agreement,
-      middle_name: @member1.middle_name,
-      monthly_hours: @member1.monthly_hours,
-      phone2: @member1.phone2,
-      phone: @member1.phone,
-      gender: @member1.gender,
-      state: @member1.state,
-      status: @member1.status,
-      zip: @member1.zip 
+    put :update, id: @john, member: { 
+      address2: @john.address2,
+      address: @john.address,
+      admin: @john.admin,
+      city: @john.city,
+      contact_preference: @john.contact_preference,
+      country: @john.country,
+      date_of_birth: @john.date_of_birth,
+      email: @john.email,
+      fax: @john.fax,
+      membership_discount: @john.membership_discount,
+      first_name: @john.first_name,
+      investment_discount: @john.investment_discount,
+      join_date: @john.join_date,
+      work_date: @john.work_date,
+      last_name: @john.last_name,
+      membership_agreement: @john.membership_agreement,
+      monthly_hours: @john.monthly_hours,
+      phone2: @john.phone2,
+      phone: @john.phone,
+      gender: @john.gender,
+      state: @john.state,
+      status: @john.status,
+      zip: @john.zip 
     }
     assert_redirected_to member_path(assigns(:member))
   end

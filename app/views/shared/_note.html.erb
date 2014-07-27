@@ -4,16 +4,11 @@
   });
 </script>
 <section>
-	<% @creators ||= Member.form_select.collect{|m| [m.full_name, m.id]} %>
   <h3 style="display:inline;">Note</h3> <input type=checkbox name="note_toggle" onclick="$('#note').toggle()">
   <div id="note">
     <%= f.hidden_field :commentable_id  %>
     <%= f.hidden_field :commentable_type %>
-
-    <div class="field">
-      <%= f.label :creator_id %><br>
-      <%= f.select :creator_id, @creators, include_blank: true %>
-    </div>
+    <%= f.hidden_field :creator_id %>
 
     <div class="field">
       <%= f.label :note %><br>

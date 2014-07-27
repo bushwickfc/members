@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def member_admin?
+    current_member.admin?
+  end
+
+  def is_current_member?
+    current_member.id == @member.id
+  end
+
   def is_controller?(*names)
     names.include?(params[:controller])
   end
@@ -35,7 +43,16 @@ module ApplicationHelper
     "$%0.2f" % mny
   end
 
-  def search_link(obj, field)
+  def search_link(obj, field, &block)
+    if block_given?
+      begin
+        link_text = block.call
+      rescue NoMethodError
+        link_text = nil
+      end
+    else
+      link_text = obj.send(field)
+    end
     value = obj.send(field)
     unless value.nil?
       if value === true
@@ -54,7 +71,7 @@ module ApplicationHelper
       else
         req.query = query
       end
-      link_to value, req.to_s
+      link_to link_text, req.to_s
     end
   end
 

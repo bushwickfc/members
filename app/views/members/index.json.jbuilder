@@ -2,7 +2,6 @@ json.array!(@members) do |member|
   json.extract! member,
     :id,
     :first_name,
-    :middle_name,
     :last_name,
     :opt_out,
     :email,
