@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 20140718004920) do
 
   create_table "members", force: true do |t|
     t.string   "first_name",                                             null: false
-    t.string   "middle_name"
     t.string   "last_name",                                              null: false
     t.string   "email"
     t.string   "phone"
