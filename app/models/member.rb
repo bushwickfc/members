@@ -38,6 +38,7 @@ class Member < ActiveRecord::Base
   validates :membership_discount, numericality: { greater_than_or_equal_to: 0.0 }
   validates :annual_discount, numericality: { greater_than_or_equal_to: 0.0 }
 
+  scope     :status_totals, -> { select("count(*) as total, status").group(:status).order(:status) }
   scope     :form_select, -> { full_name.select(:id) }
   scope     :full_name,   -> { select(FULL_NAME) }
   scope     :cached_cant_shop, -> { where(status: %w[inactive canceled volunteer interested hold]) }

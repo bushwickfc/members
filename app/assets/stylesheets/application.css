@@ -52,3 +52,20 @@ body {
 .navbar-padded {
   padding-left: 15px;
 }
+
+#status-totals {
+  list-style-type: none;
+  padding-left: 0px;
+}
+#status-totals > li {
+  float: left;
+  padding-right: 20px;
+}
+
+.clearfix:after {
+  content: " "; /* Older browser do not support empty content */
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}

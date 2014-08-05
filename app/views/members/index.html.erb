@@ -1,5 +1,12 @@
 <div class="page-header">
   <h1>Listing <%= (params[:interested] && "interested") || (params[:inactive] && "inactive") || "active" %> members</h1>
+
+  <h5>Membership summary</h5>
+  <ul id="status-totals" class="clearfix">
+    <%- @status_totals.each do |total| %>
+    <li><strong><%= total.status || "undefined" %></strong> <%= total.total %></li>
+    <% end%>
+  </ul>
 </div>
 
 <%= link_to 'New Member', new_member_path, role:'button', class:'btn btn-success'  %>

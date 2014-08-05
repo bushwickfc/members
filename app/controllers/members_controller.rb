@@ -22,6 +22,7 @@ class MembersController < ApplicationController
       @members = Member.cached_can_shop
     end
     @members = @members.where(valid_search_params).order(:last_name, :first_name)
+    @status_totals = Member.status_totals
     respond_with(@members)
   end
 
