@@ -1,5 +1,6 @@
 <ul class="nav navbar-nav">
 
+  <% if current_member.admin? %>
   <li class="dropdown <%= active_class('time_banks') %>">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Time Bank <span class="caret"></span></a>
     <ul class="dropdown-menu" role="menu">
@@ -62,6 +63,7 @@
       </li>
     </ul>
   </li>
+  <% end %>
 
   <%- if @member && @member.persisted? %>
   <li class="dropdown">

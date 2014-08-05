@@ -87,6 +87,7 @@
     <%= f.label :status %><br>
     <%= f.select :status, @statuses, include_blank: true %>
   </div>
+  <%- if current_member.admin? %>
   <div class="field">
     <%= f.label :join_date %><br>
     <%= f.date_select :join_date %>
@@ -119,6 +120,7 @@
     <%= f.label :annual_discount %><br>
     <%= f.text_field :annual_discount %>
   </div>
+  <% end %>
 
   <%= f.fields_for :notes, [@note] do |builder| %>
     <%= render "shared/note", f: builder %>

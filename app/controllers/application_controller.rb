@@ -6,6 +6,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   respond_to :html, :json, :csv
 
+  def after_sign_in_path_for(resource)
+    if resource.admin?
+      root_path
+    else
+      member_path(resource)
+    end
+  end
+
   protected
 
   def configure_permitted_parameters

@@ -29,9 +29,6 @@
     <%= f.select :time_type, @time_types, include_blank: true %>
   </div>
   <div class="field">
-    <%= f.label :approved %> <%= f.check_box :approved %>
-  </div>
-  <div class="field">
     <%= f.label :start %><br>
     <%= f.datetime_select :start, default: DateTime.current-4.hours %>
   </div>
@@ -39,6 +36,11 @@
     <%= f.label :finish %><br>
     <%= f.datetime_select :finish %>
   </div>
+  <%- if current_member.admin? %>
+  <div class="field">
+    <%= f.label :approved %> <%= f.check_box :approved %>
+  </div>
+  <% end %>
 
   <%= f.fields_for :notes, [@note] do |builder| %>
     <%= render "shared/note", f: builder %>
