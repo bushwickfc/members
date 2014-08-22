@@ -29,9 +29,19 @@ export REDISTOGO_URL="redis://localhost:6379/10"
 
 ## Development
 
+* On OS X install [brew](http://brew.sh/)
+* `brew install mysql`
+ * follow the on screen instructions, for running the server
+* `git clone git@github.com:bushwickfc/bfc-members`
+* `cd bfc-members`
 * **DO NOT USE db:setup**
 * `rake db:create db:migrate`
-* `rake test`
+* To seed data, you can use a db dump or seeds
+ * `rake db:seed`
+ * `gzip -dc db.sql.gz | mysql -D bfc-members_development`
+* REPL `rails c`
+* Local web server `rails s`
+* Run tests `rake test`
 
 ## Deployment
 
