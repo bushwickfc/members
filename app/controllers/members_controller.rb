@@ -125,7 +125,7 @@ class MembersController < ApplicationController
       pws = %w[password password_confirmation]
       attrs = params.require(:member).permit Member.permitted_params
       attrs.reject! do |k,v| 
-        (current_member.id != @member.id && !current_member.admin?) ||
+        ((!@member.nil? && current_member.id != @member.id) && !current_member.admin?) ||
           pws.include?(k) && v.blank?
       end
       attrs
