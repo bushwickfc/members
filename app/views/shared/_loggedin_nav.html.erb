@@ -49,6 +49,9 @@
         <%= link_to 'Active', members_path %>
       </li>
       <li>
+        <%= link_to 'Active Unpaid Fees', members_path(active_unpaid: 1) %>
+      </li>
+      <li>
         <%= link_to 'Interested', members_path(interested: 1) %>
       </li>
       <li>

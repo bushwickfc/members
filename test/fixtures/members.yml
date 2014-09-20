@@ -25,7 +25,7 @@ addy:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 john:
   <<: *DEFAULTS
@@ -40,7 +40,7 @@ john:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 morton:
   <<: *DEFAULTS
@@ -54,7 +54,7 @@ morton:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 gus:
   <<: *DEFAULTS
@@ -68,7 +68,7 @@ gus:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 50.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 suzy:
   <<: *DEFAULTS
@@ -83,7 +83,7 @@ suzy:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 slim:
   <<: *DEFAULTS
@@ -98,7 +98,7 @@ slim:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 safe_delete:
   <<: *DEFAULTS
@@ -112,7 +112,7 @@ safe_delete:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 member1:
   <<: *DEFAULTS
@@ -126,7 +126,7 @@ member1:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 
 member2:
   <<: *DEFAULTS
@@ -140,5 +140,5 @@ member2:
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
-  investment_discount: 0.0
+  annual_discount: 0.0
 

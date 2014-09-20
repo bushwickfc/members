@@ -50,10 +50,10 @@ describe Member do
       subject.errors[:membership_discount].must_equal ["must be greater than or equal to 0.0"]
     end
 
-    it "investment_discount" do
-      subject.investment_discount = -1
+    it "annual_discount" do
+      subject.annual_discount = -1
       subject.wont_be :valid?
-      subject.errors[:investment_discount].must_equal ["must be greater than or equal to 0.0"]
+      subject.errors[:annual_discount].must_equal ["must be greater than or equal to 0.0"]
     end
 
   end
@@ -90,12 +90,12 @@ describe Member do
     @gus.membership_rate.must_equal 25.0
   end
 
-  it "computes 0% discount investment rate" do
-    @john.investment_rate.must_equal 25.0
+  it "computes 0% discount annual rate" do
+    @john.annual_rate.must_equal 25.0
   end
 
-  it "computes 50% discount investment rate" do
-    @gus.investment_rate.must_equal 12.5
+  it "computes 50% discount annual rate" do
+    @gus.annual_rate.must_equal 12.5
   end
 
   it "concatenates the name fields" do

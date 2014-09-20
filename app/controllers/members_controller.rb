@@ -12,6 +12,12 @@ class MembersController < ApplicationController
       @members = Member.where(status: %w[canceled inactive])
     elsif params[:interested]
       @members = Member.where(status: %w[volunteer interested])
+    elsif params[:active_unpaid]
+      mems = Member.cached_can_shop.inject([]) do |ary,member|
+        ary << member.id unless member.fees.membership_paid?
+        ary
+      end
+      @members = Member.where(id: mems)
     else
       @members = Member.cached_can_shop
     end

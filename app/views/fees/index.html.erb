@@ -23,11 +23,11 @@
     <% @fees.each do |fee| %>
       <tr >
         <td class="<%= fee_table_tr_class(fee) %>">
-          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.member.full_name}"), member_path(fee.member) %>&nbsp;
+          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{fee.member.full_name}"), member_path(fee.member) %>&nbsp;
           <%= link_to member_name(fee, :member), member_fees_path(fee.member) %>
         </td>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "15x15", alt: "profile #{fee.creator.full_name}"), member_path(fee.creator.id) %>&nbsp;
+          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{fee.creator.full_name}"), member_path(fee.creator.id) %>&nbsp;
           <%= link_to member_name(fee, :creator), member_path(fee.creator.id) %>
         </td>
         <td><%= search_link(fee, :amount) %></td>

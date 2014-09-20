@@ -19,9 +19,9 @@ fee2:
   amount: 1.5
   member: member2
 
-john_investment_fee:
+john_annual_fee:
   <<: *DEFAULTS
-  payment_type: investment
+  payment_type: annual
   payment_date: <%= Date.yesterday %>
   amount: 25
   member: john

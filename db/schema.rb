@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20140718004920) do
     t.boolean  "opt_out",                           default: false
     t.float    "monthly_hours",          limit: 24, default: 4.0
     t.float    "membership_discount",    limit: 24, default: 0.0
-    t.float    "investment_discount",    limit: 24, default: 0.0
+    t.float    "annual_discount",        limit: 24, default: 0.0
     t.string   "encrypted_password",                default: "",         null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"

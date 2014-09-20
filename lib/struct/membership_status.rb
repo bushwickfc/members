@@ -101,10 +101,14 @@ Struct.new("MembershipStatus",
     if time_bank_balance <= -16
       @hours_ok = false
       self.status = "inactive"
-      messages << "Inactive, owes 16 hours"
+      messages << "Inactive, owes 16+ hours"
     elsif time_bank_balance > -16 && time_bank_balance <= -8
-      @hours_ok = true
+      @hours_ok = false
       self.status = "suspended"
+      messages << "Suspended, owes #{time_bank_balance.abs} hours"
+    elsif time_bank_balance < -4.25
+      @hours_ok = true
+      self.status = "work_alert"
       messages << "Work alert, owes #{time_bank_balance.abs} hours"
     elsif time_bank_balance < 0
       @hours_ok = true

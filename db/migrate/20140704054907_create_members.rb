@@ -24,7 +24,7 @@ class CreateMembers < ActiveRecord::Migration
       t.boolean :opt_out, default: false
       t.float :monthly_hours, default: 4.0
       t.float :membership_discount, default: 0.0
-      t.float :investment_discount, default: 0.0
+      t.float :annual_discount, default: 0.0
 
       ## Database authenticatable
       #t.string :email,              null: false, default: ""

@@ -27,7 +27,7 @@ Member.create!([
 john=Member.first
 john.fees.create!([
   {amount: 50, creator_id: john.id, payment_type: "membership", payment_method: "cash", payment_date: Date.current-1.year},
-  {amount: 25, creator_id: john.id, payment_type: "investment", payment_method: "cash", payment_date: Date.current},
+  {amount: 25, creator_id: john.id, payment_type: "annual", payment_method: "cash", payment_date: Date.current},
 ])
 john.committees.create!(
   {name: "Test"}

@@ -6,11 +6,11 @@ class Member < ActiveRecord::Base
          authentication_keys: [:login], password_length: 3..128
 
   MEMBERSHIP_FEE = 50
-  INVESTMENT_FEE = 25
+  ANNUAL_FEE     = 25
   FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, last_name)) AS full_name'
   cattr_reader :genders, :statuses, :contact_preferences
   @@genders  = %w[Male Female]
-  @@statuses = %w[active inactive suspended hold parental canceled interested volunteer]
+  @@statuses = %w[active work_alert inactive suspended hold parental canceled interested volunteer]
   @@contact_preferences = %w[email phone]
 
   has_many :committees,   dependent: :restrict_with_exception
@@ -36,7 +36,7 @@ class Member < ActiveRecord::Base
   validates :contact_preference, inclusion: { in: @@contact_preferences }, allow_nil: true, allow_blank: true
   validates :monthly_hours, numericality: { greater_than: 0.0 }
   validates :membership_discount, numericality: { greater_than_or_equal_to: 0.0 }
-  validates :investment_discount, numericality: { greater_than_or_equal_to: 0.0 }
+  validates :annual_discount, numericality: { greater_than_or_equal_to: 0.0 }
 
   scope     :form_select, -> { full_name.select(:id) }
   scope     :full_name,   -> { select(FULL_NAME) }
@@ -73,7 +73,7 @@ class Member < ActiveRecord::Base
       :membership_agreement, 
       :monthly_hours, 
       :membership_discount, 
-      :investment_discount,
+      :annual_discount,
       :password,
       :password_confirmation,
       :remember_me,
@@ -110,8 +110,8 @@ class Member < ActiveRecord::Base
     MEMBERSHIP_FEE - (MEMBERSHIP_FEE * membership_discount / 100.0)
   end
 
-  def investment_rate
-    INVESTMENT_FEE - (INVESTMENT_FEE * membership_discount / 100.0)
+  def annual_rate
+    ANNUAL_FEE - (ANNUAL_FEE * membership_discount / 100.0)
   end
 
   def membership_in(type = :weeks)

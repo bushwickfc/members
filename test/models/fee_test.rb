@@ -26,7 +26,7 @@ describe Fee do
       end
     end
 
-    %w[membership investment].each do |value|
+    %w[membership annual].each do |value|
       it "payment_type #{value}" do
         fee.payment_type = value
         fee.must_be :valid?

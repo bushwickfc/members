@@ -14,6 +14,8 @@ class MemberCsv
     "Valerie Di veglio",
     "Leighton Edmondson",
     "Mark Gering",
+    "Ana Hurka-robles",
+    "Rachael Rho",
   ]
   COMMITTEES = %w[
     Outreach
@@ -113,7 +115,7 @@ class MemberCsv
         status: member["Member Status"].downcase.strip,
         membership_agreement: member["Membership Agreement"] =~ /y/i ? true : false,
         membership_discount: member["Low Income Verified"] =~ /y/i ? 50.0 : 0.0,
-        investment_discount: member["Low Income Verified"] =~ /y/i ? 30.0 : 0.0,
+        annual_discount: member["Low Income Verified"] =~ /y/i ? 30.0 : 0.0,
         password: "pickleBFC",
         password_confirmation: "pickleBFC",
       )

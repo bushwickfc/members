@@ -2,7 +2,7 @@ class Fee < ActiveRecord::Base
   WEEKS_TO_PAY_MEMBERSHIP = 5
   cattr_reader :payment_types
   cattr_reader :payment_methods
-  @@payment_types   = %w[membership investment].freeze
+  @@payment_types   = %w[membership annual].freeze
   @@payment_methods = %w[cash check money_order debit].freeze
 
   belongs_to :member
@@ -20,7 +20,7 @@ class Fee < ActiveRecord::Base
   validates :payment_type, inclusion: { in: payment_types }
 
   scope :membership_payment, -> { where(payment_type: "membership") }
-  scope :investment_payment, -> { where(payment_type: "investment") }
+  scope :annual_payment,     -> { where(payment_type: "annual") }
   scope :include_parents,    -> { includes :member, :creator }
 
   module MemberProxy

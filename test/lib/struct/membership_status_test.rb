@@ -201,7 +201,7 @@ describe Struct::MembershipStatus do
       attrs[8] = -16
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
-      status.messages.must_equal ["Inactive, owes 16 hours"]
+      status.messages.must_equal ["Inactive, owes 16+ hours"]
       status.status.must_equal "inactive"
     end
 
@@ -209,8 +209,8 @@ describe Struct::MembershipStatus do
       attrs = member_hash.values
       attrs[8] = -8
       status = Struct::MembershipStatus.new(*attrs)
-      status.check_hours.must_equal true
-      status.messages.must_equal ["Work alert, owes 8 hours"]
+      status.check_hours.must_equal false
+      status.messages.must_equal ["Suspended, owes 8 hours"]
       status.status.must_equal "suspended"
     end
 
@@ -219,8 +219,8 @@ describe Struct::MembershipStatus do
       attrs[8] = -7
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal true
-      status.messages.must_equal ["Owes 7 hours"]
-      status.status.must_equal ""
+      status.messages.must_equal ["Work alert, owes 7 hours"]
+      status.status.must_equal "work_alert"
     end
 
     it "is true for balances > 0" do
