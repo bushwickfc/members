@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
   before_action :set_hashed_member, only: [:optout, :optout_update]
-  before_action :build_note, only: [:show, :edit, :update, :destroy]
+  before_action :build_note
 
   # GET /members
   # GET /members.json
