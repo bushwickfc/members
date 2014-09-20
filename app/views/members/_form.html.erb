@@ -90,15 +90,15 @@
   <%- if current_member.admin? %>
   <div class="field">
     <%= f.label :join_date %><br>
-    <%= f.date_select :join_date %>
+    <%= f.date_select :join_date, start_year: 2009 %>
   </div>
   <div class="field">
     <%= f.label :work_date %><br>
-    <%= f.date_select :work_date %>
+    <%= f.date_select :work_date, start_year: 2009 %>
   </div>
   <div class="field">
     <%= f.label :date_of_birth %><br>
-    <%= f.date_select :date_of_birth %>
+    <%= f.date_select :date_of_birth, start_year: 1900 %>
   </div>
   <div class="field">
     <%= f.label :admin %><br>

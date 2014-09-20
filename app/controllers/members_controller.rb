@@ -111,7 +111,11 @@ class MembersController < ApplicationController
     end
 
     def build_note
-      @note = Note.new(commentable_id: @member.id, commentable_type: @member.class.to_s, creator_id: current_member.id)
+      if @member
+        @note = Note.new(commentable_id: @member.id, commentable_type: @member.class.to_s, creator_id: current_member.id)
+      else
+        @note = Note.new(creator_id: current_member.id)
+      end
     end
 
     def set_selects
