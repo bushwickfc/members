@@ -42,7 +42,7 @@ class Member < ActiveRecord::Base
   scope     :form_select, -> { full_name.select(:id) }
   scope     :full_name,   -> { select(FULL_NAME) }
   scope     :cached_cant_shop, -> { where(status: %w[inactive canceled volunteer interested hold]) }
-  scope     :cached_can_shop, -> { where(status: [nil, "suspended", "active", "parental"]) }
+  scope     :cached_can_shop, -> { where(status: [nil, "work_alert", "suspended", "active", "parental"]) }
 
   def self.by_email_hash(hash)
     find_by!("SHA1(email) = ?", hash)
