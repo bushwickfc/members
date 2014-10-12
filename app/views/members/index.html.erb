@@ -35,7 +35,7 @@
     <% @members.each do |member| %>
       <tr>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{member.full_name}"), member_path(member) %>&nbsp;
+          <%= link_to image_tag("vcard.png", size: "20x20", alt: "profile #{member.full_name}"), member_path(member) %>&nbsp;
           <%= search_link(member, :first_name) %>
         </td>
         <td>
@@ -43,7 +43,7 @@
         </td>
         <td>
           <%- unless member.opt_out %>
-            <%= link_to image_tag(image_path("mail_appt.png"), size: "15x15", alt: "email #{member.email}"), "mailto:#{member.email}" %>&nbsp;
+            <%= link_to image_tag("mail_appt.png", size: "15x15", alt: "email #{member.email}"), "mailto:#{member.email}" %>&nbsp;
           <%- end %>
           <%= search_link(member, :email) %>
         </td>

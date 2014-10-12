@@ -59,6 +59,9 @@
         <%= link_to 'Inactive', members_path(inactive: 1) %>
       </li>
       <li>
+        <%= link_to 'Status Report', status_changes_path(format: :csv) %>
+      </li>
+      <li>
         <%= link_to 'New', new_member_path %>
       </li>
     </ul>

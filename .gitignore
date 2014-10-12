@@ -17,3 +17,5 @@
 *.sw[a-z]
 *.orig
 tags
+.yardoc
+doc

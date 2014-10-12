@@ -23,11 +23,11 @@
     <% @furloughs.each do |furlough| %>
       <tr>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{furlough.member.full_name}"), member_path(furlough.member) %>&nbsp;
+          <%= link_to image_tag("vcard.png", size: "20x20", alt: "profile #{furlough.member.full_name}"), member_path(furlough.member) %>&nbsp;
           <%= member_name(furlough, :member) %>
         </td>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{member_name(furlough, :creator)}"), member_path(furlough.creator.id) %>&nbsp;
+          <%= link_to image_tag("vcard.png", size: "20x20", alt: "profile #{member_name(furlough, :creator)}"), member_path(furlough.creator.id) %>&nbsp;
           <%= member_name(furlough, :creator) %>
         </td>
         <td><%= furlough.type %></td>

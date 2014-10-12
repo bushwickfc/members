@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get '/optout/:hash', to: 'members#optout', as: :optout_member
   post '/optout/:hash', to: 'members#optout_update', as: :update_optout_member
+  get '/members/status_changes', to: 'members#status_changes', as: :status_changes
 
   resources :members do
     resources :furloughs, module: :members, only: [:index]

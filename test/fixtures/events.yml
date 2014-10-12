@@ -1,0 +1,20 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+john_status_suspended:
+  trackable_id: john
+  trackable_type: Member
+  data: "{\"status\"=>[\"active\", \"suspended\"]}"
+
+john_status_active:
+  trackable_id: john
+  trackable_type: Member
+  data: "{\"status\"=>[\"suspended\", \"active\"]}"
+  created_at: <%= Date.current-2.months %>
+
+john_name_change:
+  trackable_id: john
+  trackable_type: Member
+  data: "{\"first_name\"=>[\"Albert\", \"John\"]}"
+  created_at: <%= Date.current-2.months %>
+

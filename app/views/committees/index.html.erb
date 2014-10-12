@@ -20,12 +20,12 @@
     <% @committees.each do |committee| %>
       <tr>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{committee.member.full_name}"), member_path(committee.member) %>&nbsp;
-          <%= link_to image_tag(image_path("group.png"), size: "15x15", alt: "committees #{committee.member.full_name}"), member_committees_path(committee.member) %>&nbsp;
+          <%= link_to image_tag("vcard.png", size: "20x20", alt: "profile #{committee.member.full_name}"), member_path(committee.member) %>&nbsp;
+          <%= link_to image_tag("group.png", size: "15x15", alt: "committees #{committee.member.full_name}"), member_committees_path(committee.member) %>&nbsp;
 					<%= member_name(committee, :member) %>
         </td>
         <td>
-          <%= link_to image_tag(image_path("clock.png"), size: "15x15", alt: "time bank for #{committee.name}"), committee_time_banks_path(committee) %>&nbsp;
+          <%= link_to image_tag("clock.png", size: "15x15", alt: "time bank for #{committee.name}"), committee_time_banks_path(committee) %>&nbsp;
           <%= committee.name %>
         </td>
         <td>

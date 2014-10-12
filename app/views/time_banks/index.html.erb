@@ -25,12 +25,12 @@
     <% @time_banks.each do |time_bank| %>
       <tr>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{member_name(time_bank, :member)}"), member_path(time_bank.member) %>&nbsp;
-					<%= link_to image_tag(image_path("clock.png"), size: "15x15", alt: "time bank #{member_name(time_bank, :member)}"), member_time_banks_path(time_bank.member) %>&nbsp;
+          <%= link_to image_tag("vcard.png", size: "20x20", alt: "profile #{member_name(time_bank, :member)}"), member_path(time_bank.member) %>&nbsp;
+					<%= link_to image_tag("clock.png", size: "15x15", alt: "time bank #{member_name(time_bank, :member)}"), member_time_banks_path(time_bank.member) %>&nbsp;
           <%= member_name(time_bank, :member) %>
         </td>
         <td>
-          <%= link_to image_tag(image_path("vcard.png"), size: "20x20", alt: "profile #{member_name(time_bank, :admin)}"), member_path(time_bank.admin_id) %>&nbsp;
+          <%= link_to image_tag("vcard.png", size: "20x20", alt: "profile #{member_name(time_bank, :admin)}"), member_path(time_bank.admin_id) %>&nbsp;
           <%= member_name(time_bank, :admin) %>
         </td>
         <td><%= search_link(time_bank, :committee_id){time_bank.committee.name} %></td>

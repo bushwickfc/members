@@ -25,6 +25,7 @@ class Member < ActiveRecord::Base
   end
 
   has_many :notes, as: :commentable
+  has_many :events, as: :trackable
 
   accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 

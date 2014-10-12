@@ -26,6 +26,15 @@ class MembersController < ApplicationController
     respond_with(@members)
   end
 
+  # GET /members/status_changes
+  # GET /members/status_changes.json
+  # GET /members/status_changes.csv
+  def status_changes
+    ids = Event.created_after.pluck(:trackable_id)
+    @members = Member.joins(:events).where(id: ids).select("members.first_name, members.last_name, members.status, events.data AS previous_status, members.email, members.phone, members.status, members.contact_preference, events.created_at AS status_change_date")
+    respond_with(@members)
+  end
+
   # GET /members/1
   # GET /members/1.json
   # GET /members/1.csv
