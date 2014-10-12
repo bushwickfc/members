@@ -1,6 +1,7 @@
 #!/usr/bin/env rails runner
 require 'csv'
 class MemberCsv
+  WORK_WEEKS=(31..148)
   ADMINS = [
     "Amanda Pitts",
     "Philip Champon",
@@ -56,7 +57,7 @@ class MemberCsv
   end
 
   def first_work_shift
-    (30..142).select{|i|i%2==0}.each do |i|
+    WORK_WEEKS.select{|i|i%2==0}.each do |i|
       if @row[i].to_i != 0 && (date=Date.strptime(csv.headers[i], "%m/%d/%y") rescue false)
         return date
       end
@@ -153,7 +154,7 @@ class MemberCsv
   def s2time_type(hr_string, hours)
     @committee = nil
     str = hr_string.sub(/.*\(([^)]+)/, '\1').split(/,\s*/)[0].strip.downcase
-    #puts "STR #{str} // hours #{hours} // #{hr_string}"
+    puts "STR #{str} // hours #{hours} // #{hr_string}"
     if hours < 0.0
       if str =~ /gift/
         "gift_given"
@@ -202,6 +203,7 @@ class MemberCsv
   end
 
   def convert_date(date)
+    puts "DATE #{date}"
     return date if date.respond_to?(:day)
     date.match %r{(\d+([./-])\d+([./-])\d+)}
     d = $1
@@ -267,25 +269,30 @@ class MemberCsv
   end
 
   def import_hours
-    (30..142).select{|i|i%2==0}.each do |i|
-      next if csv.headers[i].nil? || @row[i].nil?
-      date_start=date_finish=convert_date(csv.headers[i])
-      #puts "ROW #{@row[i].split(/\)?,\s*/)}"
-      if @row[i][/^hold$/i]
+    WORK_WEEKS.select{|i|i%2==1}.each do |i|
+      next if csv.headers[i].nil? || (@row[i].nil? && @row[i-1].nil?)
+      puts "ROW-1 #{@row[i-1]} // ROW #{@row[i]}"
+      i-=1 if @row[i].to_i < @row[i-1].to_i
+      row_data = @row[i] || ""
+      date = csv.headers[i].split(/\s*-\s*/)[1] || csv.headers[i]
+      date_start=date_finish=convert_date(date)
+      #puts "ROW #{row_data.split(/\)?,\s*/)}"
+      if row_data[/^hold$/i]
         date_finish += @member.monthly_hours.hours
-        create_time_bank(@row[i], "hold", date_start, date_finish)
+        create_time_bank(row_data, "hold", date_start, date_finish)
       else
-        hours_split = @row[i].split(/\)?,\s*/)
+        puts "ROW #{row_data}"
+        hours_split = row_data.split(/\)?,\s*/)
         hours_split.each do |h|
           hours = h.to_f
           if hours == 0.0
-            puts "ERROR SKIPPING TIME_BANK: #{@member.full_name} // COL #{@row[i]} // HOURS #{hours} // h #{h}"
+            puts "ERROR SKIPPING TIME_BANK: #{@member.full_name} // COL #{row_data} // HOURS #{hours} // h #{h}"
             next
           end
-          #puts "HH #{h} // #{hours}"
+          puts "HH #{h} // #{hours}"
           date_start=date_finish
           date_finish = (date_start + hours.hours rescue date_start)
-          create_time_bank(@row[i], s2time_type(h, hours), date_start, date_finish)
+          create_time_bank(row_data, s2time_type(h, hours), date_start, date_finish)
         end
       end
     end
