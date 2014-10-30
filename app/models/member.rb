@@ -87,8 +87,9 @@ class Member < ActiveRecord::Base
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      fname, lname = login.split(/\s+/, 2)
-      where(conditions).find_by("first_name = ? AND last_name = ? OR email = ?", fname, lname, login)
+      where(conditions).
+        find_by("concat_ws(' ', first_name, last_name) = ? OR email = ?", 
+                login, login)
     else
       where(conditions).first
     end
