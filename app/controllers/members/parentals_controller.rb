@@ -42,7 +42,7 @@ class Members::ParentalsController < ApplicationController
         format.html { redirect_to member_parental_path(@member, @parental), notice: 'Parental Leave was successfully created.' }
         format.json { render :show, status: :created, location: @parental }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @parental.errors, status: :unprocessable_entity }
       end
     end

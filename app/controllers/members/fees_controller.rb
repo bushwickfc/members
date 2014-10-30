@@ -42,7 +42,7 @@ class Members::FeesController < ApplicationController
         format.html { redirect_to member_fee_path(@member, @fee), notice: 'Fee was successfully created.' }
         format.json { render :show, status: :created, location: @fee }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @fee.errors, status: :unprocessable_entity }
       end
     end

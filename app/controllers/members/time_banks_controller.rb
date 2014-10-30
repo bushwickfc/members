@@ -40,7 +40,7 @@ class Members::TimeBanksController < ApplicationController
         format.html { redirect_to member_time_bank_path(@member, @time_bank), notice: 'TimeBank was successfully created.' }
         format.json { render :show, status: :created, location: @time_bank }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @time_bank.errors, status: :unprocessable_entity }
       end
     end

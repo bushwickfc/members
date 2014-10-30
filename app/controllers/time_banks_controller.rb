@@ -23,7 +23,7 @@ class TimeBanksController < ApplicationController
 
   # GET /time_banks/new
   def new
-    @time_bank = TimeBank.new
+    @time_bank = TimeBank.new(admin_id: current_member.id)
     build_note
   end
 
@@ -41,7 +41,7 @@ class TimeBanksController < ApplicationController
         format.html { redirect_to @time_bank, notice: 'TimeBank was successfully created.' }
         format.json { render :show, status: :created, location: @time_bank }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @time_bank.errors, status: :unprocessable_entity }
       end
     end

@@ -65,7 +65,7 @@ class MembersController < ApplicationController
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: @member }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end

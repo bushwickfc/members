@@ -42,7 +42,7 @@ class Members::HoldsController < ApplicationController
         format.html { redirect_to member_hold_path(@member, @hold), notice: 'Hold was successfully created.' }
         format.json { render :show, status: :created, location: @hold }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @hold.errors, status: :unprocessable_entity }
       end
     end

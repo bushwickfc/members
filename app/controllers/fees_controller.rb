@@ -39,7 +39,7 @@ class FeesController < ApplicationController
         format.html { redirect_to fee_path(@fee), notice: 'Fee was successfully created.' }
         format.json { render :show, status: :created, location: @fee }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @fee.errors, status: :unprocessable_entity }
       end
     end

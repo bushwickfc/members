@@ -38,7 +38,7 @@ class Committees::TimeBanksController < ApplicationController
         format.html { redirect_to committee_time_bank_path(@committee, @time_bank), notice: 'TimeBank was successfully created.' }
         format.json { render :show, status: :created, location: @time_bank }
       else
-        format.html { render :new }
+        format.html { build_note; render :new }
         format.json { render json: @time_bank.errors, status: :unprocessable_entity }
       end
     end
@@ -85,7 +85,7 @@ class Committees::TimeBanksController < ApplicationController
     end
 
     def build_note
-      @note = @time_bank.notes.build(creator_id: current_member.id)
+      @note = Note.new(commentable_id: @time_bank.id, commentable_type: @time_bank.class.to_s, creator_id: current_member.id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
