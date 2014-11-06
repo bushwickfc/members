@@ -39,9 +39,11 @@ class CommitteesController < ApplicationController
   # POST /committees.json
   def create
     @committee = Committee.new(committee_params)
+    member = @committee.member
+    member.admin = true
 
     respond_to do |format|
-      if @committee.save
+      if @committee.save && member.save
         format.html { redirect_to @committee, notice: 'Committee was successfully created.' }
         format.json { render :show, status: :created, location: @committee }
       else
@@ -54,8 +56,10 @@ class CommitteesController < ApplicationController
   # PATCH/PUT /committees/1
   # PATCH/PUT /committees/1.json
   def update
+    member = @committee.member
+    member.admin = true
     respond_to do |format|
-      if @committee.update(committee_params)
+      if @committee.update(committee_params) && member.save
         format.html { redirect_to @committee, notice: 'Committee was successfully updated.' }
         format.json { render :show, status: :ok, location: @committee }
       else

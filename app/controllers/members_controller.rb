@@ -24,7 +24,11 @@ class MembersController < ApplicationController
       @members = Member.cached_can_shop
     end
     @status_totals = Member.status_totals
-    respond_with(@members)
+    if current_member.admin?
+      respond_with(@members)
+    else
+      redirect_to action: :show, id: current_member.id
+    end
   end
 
   # GET /members/status_changes
@@ -59,6 +63,7 @@ class MembersController < ApplicationController
   # POST /members
   # POST /members.json
   def create
+
     @member = Member.new(member_params)
 
     respond_to do |format|
