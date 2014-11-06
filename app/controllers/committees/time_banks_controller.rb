@@ -20,7 +20,7 @@ class Committees::TimeBanksController < ApplicationController
 
   # GET /committees/:committee_id/time_banks/new
   def new
-    @time_bank = @committee.time_banks.new
+    @time_bank = @committee.time_banks.new(admin_id: current_member.id)
     build_note
   end
 

@@ -76,7 +76,6 @@ suzy:
   last_name: Zzz
   email: s@gmail.com
   admin: false
-  gender: F
   status: 
   join_date: <%= Date.current - 5.weeks %>
   work_date: <%= Date.current - 5.weeks %>
@@ -91,7 +90,6 @@ slim:
   last_name: Zzz
   email: sl@gmail.com
   admin: false
-  gender: M
   status: inactive
   join_date: <%= Date.current - 5.weeks %>
   work_date: <%= Date.current - 5.weeks %>

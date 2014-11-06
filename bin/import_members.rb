@@ -110,7 +110,6 @@ class MemberCsv
         zip: member["postal (zip)"],
         contact_preference: member["Contact Preference"] =~ /[Pp]hone/ ? "phone" : "email",
         date_of_birth: (strptime("DOB") rescue nil),
-        gender: member["Sex"] =~ /F/i ? "Female" : "Male",
         join_date: join_date,
         work_date: work_date,
         status: member["Member Status"].downcase.strip,

@@ -43,7 +43,6 @@ new_csv = [
   #:zip,
   :contact_preference,
   :date_of_birth,
-  :gender,
   :status,
   :membership_agreement,
   :total_hours,

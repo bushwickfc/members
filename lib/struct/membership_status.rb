@@ -64,6 +64,10 @@ Struct.new("MembershipStatus",
         self.status = "parental"
       end
 
+    elsif status == "work_alert"
+      @status_ok = true
+      self.status = "work_alert"
+
     elsif status == "active" || status.blank?
       @status_ok = true
       self.status = "active"
@@ -102,11 +106,11 @@ Struct.new("MembershipStatus",
       @hours_ok = false
       self.status = "inactive"
       messages << "Inactive, owes 16+ hours"
-    elsif time_bank_balance > -16 && time_bank_balance <= -8
+    elsif time_bank_balance > -16 && time_bank_balance <= -8.25
       @hours_ok = false
       self.status = "suspended"
       messages << "Suspended, owes #{time_bank_balance.abs} hours"
-    elsif time_bank_balance < -4.25
+    elsif time_bank_balance < -4
       @hours_ok = true
       self.status = "work_alert"
       messages << "Work alert, owes #{time_bank_balance.abs} hours"

@@ -68,8 +68,8 @@ gus_penalty_negative:
   member: gus
   admin: addy
   committee: 
-  start: 2014-07-05 19:50:19
-  finish: 2014-07-05 15:50:19
+  start: <%= DateTime.current + 4.hours %>
+  finish: <%= DateTime.current %>
   time_type: penalty
   approved: true
 
@@ -77,8 +77,8 @@ gus_penalty_positive:
   member: gus
   admin: addy
   committee: 
-  start: 2014-07-04 15:50:19
-  finish: 2014-07-04 19:50:19
+  start: <%= DateTime.current %>
+  finish: <%= DateTime.current + 4.hours %>
   time_type: penalty
   approved: true
 

@@ -15,7 +15,6 @@ json.array!(@members) do |member|
     :country,
     :zip,
     :contact_preference,
-    :gender,
     :status,
     :join_date,
     :work_date,

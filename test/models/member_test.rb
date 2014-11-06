@@ -26,12 +26,6 @@ describe Member do
       subject.errors[:email].must_equal ["is invalid"]
     end
 
-    it "gender" do
-      subject.gender = "invalid"
-      subject.wont_be :valid?
-      subject.errors[:gender].must_equal ["is not included in the list"]
-    end
-
     it "status" do
       subject.status = "invalid"
       subject.wont_be :valid?

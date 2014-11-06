@@ -8,7 +8,9 @@ class MembersController < ApplicationController
   # GET /members.json
   # GET /members.csv
   def index
-    if params[:inactive]
+    if params[:search]
+      @members = Member.unscoped.name_like(valid_search_params).order(:last_name, :first_name)
+    elsif params[:inactive]
       @members = Member.where(status: %w[canceled inactive])
     elsif params[:interested]
       @members = Member.where(status: %w[volunteer interested])
@@ -21,7 +23,6 @@ class MembersController < ApplicationController
     else
       @members = Member.cached_can_shop
     end
-    @members = @members.where(valid_search_params).order(:last_name, :first_name)
     @status_totals = Member.status_totals
     respond_with(@members)
   end
@@ -128,7 +129,6 @@ class MembersController < ApplicationController
     end
 
     def set_selects
-      @genders  = Member.genders
       @statuses = Member.statuses
       @contact_preferences = Member.contact_preferences
     end

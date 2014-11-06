@@ -87,6 +87,7 @@
   <li><%= link_to "Logout", destroy_member_session_path, method: :delete %>
 </ul>
 
+<% if current_member.admin? %>
 <form class="navbar-form navbar-right" role="form" action="<%= members_path %>">
   <div class="form-group">
     <input type="text" placeholder="First Name" name="search[first_name]" value="<%= params[:search][:first_name] rescue nil %>" class="form-control">
@@ -96,4 +97,5 @@
   </div>
   <button type="submit" class="btn btn-default">Search</button>
 </form>
+<% end %>
 

@@ -8,8 +8,7 @@ class Member < ActiveRecord::Base
   MEMBERSHIP_FEE = 50
   ANNUAL_FEE     = 25
   FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, last_name)) AS full_name'
-  cattr_reader :genders, :statuses, :contact_preferences
-  @@genders  = %w[Male Female]
+  cattr_reader :statuses, :contact_preferences
   @@statuses = %w[active work_alert inactive suspended hold parental canceled interested volunteer]
   @@contact_preferences = %w[email phone]
 
@@ -32,7 +31,6 @@ class Member < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, email: { mx: true, message: "Host does not receive email" }, if: lambda {|m| m.contact_preference == "email" }
-  validates :gender, inclusion: { in: @@genders }, allow_nil: true, allow_blank: true
   validates :status, inclusion: { in: @@statuses }, allow_nil: true, allow_blank: true
   validates :contact_preference, inclusion: { in: @@contact_preferences }, allow_nil: true, allow_blank: true
   validates :monthly_hours, numericality: { greater_than: 0.0 }
@@ -65,8 +63,6 @@ class Member < ActiveRecord::Base
       :state, 
       :country, 
       :zip, 
-      :contact_preference,
-      :gender, 
       :status, 
       :join_date, 
       :work_date,
@@ -93,6 +89,15 @@ class Member < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+
+  def self.name_like(params = {})
+    fname = params[:first_name]
+    lname = params[:last_name]
+    rel = default_scoped
+    rel = rel.where("first_name LIKE '%#{fname}%'") if fname
+    rel = rel.where("last_name LIKE '%#{lname}%'") if lname
+    rel
   end
 
   def all_notes

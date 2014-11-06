@@ -71,7 +71,7 @@ module ApplicationHelper
       else
         req.query = query
       end
-      link_to link_text, req.to_s
+      link_to link_text.to_s, req.to_s
     end
   end
 

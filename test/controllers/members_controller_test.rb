@@ -26,7 +26,6 @@ describe MembersController do
   it "gets new" do
     get :new
     assert_response :success
-    assert_not_nil assigns(:genders)
     assert_not_nil assigns(:member)
     assert_not_nil assigns(:statuses)
     assert_not_nil assigns(:contact_preferences)
@@ -56,7 +55,6 @@ describe MembersController do
         monthly_hours: @john.monthly_hours,
         phone2: @john.phone2,
         phone: @john.phone,
-        gender: @john.gender,
         state: @john.state,
         status: @john.status,
         zip: @john.zip 
@@ -75,7 +73,6 @@ describe MembersController do
   it "gets edit" do
     get :edit, id: @john
     assert_response :success
-    assert_not_nil assigns(:genders)
     assert_not_nil assigns(:member)
     assert_not_nil assigns(:statuses)
     assert_not_nil assigns(:contact_preferences)
@@ -102,7 +99,6 @@ describe MembersController do
       monthly_hours: @john.monthly_hours,
       phone2: @john.phone2,
       phone: @john.phone,
-      gender: @john.gender,
       state: @john.state,
       status: @john.status,
       zip: @john.zip 

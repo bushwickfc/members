@@ -205,12 +205,12 @@ describe Struct::MembershipStatus do
       status.status.must_equal "inactive"
     end
 
-    it "is true for balances > -16 && <= -8" do
+    it "is true for balances > -16 && <= -8.25" do
       attrs = member_hash.values
-      attrs[8] = -8
+      attrs[8] = -8.25
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
-      status.messages.must_equal ["Suspended, owes 8 hours"]
+      status.messages.must_equal ["Suspended, owes 8.25 hours"]
       status.status.must_equal "suspended"
     end
 
