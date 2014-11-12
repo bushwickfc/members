@@ -1,7 +1,9 @@
 <div class="col-md-6">
   <h3>Fee for <%= @member.full_name %></h3>
   <%= render 'shared/csv' %>
-  <%= link_to 'Edit', edit_member_fee_path(@member, @fee), role:'button', class:'btn btn-primary' %>
+  <%- if current_member.admin? %>
+    <%= link_to 'Edit', edit_member_fee_path(@member, @fee), role:'button', class:'btn btn-primary' %>
+  <% end %>
   <%= link_to 'Back', member_fees_path(@member), role:'button', class:'btn btn-default'  %>
   
   <p>
