@@ -3,20 +3,16 @@ class Ability
 
   def initialize(user)
     if user && user.admin?
-      Rails.logger.debug("FOO ADMIN")
       can :manage, :all
     elsif user
+      can :read, Committee
       can :manage, :all do |obj|
-        Rails.logger.debug("FOO CHECK")
-        Rails.logger.debug(obj.inspect)
-        Rails.logger.debug(user.inspect)
         case obj
         when Member then obj.id == user.id
         else obj.member_id == user.id
         end
       end
     else
-      Rails.logger.debug("FOO NO")
       cannot :manage, :all
     end
     # Define abilities for the passed in user here. For example:
