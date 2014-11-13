@@ -36,6 +36,7 @@ class Member < ActiveRecord::Base
   validates :monthly_hours, numericality: { greater_than: 0.0 }
   validates :membership_discount, numericality: { greater_than_or_equal_to: 0.0 }
   validates :annual_discount, numericality: { greater_than_or_equal_to: 0.0 }
+  validates_confirmation_of :password
 
   scope     :status_totals, -> { select("count(*) as total, status").group(:status).order(:status) }
   scope     :form_select, -> { full_name.select(:id) }
