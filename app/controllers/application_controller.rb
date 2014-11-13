@@ -6,6 +6,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   respond_to :html, :json, :csv
 
+  # cancan
+  alias_method :current_user, :current_member
+  check_authorization unless: :devise_controller?
+  rescue_from CanCan::AccessDenied do |e|
+    redirect_to root_url, alert: e.message
+  end
+
   def after_sign_in_path_for(resource)
     if resource.admin?
       root_path

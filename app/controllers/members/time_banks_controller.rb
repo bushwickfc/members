@@ -1,8 +1,9 @@
 class Members::TimeBanksController < ApplicationController
-  before_action :set_member
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_time_bank, only: [:show, :edit, :update, :destroy]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :member
+  load_and_authorize_resource :time_bank, through: :member
 
   # GET /members/:member_id/time_banks
   # GET /members/:member_id/time_banks.json
@@ -74,10 +75,6 @@ class Members::TimeBanksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_time_bank
       @time_bank = @member.time_banks.include_parents.select_all.find(params[:id])
-    end
-
-    def set_member
-      @member = Member.find(params[:member_id])
     end
 
     def set_selects

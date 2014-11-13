@@ -13,7 +13,7 @@ require "minitest/pride"
 class ActionController::TestCase
   include Devise::TestHelpers
   def setup
-    sign_in :member, @john
+    sign_in :member, @addy
   end
 end
 

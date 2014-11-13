@@ -1,8 +1,9 @@
 class Members::HoldsController < ApplicationController
-  before_action :set_member
   before_action :set_hold, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource :member
+  load_and_authorize_resource :hold, through: :member
 
   # GET /members/:member_id/holds
   # GET /members/:member_id/holds.json
@@ -74,10 +75,6 @@ class Members::HoldsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_member
-      @member = Member.find(params[:member_id])
-    end
-
     def set_hold
       @hold = Hold.include_parents.find(params[:id])
       @creator = @hold.creator

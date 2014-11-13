@@ -1,6 +1,7 @@
 class CommitteesController < ApplicationController
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_committee, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /committees
   # GET /committees.json

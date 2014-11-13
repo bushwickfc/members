@@ -6,6 +6,7 @@ gem 'unicorn'
 gem 'mysql2'
 gem 'foreman'
 gem 'devise'
+gem 'cancancan'
 
 # Jobs #
 gem 'sidekiq'

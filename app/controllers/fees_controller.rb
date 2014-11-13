@@ -2,6 +2,7 @@ class FeesController < ApplicationController
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /fees
   # GET /fees.json

@@ -1,5 +1,6 @@
 class Members::FurloughsController < ApplicationController
-  before_action :set_member
+  load_and_authorize_resource :member
+  load_and_authorize_resource :furlough, through: :member
 
   # GET /members/:member_id/furloughs
   # GET /members/:member_id/furloughs.json
@@ -8,11 +9,5 @@ class Members::FurloughsController < ApplicationController
     @furloughs = @member.furloughs.include_parents.where(params[:search])
     respond_with(@furloughs)
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_member
-      @member = Member.find(params[:member_id])
-    end
 
 end

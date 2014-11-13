@@ -2,6 +2,7 @@ class TimeBanksController < ApplicationController
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_time_bank, only: [:show, :edit, :update, :destroy]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /time_banks
   # GET /time_banks.json

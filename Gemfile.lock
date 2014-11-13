@@ -33,6 +33,7 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-datetimepicker-rails (0.0.11)
     builder (3.2.2)
+    cancancan (1.9.2)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     clockwork (0.7.5)
@@ -181,6 +182,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-datetimepicker-rails
+  cancancan
   clockwork
   coffee-rails (~> 4.0.0)
   devise
