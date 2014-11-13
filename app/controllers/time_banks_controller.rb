@@ -53,7 +53,13 @@ class TimeBanksController < ApplicationController
   def update
     respond_to do |format|
       if @time_bank.update(time_bank_params)
-        format.html { redirect_to @time_bank, notice: 'TimeBank was successfully updated.' }
+        format.html { 
+          if request.headers[:referer]
+            redirect_to :back, notice: 'TimeBank was successfully updated.' 
+          else
+            redirect_to @time_bank, notice: 'TimeBank was successfully updated.' 
+          end
+        }
         format.json { render :show, status: :ok, location: @time_bank }
       else
         format.html { render :edit }
