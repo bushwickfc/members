@@ -44,7 +44,9 @@
             tb_approved = {time_bank: time_bank.attributes}
             tb_approved[:time_bank][:approved] = true
           %>
-          <%= link_to 'Approve', time_bank_path(time_bank,tb_approved), role:'button', class:'btn btn-success', method: :patch  %>&nbsp;
+          <%- unless time_bank.approved? %>
+            <%= link_to 'Approve', time_bank_path(time_bank,tb_approved), role:'button', class:'btn btn-success', method: :patch  %>&nbsp;
+          <%- end %>
           <%= link_to 'Show', time_bank, role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_time_bank_path(time_bank), role:'button', class:'btn btn-primary'  %>&nbsp;
           <%= link_to 'Destroy', time_bank_path(time_bank), role:'button', class:'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>

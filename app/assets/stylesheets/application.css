@@ -74,3 +74,8 @@ body {
   display: inline;
   color: red;
 }
+
+.log-output {
+  font-family: "Courier New";
+}
+
