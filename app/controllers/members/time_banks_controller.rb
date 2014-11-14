@@ -1,9 +1,9 @@
 class Members::TimeBanksController < ApplicationController
+  load_and_authorize_resource :member
+  load_and_authorize_resource :time_bank, through: :member
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :set_time_bank, only: [:show, :edit, :update, :destroy]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource :member
-  load_and_authorize_resource :time_bank, through: :member
 
   # GET /members/:member_id/time_banks
   # GET /members/:member_id/time_banks.json

@@ -1,9 +1,9 @@
 class Members::FeesController < ApplicationController
+  load_and_authorize_resource :member
+  load_and_authorize_resource :fee, through: :member
   before_action :set_fee, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource :member
-  load_and_authorize_resource :fee, through: :member
 
   # GET /members/:member_id/fees
   # GET /members/:member_id/fees.json

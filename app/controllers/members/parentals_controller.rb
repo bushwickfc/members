@@ -1,9 +1,9 @@
 class Members::ParentalsController < ApplicationController
+  load_and_authorize_resource :member
+  load_and_authorize_resource :parental, through: :member
   before_action :set_parental, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource :member
-  load_and_authorize_resource :parental, through: :member
 
   # GET /members/:member_id/parentals
   # GET /members/:member_id/parentals.json

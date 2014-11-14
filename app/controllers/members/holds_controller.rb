@@ -1,9 +1,9 @@
 class Members::HoldsController < ApplicationController
+  load_and_authorize_resource :member
+  load_and_authorize_resource :hold, through: :member
   before_action :set_hold, only: [:show, :edit, :update, :destroy]
   before_action :set_selects, only: [:new, :edit, :create, :update]
   before_action :build_note, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource :member
-  load_and_authorize_resource :hold, through: :member
 
   # GET /members/:member_id/holds
   # GET /members/:member_id/holds.json
