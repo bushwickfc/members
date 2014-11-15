@@ -10,7 +10,6 @@ class Members::HoldsController < ApplicationController
   # GET /members/:member_id/holds.csv
   def index
     @holds = @member.holds.include_parents.where(params[:search])
-    @creator = Member.new
     respond_with(@holds)
   end
 
@@ -24,8 +23,7 @@ class Members::HoldsController < ApplicationController
 
   # GET /members/:member_id/holds/new
   def new
-    @creator = Member.new
-    @hold = @member.holds.new
+    @hold = @member.holds.new(creator_id: current_member.id)
     build_note
   end
 
@@ -77,7 +75,6 @@ class Members::HoldsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_hold
       @hold = Hold.include_parents.find(params[:id])
-      @creator = @hold.creator
     end
 
     def build_note

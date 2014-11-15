@@ -9,7 +9,6 @@ class FeesController < ApplicationController
   # GET /fees.csv
   def index
     @fees = Fee.include_parents.where(params[:search])
-    @creator = Member.new
     respond_with(@fees)
   end
 
@@ -21,7 +20,6 @@ class FeesController < ApplicationController
 
   # GET /fees/new
   def new
-    @creator = Member.new
     @fee = Fee.new
     build_note
   end
@@ -74,7 +72,6 @@ class FeesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_fee
       @fee = Fee.include_parents.find(params[:id])
-      @creator = @fee.creator
     end
 
     def build_note

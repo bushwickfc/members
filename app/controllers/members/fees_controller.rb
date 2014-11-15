@@ -10,7 +10,6 @@ class Members::FeesController < ApplicationController
   # GET /members/:member_id/fees.csv
   def index
     @fees = @member.fees.include_parents.where(params[:search])
-    @creator = Member.new
     respond_with(@fees)
   end
 
@@ -24,8 +23,7 @@ class Members::FeesController < ApplicationController
 
   # GET /members/:member_id/fees/new
   def new
-    @creator = Member.new
-    @fee = @member.fees.new
+    @fee = @member.fees.new(creator_id: current_member.id)
     build_note
   end
 
@@ -76,7 +74,6 @@ class Members::FeesController < ApplicationController
   private
     def set_fee
       @fee = Fee.include_parents.find(params[:id])
-      @creator = @fee.creator
     end
 
     def build_note

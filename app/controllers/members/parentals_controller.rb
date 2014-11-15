@@ -10,7 +10,6 @@ class Members::ParentalsController < ApplicationController
   # GET /members/:member_id/parentals.csv
   def index
     @parentals = @member.parentals.include_parents.where(params[:search])
-    @creator = Member.new
     respond_with(@parentals)
   end
 
@@ -24,8 +23,7 @@ class Members::ParentalsController < ApplicationController
 
   # GET /members/:member_id/parentals/new
   def new
-    @creator = Member.new
-    @parental = @member.parentals.new
+    @parental = @member.parentals.new(creator_id: current_member.id)
     build_note
   end
 
@@ -77,7 +75,6 @@ class Members::ParentalsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_parental
       @parental = Parental.include_parents.find(params[:id])
-      @creator = @parental.creator
     end
 
     def build_note
