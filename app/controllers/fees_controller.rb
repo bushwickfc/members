@@ -20,7 +20,7 @@ class FeesController < ApplicationController
 
   # GET /fees/new
   def new
-    @fee = Fee.new
+    @fee = Fee.new(creator_id: current_member.id)
     build_note
   end
 
