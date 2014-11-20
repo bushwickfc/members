@@ -28,7 +28,7 @@ class Member < ActiveRecord::Base
 
   accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
-  validates :first_name, presence: true
+  validates :first_name, uniqueness: { scope: :last_name, message: "and last name must be unique" }, presence: true
   validates :last_name, presence: true
   validates :email, email: { mx: true, message: "Host does not receive email" }, if: lambda {|m| m.contact_preference == "email" }
   validates :status, inclusion: { in: @@statuses }, allow_nil: true, allow_blank: true

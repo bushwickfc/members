@@ -44,7 +44,7 @@ class CommitteesController < ApplicationController
     member.admin = true
 
     respond_to do |format|
-      if @committee.save && member.save
+      if @committee.valid? && @committee.save && member.save
         format.html { redirect_to @committee, notice: 'Committee was successfully created.' }
         format.json { render :show, status: :created, location: @committee }
       else

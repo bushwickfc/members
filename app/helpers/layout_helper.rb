@@ -1,6 +1,6 @@
 module LayoutHelper
   def bootstrap_version
-    "3.2.0"
+    "3.3.1"
   end
 
   def datatables_version

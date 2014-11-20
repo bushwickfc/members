@@ -8,6 +8,13 @@ describe Member do
   describe "invalidates attribute" do
     subject { @john }
 
+    it "first_name and last_name" do
+      subject.first_name = @addy.first_name
+      subject.last_name = @addy.last_name
+      subject.wont_be :valid?
+      subject.errors[:first_name].must_equal ["and last name must be unique"]
+    end
+
     it "first_name" do
       subject.first_name = nil
       subject.wont_be :valid?

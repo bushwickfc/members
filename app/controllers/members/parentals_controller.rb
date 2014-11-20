@@ -37,7 +37,7 @@ class Members::ParentalsController < ApplicationController
     @parental = @member.parentals.new(parental_params)
 
     respond_to do |format|
-      if @parental.save
+      if @parental.valid? && @parental.save
         format.html { redirect_to member_parental_path(@member, @parental), notice: 'Parental Leave was successfully created.' }
         format.json { render :show, status: :created, location: @parental }
       else

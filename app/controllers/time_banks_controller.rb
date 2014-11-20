@@ -38,7 +38,7 @@ class TimeBanksController < ApplicationController
     @time_bank = TimeBank.new(time_bank_params)
 
     respond_to do |format|
-      if @time_bank.save
+      if @time_bank.valid? && @time_bank.save
         format.html { redirect_to @time_bank, notice: 'TimeBank was successfully created.' }
         format.json { render :show, status: :created, location: @time_bank }
       else

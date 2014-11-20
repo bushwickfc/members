@@ -34,7 +34,7 @@ class FeesController < ApplicationController
     @fee = Fee.new(fee_params)
 
     respond_to do |format|
-      if @fee.save
+      if @fee.valid? && @fee.save
         format.html { redirect_to fee_path(@fee), notice: 'Fee was successfully created.' }
         format.json { render :show, status: :created, location: @fee }
       else

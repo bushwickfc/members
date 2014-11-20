@@ -37,7 +37,7 @@ class Members::HoldsController < ApplicationController
     @hold = @member.holds.new(hold_params)
 
     respond_to do |format|
-      if @hold.save
+      if @hold.valid? && @hold.save
         format.html { redirect_to member_hold_path(@member, @hold), notice: 'Hold was successfully created.' }
         format.json { render :show, status: :created, location: @hold }
       else
