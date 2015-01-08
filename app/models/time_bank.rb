@@ -4,21 +4,17 @@ class TimeBank < ActiveRecord::Base
   HOURS_SUSPENDED = -4
   cattr_reader :time_types
   @@time_types = %w[
-    cashier
-    close
+    store_shift
     committee
     facilities
     gift_given
     gift_received
-    greeter
     hold
     parental
     meeting
-    open
     orientation
     other
     penalty
-    receiving
   ]
 
   belongs_to :member

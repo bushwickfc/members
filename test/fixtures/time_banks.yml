@@ -7,7 +7,7 @@ john_cashier_approved:
   committee: 
   start: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
-  time_type: cashier
+  time_type: store_shift
   approved: true
 
 john_committee_approved:
@@ -16,7 +16,7 @@ john_committee_approved:
   committee: it
   start: <%= DateTime.current-1.month %>
   finish: <%= DateTime.current-1.month+4.hours %>
-  time_type: cashier
+  time_type: store_shift
   approved: true
 
 john_committee_unapproved:
@@ -25,7 +25,7 @@ john_committee_unapproved:
   committee: it
   start: <%= DateTime.current-2.month %>
   finish: <%= DateTime.current-2.month+4.hours %>
-  time_type: cashier
+  time_type: store_shift
   approved: false
 
 morton_greeter_approved:
@@ -34,7 +34,7 @@ morton_greeter_approved:
   committee: 
   start: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
-  time_type: greeter
+  time_type: store_shift
   approved: true
 
 morton_greeter_unapproved:
@@ -43,14 +43,14 @@ morton_greeter_unapproved:
   committee: 
   start: <%= DateTime.current-1.month %>
   finish: <%= DateTime.current-1.month+4.hours %>
-  time_type: greeter
+  time_type: store_shift
   approved: false
 
 suzy_greeter_approved:
   member: suzy
   admin: addy
   committee: 
-  time_type: greeter
+  time_type: store_shift
   start: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
   approved: true
@@ -61,7 +61,7 @@ gus_greeter_approved:
   committee: 
   start: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
-  time_type: greeter
+  time_type: store_shift
   approved: true
 
 gus_penalty_negative:
