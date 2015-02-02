@@ -5,17 +5,15 @@ describe Members::ParentalsController do
   let(:parental) { furloughs :john_one_year_parental }
 
   it "creates parental" do
-    assert_difference('parental.member.parentals.count') do
+    assert_difference('Parental.count') do
       start = Date.current + 2.month
       finish = start + 1.year
-      r = post :create, member_id: parental.member, parental: { 
-        member_id: parental.member_id, 
-        creator_id: parental.creator_id, 
+      post :create, member_id: @addy.id, parental: { 
+        creator_id: @addy.id,
         type: parental.type, 
         start: start, 
         finish: finish
       }
-      #puts r.body
     end
 
     assert_redirected_to member_parental_path(assigns(:member), assigns(:parental))

@@ -36,7 +36,6 @@ john:
   status: active
   join_date: <%= Date.current - 1.year %>
   work_date: <%= Date.current - 1.year %>
-  status: active
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0

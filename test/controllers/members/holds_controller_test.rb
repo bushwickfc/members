@@ -5,12 +5,11 @@ describe Members::HoldsController do
   let(:hold) { furloughs :john_one_month_hold }
 
   it "creates hold" do
-    assert_difference('hold.member.holds.count') do
+    assert_difference('Hold.count') do
       start = Date.current + 2.month
       finish = start + 1.month
-      post :create, member_id: hold.member, hold: { 
-        member_id: hold.member_id, 
-        creator_id: hold.creator_id, 
+      post :create, member_id: @addy.id, hold: { 
+        creator_id: @addy.id,
         type: hold.type, 
         start: start, 
         finish: finish

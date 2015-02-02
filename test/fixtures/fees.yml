@@ -19,6 +19,20 @@ fee2:
   amount: 1.5
   member: member2
 
+addy_annual_fee:
+  <<: *DEFAULTS
+  payment_type: annual
+  payment_date: <%= Date.yesterday %>
+  amount: 25
+  member: addy
+
+addy_membership_fee:
+  <<: *DEFAULTS
+  payment_type: membership
+  payment_date: <%= Date.yesterday %>
+  amount: 50
+  member: addy
+
 john_annual_fee:
   <<: *DEFAULTS
   payment_type: annual

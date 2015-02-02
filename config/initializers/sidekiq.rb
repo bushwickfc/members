@@ -4,21 +4,23 @@ require 'redis'
 SIDEKIQ_REDIS_NAMESPACE = Rails.application.class.parent.to_s
 
 if ENV['RACK_ENV'] == 'production' || ENV['RACK_ENV'] == 'staging'
-  redis_url = URI.parse(ENV['REDISTOGO_URL'])
+  redis_url = URI.parse(ENV["REDIS_URL"]=ENV['REDISTOGO_URL'])
   redis_config = { host: redis_url.host, port: redis_url.port,
                    password: redis_url.password }
-  redis_url = redis_url.to_s
 else
-  redis_url = 'redis://localhost:6379'
-  redis_config = { host: 'localhost', port: 6379 }
+  ENV['REDIS_PROVIDER']='REDIS_URL'
+  ENV['REDIS_URL']||='redis://localhost:6379/0'
+  redis_url = URI.parse(ENV["REDIS_URL"])
+  redis_config = { host: redis_url.host, port: redis_url.port}
 end
+redis_url = redis_url.to_s
 
 Sidekiq.configure_server do |config|
-  config.redis = { url: redis_url, namespace: SIDEKIQ_REDIS_NAMESPACE, size: 23 }
+  config.redis = { namespace: SIDEKIQ_REDIS_NAMESPACE }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: redis_url, namespace: SIDEKIQ_REDIS_NAMESPACE, size: 10 }
+  config.redis = { namespace: SIDEKIQ_REDIS_NAMESPACE }
 end
 
 if ENV['SIDEKIQ_USER'] && ENV['SIDEKIQ_PASSWORD']

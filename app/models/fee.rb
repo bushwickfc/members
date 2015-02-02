@@ -2,8 +2,8 @@ class Fee < ActiveRecord::Base
   WEEKS_TO_PAY_MEMBERSHIP = 5
   cattr_reader :payment_types
   cattr_reader :payment_methods
-  @@payment_types   = %w[membership annual].freeze
-  @@payment_methods = %w[cash check money_order debit].freeze
+  @@payment_types   = %w[membership annual].sort.freeze
+  @@payment_methods = %w[cash check money_order debit].sort.freeze
 
   belongs_to :member
   belongs_to :creator, class_name: "Member"

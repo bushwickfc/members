@@ -15,7 +15,7 @@ class TimeBank < ActiveRecord::Base
     orientation
     other
     penalty
-  ]
+  ].sort.freeze
 
   belongs_to :member
   belongs_to :admin

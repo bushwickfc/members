@@ -1,12 +1,21 @@
 require "test_helper"
 
 describe Furlough do
+  subject { 
+    Furlough.new(
+      start: Date.current+1.month, 
+      finish: Date.current+3.month, 
+      type: 'Hold',
+      member: Member.find_by(admin: true),
+      creator: Member.find_by(admin: true)
+    )
+  }
+
   it "must be valid" do
     @john_one_month_hold.must_be :valid?
   end
 
   describe "invalidates attribute" do
-    subject { Furlough.new }
 
     it "start" do
       subject.start = "invalid"
@@ -15,7 +24,7 @@ describe Furlough do
     end
 
     it "finish" do
-      subject.start = "finish"
+      subject.finish = "finish"
       subject.wont_be :valid?
       subject.errors[:finish].must_equal ["can't be blank"]
     end

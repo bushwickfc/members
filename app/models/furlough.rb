@@ -11,6 +11,8 @@ class Furlough < ActiveRecord::Base
   validates :finish, presence: true
   validates :type, presence: true
   validate  :no_member_furloughs_active, :start_finish_valid
+  before_validation :membership_active, unless: :persisted?
+  after_save :back_fill_time_banks
 
   scope :active,          -> { where("NOW() BETWEEN start AND finish") }
   scope :hold,            -> { where(type: :Hold) }
@@ -33,6 +35,25 @@ class Furlough < ActiveRecord::Base
     if finish < start
       errors.add(:start, "must come before finish")
       false
+    end
+  end
+
+  def membership_active
+    if member && !member.membership_status.can_shop?
+      errors.add(:member_id, "must be able to shop")
+    end
+  end
+
+  def back_fill_time_banks
+    eom = Date.current.end_of_month
+    return true if start > eom
+    i=0
+    loop do
+      s = (Date.current - i.months).beginning_of_month
+      f = s.end_of_month
+      break if s < start.beginning_of_month
+      UpdateHoldsAndLeaves.perform_async(member.id, s.to_s, f.to_s, 'hold', creator.id)
+      i+=1
     end
   end
 

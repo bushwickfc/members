@@ -248,7 +248,7 @@ describe Struct::MembershipStatus do
       end
     end
 
-    it "is false, if any thing is false" do
+    it "is false, if check_status is false" do
       status = Struct::MembershipStatus.new(*member_hash.values)
       status.stub :check_status, false do
         status.stub :check_membership_fees, true do
@@ -259,6 +259,41 @@ describe Struct::MembershipStatus do
           end
         end
       end
+    end
+
+    it "is false, if check_membership_fees is false" do
+      status = Struct::MembershipStatus.new(*member_hash.values)
+      status.stub :check_status, true do
+        status.stub :check_membership_fees, false do
+          status.stub :check_hours, true do
+            status.wont_be :can_shop?
+            status.status.must_equal ""
+            status.messages.must_equal []
+          end
+        end
+      end
+    end
+
+    it "is false, if check_hours is false" do
+      status = Struct::MembershipStatus.new(*member_hash.values)
+      status.stub :check_status, true do
+        status.stub :check_membership_fees, true do
+          status.stub :check_hours, false do
+            status.wont_be :can_shop?
+            status.status.must_equal ""
+            status.messages.must_equal []
+          end
+        end
+      end
+    end
+
+    it "is true, if member is in work_alert" do
+      attrs = member_hash.values
+      attrs[8] = -6
+      status = Struct::MembershipStatus.new(*attrs)
+      status.must_be :can_shop?
+      status.status.must_equal "work_alert"
+      status.messages.must_equal ["Work alert, owes 6 hours", "Member in good standing"]
     end
 
   end

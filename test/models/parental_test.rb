@@ -11,7 +11,7 @@ describe Parental do
     it "start" do
       subject.finish = subject.start = Date.current
       subject.wont_be :valid?
-      subject.errors[:start] = ["Hold must be at least 1 year"]
+      subject.errors[:start].must_equal ["Hold must be at least 1 year"]
     end
   end
 end

@@ -9,8 +9,8 @@ class Member < ActiveRecord::Base
   ANNUAL_FEE     = 25
   FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, last_name)) AS full_name'
   cattr_reader :statuses, :contact_preferences
-  @@statuses = %w[active work_alert inactive suspended hold parental canceled interested volunteer]
-  @@contact_preferences = %w[email phone]
+  @@statuses = %w[active work_alert inactive suspended hold parental canceled interested volunteer].sort.freeze
+  @@contact_preferences = %w[email phone].sort.freeze
 
   has_many :committees,   dependent: :restrict_with_exception
   has_many :fees,         dependent: :restrict_with_exception do

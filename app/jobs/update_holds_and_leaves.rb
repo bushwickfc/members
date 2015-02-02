@@ -2,7 +2,7 @@ class UpdateHoldsAndLeaves
   include Sidekiq::Worker
   sidekiq_options queue: :furloughs, retry: true, backtrace: true, failures: true 
 
-  def perform(member_id=nil, start=nil, finish=nil, type=nil)
+  def perform(member_id=nil, start=nil, finish=nil, type=nil, admin=Admin.first.id)
     if member_id.nil?
       last_month = Date.current-1.month
       start_lmonth = last_month.beginning_of_month
@@ -10,12 +10,12 @@ class UpdateHoldsAndLeaves
 
       holds = Hold.active_between(start_lmonth, finish_lmonth)
       holds.each do |hold|
-        UpdateHoldsAndLeaves.perform_async(hold.member_id, start_lmonth.to_s, finish_lmonth.to_s, "hold")
+        UpdateHoldsAndLeaves.perform_async(hold.member_id, start_lmonth.to_s, finish_lmonth.to_s, "hold", hold.creator.id)
       end
 
       parentals = Parental.active_between(start_lmonth, finish_lmonth)
       parentals.each do |parental|
-        UpdateHoldsAndLeaves.perform_async(parental.member_id, start_lmonth.to_s, finish_lmonth.to_s, "parental")
+        UpdateHoldsAndLeaves.perform_async(parental.member_id, start_lmonth.to_s, finish_lmonth.to_s, "parental", hold.creator.id)
       end
 
     else
@@ -23,8 +23,13 @@ class UpdateHoldsAndLeaves
       hours = member.time_banks.hours_summed.hours_between(start, finish).hours_worked
       hours = member.monthly_hours - hours
       if hours > 0
+        begin
+          a = Admin.find(admin)
+        rescue ActiveRecord::RecordNotFound => e
+          a = Admin.first
+        end
         member.time_banks.create!(
-          admin: Admin.first,
+          admin: a,
           approved: false,
           start: start.to_time,
           finish: start.to_time + hours.hours,

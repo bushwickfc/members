@@ -1,6 +1,17 @@
 # Read about fixtures at
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+<% ((Date.current-Date.parse('2014-06-17')).to_i/30).times do |i| %>
+addy_cashier_approved_<%= i%>:
+  member: addy
+  admin: addy
+  committee: 
+  start: <%= DateTime.current - i.months %>
+  finish: <%= DateTime.current - i.months + 4.hours %>
+  time_type: store_shift
+  approved: true
+<% end %>
+
 john_cashier_approved:
   member: john
   admin: addy

@@ -24,7 +24,7 @@ Struct.new("MembershipStatus",
     self.can_shop = @can_shop_bool = s_ok && m_ok && h_ok
     if @can_shop_bool
       messages << "Member in good standing"
-      self.status = "active"
+      self.status = "active" if status.blank?
     end
     @can_shop_bool
   end
