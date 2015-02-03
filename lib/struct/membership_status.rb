@@ -7,7 +7,8 @@ Struct.new("MembershipStatus",
             :membership_fees_balance,
             :membership_fees_overdue,
             :parental,
-            :time_bank_balance
+            :time_bank_balance,
+            :last_shift
 ) do
 
   def messages(force = false)
@@ -85,12 +86,12 @@ Struct.new("MembershipStatus",
     return false unless a_member?
 
     if membership_fees_overdue
-      #self.status = "inactive"
-      @fees_ok = true
-      messages << "Membership fees not paid in 2 months, balance $#{membership_fees_balance}"
+      self.status = "inactive"
+      @fees_ok = false
+      messages << "Membership fees not paid in 2 months, balance $%0.2f" % membership_fees_balance
     elsif membership_fees_balance > 0
       @fees_ok = true
-      messages << "Still owes fees ($#{membership_fees_balance})"
+      messages << "Still owes fees ($%0.2f)" % membership_fees_balance
     else
       @fees_ok = true
     end
@@ -121,6 +122,8 @@ Struct.new("MembershipStatus",
       @hours_ok = true
       messages << "Banked #{time_bank_balance} hours"
     end
+
+    messages << "Last shift #{last_shift}"
 
     @hours_ok
   end

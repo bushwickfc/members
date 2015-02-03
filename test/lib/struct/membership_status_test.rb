@@ -10,7 +10,8 @@ describe Struct::MembershipStatus do
     membership_fees_balance: 0.0,
     membership_fees_overdue: false,
     parental: nil,
-    time_bank_balance: 1461.25
+    time_bank_balance: 1461.25,
+    last_shift: "Feb 02, 2015"
   }}
 
   describe "#messages" do
@@ -160,14 +161,14 @@ describe Struct::MembershipStatus do
       end
     end
 
-    it "is true if membership_fees_overdue" do
+    it "is false if membership_fees_overdue" do
       attrs = member_hash.values
       attrs[5] = 1.0
       attrs[6] = true
       status = Struct::MembershipStatus.new(*attrs)
-      status.check_membership_fees.must_equal true
-      status.messages.must_equal ["Membership fees not paid in 2 months, balance $1.0"]
-      status.status.must_equal ""
+      status.check_membership_fees.must_equal false
+      status.messages.must_equal ["Membership fees not paid in 2 months, balance $1.00"]
+      status.status.must_equal "inactive"
     end
 
     it "is true if membership_fees_balance" do
@@ -175,7 +176,7 @@ describe Struct::MembershipStatus do
       attrs[5] = 1.0
       status = Struct::MembershipStatus.new(*attrs)
       status.check_membership_fees.must_equal true
-      status.messages.must_equal ["Still owes fees ($1.0)"]
+      status.messages.must_equal ["Still owes fees ($1.00)"]
       status.status.must_equal ""
     end
 
@@ -201,7 +202,7 @@ describe Struct::MembershipStatus do
       attrs[8] = -16
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
-      status.messages.must_equal ["Inactive, owes 16+ hours"]
+      status.messages.must_equal ["Inactive, owes 16+ hours", "Last shift Feb 02, 2015"]
       status.status.must_equal "inactive"
     end
 
@@ -210,7 +211,7 @@ describe Struct::MembershipStatus do
       attrs[8] = -8.25
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
-      status.messages.must_equal ["Suspended, owes 8.25 hours"]
+      status.messages.must_equal ["Suspended, owes 8.25 hours", "Last shift Feb 02, 2015"]
       status.status.must_equal "suspended"
     end
 
@@ -219,7 +220,7 @@ describe Struct::MembershipStatus do
       attrs[8] = -7
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal true
-      status.messages.must_equal ["Work alert, owes 7 hours"]
+      status.messages.must_equal ["Work alert, owes 7 hours", "Last shift Feb 02, 2015"]
       status.status.must_equal "work_alert"
     end
 
@@ -228,7 +229,7 @@ describe Struct::MembershipStatus do
       attrs[8] = 7
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal true
-      status.messages.must_equal ["Banked 7 hours"]
+      status.messages.must_equal ["Banked 7 hours", "Last shift Feb 02, 2015"]
       status.status.must_equal ""
     end
 
@@ -293,7 +294,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.must_be :can_shop?
       status.status.must_equal "work_alert"
-      status.messages.must_equal ["Work alert, owes 6 hours", "Member in good standing"]
+      status.messages.must_equal ["Work alert, owes 6 hours", "Last shift Feb 02, 2015", "Member in good standing"]
     end
 
   end

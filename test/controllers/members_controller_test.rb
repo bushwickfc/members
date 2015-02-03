@@ -68,6 +68,8 @@ describe MembersController do
     get :show, id: @john
     assert_response :success
     assert_not_nil assigns(:member)
+    assert_not_nil assigns(:messages)
+    assert_not_nil assigns(:notes)
   end
 
   it "gets edit" do

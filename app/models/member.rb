@@ -168,6 +168,7 @@ class Member < ActiveRecord::Base
       fees.membership_payment_overdue?,           # membership_fees_overdue
       (parentals.active.first.finish rescue nil), # parental
       time_banks.balance,                         # time_bank_balance
+      time_banks.last_shift.start.strftime("%b %d, %Y"), # last_shift
     )
   end
 

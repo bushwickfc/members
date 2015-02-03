@@ -40,6 +40,7 @@ class TimeBank < ActiveRecord::Base
   scope :hours_summed,    -> { select(HOURS_SELECT % "SUM") }
   scope :include_parents, -> { includes(:admin, :member, :committee) }
   scope :select_all,      -> { select("#{table_name}.*").hours }
+  scope :last_shift,      -> { order(start: :desc).limit(1).first }
 
   # @params range [Array|Range|Scalar] an array or range or two date strings
   def self.hours_between(*range)
