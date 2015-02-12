@@ -170,6 +170,10 @@ class Member < ActiveRecord::Base
       time_banks.balance,                         # time_bank_balance
       time_banks.last_shift.start.strftime("%b %d, %Y"), # last_shift
     )
+    update_column(:status, @membership_status.status)
+
+    Rails.logger.debug("SSS "+@membership_status.status)
+    @membership_status
   end
 
   # JSON work around

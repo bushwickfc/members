@@ -67,7 +67,7 @@ describe Struct::MembershipStatus do
         status = Struct::MembershipStatus.new(*attrs)
         status.check_status.must_equal false
         status.messages.must_equal ["#{s.capitalize} membership"]
-        status.status.must_equal s
+        status.convert_calculated_status.must_equal s
       end
     end
 
@@ -77,7 +77,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_status.must_equal true
       status.messages.must_equal ["Unknown status 'invalid'"]
-      status.status.must_equal "invalid"
+      status.convert_calculated_status.must_equal "invalid"
     end
 
     it "is true for hold without date" do
@@ -87,7 +87,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_status.must_equal true
       status.messages.must_equal []
-      status.status.must_equal "active"
+      status.convert_calculated_status.must_equal "active"
     end
 
     it "is false for hold with date" do
@@ -97,7 +97,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_status.must_equal false
       status.messages.must_equal ["On hold until #{Date.current}"]
-      status.status.must_equal "hold"
+      status.convert_calculated_status.must_equal "hold"
     end
 
     it "is false for hold date" do
@@ -107,7 +107,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_status.must_equal false
       status.messages.must_equal ["On hold until #{Date.current}"]
-      status.status.must_equal "hold"
+      status.convert_calculated_status.must_equal "hold"
     end
 
     it "is true for parental without date" do
@@ -117,7 +117,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_status.must_equal true
       status.messages.must_equal []
-      status.status.must_equal "active"
+      status.convert_calculated_status.must_equal "active"
     end
 
     it "is true for parental with date" do
@@ -127,7 +127,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_status.must_equal true
       status.messages.must_equal ["On parental leave until #{Date.current}"]
-      status.status.must_equal "parental"
+      status.convert_calculated_status.must_equal "parental"
     end
 
     it "is true for parental date" do
@@ -137,7 +137,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_status.must_equal true
       status.messages.must_equal ["On parental leave until #{Date.current}"]
-      status.status.must_equal "parental"
+      status.convert_calculated_status.must_equal "parental"
     end
 
     ["active", "", nil].each do |s|
@@ -147,7 +147,7 @@ describe Struct::MembershipStatus do
         status = Struct::MembershipStatus.new(*attrs)
         status.check_status.must_equal true
         status.messages.must_equal []
-        status.status.must_equal "active"
+        status.convert_calculated_status.must_equal "active"
       end
     end
 
@@ -168,7 +168,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_membership_fees.must_equal false
       status.messages.must_equal ["Membership fees not paid in 2 months, balance $1.00"]
-      status.status.must_equal "inactive"
+      status.convert_calculated_status.must_equal "inactive"
     end
 
     it "is true if membership_fees_balance" do
@@ -177,14 +177,14 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_membership_fees.must_equal true
       status.messages.must_equal ["Still owes fees ($1.00)"]
-      status.status.must_equal ""
+      status.convert_calculated_status.must_equal ""
     end
 
     it "is true otherwise" do
       status = Struct::MembershipStatus.new(*member_hash.values)
       status.check_membership_fees.must_equal true
       status.messages.must_equal []
-      status.status.must_equal ""
+      status.convert_calculated_status.must_equal ""
     end
 
   end
@@ -203,7 +203,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
       status.messages.must_equal ["Inactive, owes 16+ hours", "Last shift Feb 02, 2015"]
-      status.status.must_equal "inactive"
+      status.convert_calculated_status.must_equal "inactive"
     end
 
     it "is true for balances > -16 && <= -8.25" do
@@ -212,7 +212,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
       status.messages.must_equal ["Suspended, owes 8.25 hours", "Last shift Feb 02, 2015"]
-      status.status.must_equal "suspended"
+      status.convert_calculated_status.must_equal "suspended"
     end
 
     it "is true for balances < 0" do
@@ -221,7 +221,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal true
       status.messages.must_equal ["Work alert, owes 7 hours", "Last shift Feb 02, 2015"]
-      status.status.must_equal "work_alert"
+      status.convert_calculated_status.must_equal "work_alert"
     end
 
     it "is true for balances > 0" do
@@ -230,7 +230,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal true
       status.messages.must_equal ["Banked 7 hours", "Last shift Feb 02, 2015"]
-      status.status.must_equal ""
+      status.convert_calculated_status.must_equal ""
     end
 
   end
