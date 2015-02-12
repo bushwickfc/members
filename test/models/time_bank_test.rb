@@ -193,4 +193,16 @@ describe TimeBank do
     end
   end
 
+  describe "#last_shift" do
+    it "finds the last shift worked" do
+      @john.time_banks.last_shift.must_equal @john_cashier_approved
+    end
+
+    it "performs strftime on the last_shift.start " do
+      fmt = "%b %d, %Y"
+      expected = DateTime.current.strftime fmt
+      @john.time_banks.last_shift(fmt).must_equal expected
+    end
+  end
+
 end

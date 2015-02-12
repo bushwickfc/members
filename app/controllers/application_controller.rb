@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, alert: e.message
   end
 
+  rescue_from RuntimeError, NoMethodError, StandardError do |e|
+    Rails.logger.error(e.back_trace.join("\n"))
+    redirect_to root_url, alert: e.message
+  end
+
   def after_sign_in_path_for(resource)
     if resource.admin?
       root_path

@@ -2,25 +2,27 @@ require "test_helper"
 
 describe TimeBanksController do
 
-  it "gets 4 month index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:time_banks)
-    assert_equal assigns(:time_banks).to_a.count, 14
-  end
+  describe "index" do
+    it "gets 4 month index" do
+      get :index
+      assert_response :success
+      assert_not_nil assigns(:time_banks)
+      assert_equal assigns(:time_banks).to_a.count, 14
+    end
 
-  it "gets all index" do
-    get :index, all: 1
-    assert_response :success
-    assert_not_nil assigns(:time_banks)
-    assert_equal assigns(:time_banks).to_a.count, 16
-  end
+    it "gets all index" do
+      get :index, all: 1
+      assert_response :success
+      assert_not_nil assigns(:time_banks)
+      assert_equal assigns(:time_banks).to_a.count, 17
+    end
 
-  it "gets unapproved index" do
-    get :index, search: {approved: 0}
-    assert_response :success
-    assert_not_nil assigns(:time_banks)
-    assert_equal assigns(:time_banks).to_a.count, 2
+    it "gets unapproved index" do
+      get :index, search: {approved: 0}
+      assert_response :success
+      assert_not_nil assigns(:time_banks)
+      assert_equal assigns(:time_banks).to_a.count, 2
+    end
   end
 
   it "gets new" do

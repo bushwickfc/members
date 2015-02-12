@@ -19,3 +19,4 @@
 tags
 .yardoc
 doc
+*.rdb

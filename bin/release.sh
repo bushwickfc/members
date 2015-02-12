@@ -36,6 +36,18 @@ fi
 cd $app_dir
 ln -s $rel_dir current
 cd current
+rails runner 'File.open("tmp/appjs","w"){|f| f.puts ApplicationController.helpers.asset_path("application.js")}'
+appjs=$(cat tmp/appjs)
+rails runner 'File.open("tmp/appcss","w"){|f| f.puts ApplicationController.helpers.asset_path("application.css")}'
+appcss=$(cat tmp/appcss)
+
+for file in public/*.html; do
+  sed -i.bak \
+    -e s,@@APPLICATION_JS@@,$appjs,g \
+    -e s,@@APPLICATION_CSS@@,$appcss,g \
+    $file
+  rm -f ${file}.bak
+done
 
 sudo /sbin/start $app
 

@@ -123,7 +123,7 @@ Struct.new("MembershipStatus",
       messages << "Banked #{time_bank_balance} hours"
     end
 
-    messages << "Last shift #{last_shift}"
+    messages << "Last shift #{last_shift}" if last_shift
 
     @hours_ok
   end
