@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Dear <%= @member.first_name %>,</p>
+    <p>As of <%= @date.strftime("%m/%d/%Y") %> your membership has been suspended. You currently owe <%= @member.hours_owed.to_s %> hours. Please complete them as soon as you can to get back in good standing.</p>
+    <p>Best,</p>
+    <p>Bushwick Food Cooperative</p>
+  </body>
+</html>
