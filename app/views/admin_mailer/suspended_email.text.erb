@@ -1,0 +1,6 @@
+Dear <%= @member.first_name %>,
+
+Your membership has been suspended as of <%= @date.strftime("%m/%d/%Y") %>. You currently owe <%= @member.hours_owed.to_s %> work hours. Please complete them as soon as you can to get back in good standing.
+
+Best,
+Bushwick Food Cooperative
