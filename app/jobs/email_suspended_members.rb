@@ -3,14 +3,16 @@ class EmailSuspendedMembers
 	 sidekiq_options queue: :members, retry: true, backtrace: true, failures: true 
 
 	 def perform
-	 	suspended_members = Member.find_by_status("suspended")
+	 	suspended_members = Member.where(:status => "suspended")
 	 	suspended_members.each do |m|
-	 		if m.last_emailed and Date.current.month - m.last_emailed.month >= 1
-	 			AdminMailer.suspended_email(m).deliver_now
-		    	rescue Net::SMTPAuthenticationError, Net::SMTPServerBusy, Net::SMTPSyntaxError, Net::SMTPFatalError, Net::SMTPUnknownError => e
+	 		if m.last_suspended_email.nil? || Date.current.month - m.last_suspended_email.month >= 1
+	 			begin
+	 				AdminMailer.suspended_email(m).deliver
+		    	rescue
 		    		next
 				end
-				m.last_emailed = Date.current
+				m.last_suspended_email = Date.current
+				m.save				
 	 		end
 	 	end
 	 end
