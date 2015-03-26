@@ -24,6 +24,7 @@ export RACK_ENV="prodcution"
 export RAILS_ENV="prodcution"
 export DATABASE_URL=
 export REDISTOGO_URL="redis://localhost:6379/10"
+export SMTP_PASSWORD=...
 ```
 * `sudo -u apps 'cd ~apps; ./release bfc-members`
 
