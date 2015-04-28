@@ -10,7 +10,7 @@ def generate_time_bank(member, admin)
   months = member.membership_in(:months)
   bank = (1..months).inject([]) do |m,a|
     was = Time.current - a.months
-    m << {start: was, finish: was+4.hours, time_type: "greeter", admin_id: admin.id, approved: true}
+    m << {start: was, finish: was+4.hours, time_type: "store_shift", admin_id: admin.id, approved: true}
   end
 end
 
