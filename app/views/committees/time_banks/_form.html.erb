@@ -32,14 +32,6 @@
     <%= f.label :approved %><br>
     <%= f.check_box :approved %>
   </div>
-  <div class="field">
-    <%= f.label :start %><br>
-    <%= f.datetime_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :finish %><br>
-    <%= f.datetime_select :finish %>
-  </div>
 
   <%= f.fields_for :notes, [@note] do |builder| %>
     <%= render "shared/note", f: builder %>
