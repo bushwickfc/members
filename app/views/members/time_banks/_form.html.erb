@@ -21,6 +21,13 @@
     <%= f.select :committee_id, @committees, include_blank: true %>
   </div>
   <div class="field">
+    <%= f.label :date_worked %><br>
+    <%= f.datetime_select :date_worked %>
+  </div>
+  <div class="field">
+    <%= f.label :hours_worked %><br>
+    <%= f.text_field :hours_worked, :maxlength => 2, :size => 10 %>
+  <div class="field">
     <%= f.label :admin_id %><br>
     <%= f.select :admin_id, @admins, include_blank: true %>
   </div>

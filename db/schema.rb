@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150307161600) do
+ActiveRecord::Schema.define(version: 20150730212740) do
 
   create_table "committees", force: true do |t|
     t.integer  "member_id",  null: false
@@ -123,19 +123,22 @@ ActiveRecord::Schema.define(version: 20150307161600) do
   add_index "notes", ["creator_id"], name: "index_notes_on_creator_id", using: :btree
 
   create_table "time_banks", force: true do |t|
-    t.integer  "member_id",                    null: false
-    t.integer  "admin_id",                     null: false
+    t.integer  "member_id",                                             null: false
+    t.integer  "admin_id",                                              null: false
     t.integer  "committee_id"
-    t.datetime "start",                        null: false
-    t.datetime "finish",                       null: false
-    t.string   "time_type",                    null: false
-    t.boolean  "approved",     default: false
+    t.datetime "start",                                                 null: false
+    t.datetime "finish",                                                null: false
+    t.datetime "date_worked",                                           null: false
+    t.decimal  "hours_worked", precision: 10, scale: 0, default: 0,     null: false
+    t.string   "time_type",                                             null: false
+    t.boolean  "approved",                              default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "time_banks", ["admin_id"], name: "index_time_banks_on_admin_id", using: :btree
   add_index "time_banks", ["committee_id"], name: "index_time_banks_on_committee_id", using: :btree
+  add_index "time_banks", ["date_worked"], name: "index_time_banks_on_date_worked", using: :btree
   add_index "time_banks", ["member_id"], name: "index_time_banks_on_member_id", using: :btree
   add_index "time_banks", ["start", "finish"], name: "index_time_banks_on_start_and_finish", using: :btree
 

@@ -94,6 +94,8 @@ class Committees::TimeBanksController < ApplicationController
         :member_id,
         :admin_id,
         :committee_id,
+        :date_worked,
+        :hours_worked,
         :time_type,
         :approved,
         notes_attributes: note_params

@@ -25,9 +25,12 @@ class TimeBank < ActiveRecord::Base
   accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
   before_validation :penalty_swap
+  before_validation :update_start_and_finish
 
   validates :member_id, presence: true
   validates :admin_id,  presence: true
+  validates :date_worked,  presence: true
+  validates :hours_worked, numericality: true, presence: true
   validates :start,     presence: true
   validates :finish,    presence: true
   validates :time_type, inclusion: { in: @@time_types }
@@ -79,6 +82,14 @@ class TimeBank < ActiveRecord::Base
     swap_start_finish do
       update_columns(start: start, finish: finish) if persisted?
     end
+  end
+
+  # Facilitates migrating class properties from timestamps to a single timestamp and number of hours worked.
+  # @refs issue #16.
+  # Sets 'starts' to 'date_worked', and sets 'finish' to ('date_worked' + 'hours_worked.hours')
+  def update_start_and_finish
+    self.start  = date_worked
+    self.finish = (date_worked + hours_worked.hours).to_datetime
   end
 
   # only check for negative times when it's for penalty
