@@ -20,9 +20,14 @@
     <%= f.label :committee_id %><br>
     <%= f.select :committee_id, @committees, include_blank: true %>
   </div>
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :date_worked %><br>
-    <%= f.datetime_select :date_worked %>
+    <div class="input-group col-lg-2" id="datetimepicker-dateworked">
+      <%= f.text_field :date_worked, :class => 'form-control datetimepicker' %>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
   </div>
   <div class="field">
     <%= f.label :hours_worked %><br>
