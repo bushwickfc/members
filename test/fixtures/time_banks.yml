@@ -7,7 +7,9 @@ addy_cashier_approved_<%= i%>:
   admin: addy
   committee: 
   start: <%= DateTime.current - i.months %>
+  date_worked: <%= DateTime.current - i.months %>
   finish: <%= DateTime.current - i.months + 4.hours %>
+  hours_worked: 4
   time_type: store_shift
   approved: true
 <% end %>
@@ -17,7 +19,9 @@ john_cashier_approved:
   admin: addy
   committee: 
   start: <%= DateTime.current %>
+  date_worked: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
+  hours_worked: 4
   time_type: store_shift
   approved: true
 
@@ -26,7 +30,9 @@ john_committee_approved:
   admin: addy
   committee: it
   start: <%= DateTime.current-1.month %>
+  date_worked: <%= DateTime.current-1.month %>
   finish: <%= DateTime.current-1.month+4.hours %>
+  hours_worked: 4
   time_type: store_shift
   approved: true
 
@@ -35,7 +41,9 @@ john_committee_unapproved:
   admin: addy
   committee: it
   start: <%= DateTime.current-2.month %>
+  date_worked: <%= DateTime.current-2.month %>
   finish: <%= DateTime.current-2.month+4.hours %>
+  hours_worked: 4
   time_type: store_shift
   approved: false
 
@@ -44,7 +52,9 @@ morton_greeter_approved:
   admin: addy
   committee: 
   start: <%= DateTime.current %>
+  date_worked: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
+  hours_worked: 4
   time_type: store_shift
   approved: true
 
@@ -53,7 +63,9 @@ morton_greeter_unapproved:
   admin: addy
   committee: 
   start: <%= DateTime.current-1.month %>
+  date_worked: <%= DateTime.current-1.month %>
   finish: <%= DateTime.current-1.month+4.hours %>
+  hours_worked: 4
   time_type: store_shift
   approved: false
 
@@ -63,7 +75,9 @@ suzy_greeter_approved:
   committee: 
   time_type: store_shift
   start: <%= DateTime.current %>
+  date_worked: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
+  hours_worked: 4
   approved: true
 
 gus_greeter_approved:
@@ -71,7 +85,9 @@ gus_greeter_approved:
   admin: addy
   committee: 
   start: <%= DateTime.current %>
+  date_worked: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
+  hours_worked: 4
   time_type: store_shift
   approved: true
 
@@ -80,7 +96,9 @@ gus_penalty_negative:
   admin: addy
   committee: 
   start: <%= DateTime.current + 4.hours %>
+  date_worked: <%= DateTime.current + 4.hours %>
   finish: <%= DateTime.current %>
+  hours_worked: 4
   time_type: penalty
   approved: true
 
@@ -89,7 +107,9 @@ gus_penalty_positive:
   admin: addy
   committee: 
   start: <%= DateTime.current %>
+  date_worked: <%= DateTime.current %>
   finish: <%= DateTime.current + 4.hours %>
+  hours_worked: 4
   time_type: penalty
   approved: true
 

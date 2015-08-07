@@ -1,11 +1,16 @@
-$(document).ready(function() {
-  $("#time_bank_start_1i").change(function() {
-    $("#time_bank_finish_1i").val($(this).val());
-  });
-  $("#time_bank_start_2i").change(function() {
-    $("#time_bank_finish_2i").val($(this).val());
-  });
-  $("#time_bank_start_3i").change(function() {
-    $("#time_bank_finish_3i").val($(this).val());
-  });
-});
+/**
+ * Applies the Bootstrap 3 Datetimepicker to the specified selector.
+ *  Formatted to MySQL DATETIME to ease compatibility with dates in the past.
+ * @see vendor/assets/bootstrap-datetimepicker.js
+ * @return VOID
+ */
+var dateWorkedDatetimepicker = function() {
+  $('#datetimepicker-dateworked').datetimepicker({format: 'YYYY-MM-DD HH:mm:ss'});
+};
+
+// Both doc.ready and doc.on(page:load) must be called due to Turbolinks. The
+//  doc.ready() is effectively unbound every time Turbolinks AJAX loads <body>
+//  content. Thus doc.on(page:load) is required to call the same activity when
+//  the page initially loads via Turbolinks.
+$(document).ready(dateWorkedDatetimepicker);
+$(document).on('page:load', dateWorkedDatetimepicker);

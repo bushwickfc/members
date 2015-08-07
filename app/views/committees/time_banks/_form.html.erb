@@ -25,20 +25,19 @@
     <%= f.hidden_field :committee_id %>
   </div>
   <div class="field">
+    <%= f.label :date_worked %><br>
+    <%= f.datetime_select :date_worked %>
+  </div>
+  <div class="field">
+    <%= f.label :hours_worked %><br>
+    <%= f.text_field :hours_worked, :maxlength => 2, :size => 10 %>
+  <div class="field">
     <%= f.label :time_type %><br>
     <%= f.select :time_type, @time_types, include_blank: true %>
   </div>
   <div class="field">
     <%= f.label :approved %><br>
     <%= f.check_box :approved %>
-  </div>
-  <div class="field">
-    <%= f.label :start %><br>
-    <%= f.datetime_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :finish %><br>
-    <%= f.datetime_select :finish %>
   </div>
 
   <%= f.fields_for :notes, [@note] do |builder| %>

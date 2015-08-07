@@ -24,15 +24,19 @@ class TimeBank < ActiveRecord::Base
 
   accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
+  before_validation :update_start_and_finish
   before_validation :penalty_swap
 
   validates :member_id, presence: true
   validates :admin_id,  presence: true
+  validates :date_worked,  presence: true
+  validates :hours_worked, presence: true, numericality: true, exclusion: { in: [0], message: "must not be zero" }
   validates :start,     presence: true
   validates :finish,    presence: true
   validates :time_type, inclusion: { in: @@time_types }
 
-  validate  :validate_positive_times, :validate_negative_times
+  validate  :validate_negative_hours_worked, :validate_positive_hours_worked, :validate_positive_times,
+    :validate_negative_times
 
   scope :unapproved_only, -> { where(approved: false) }
   scope :approved_only,   -> { where(approved: true) }
@@ -79,6 +83,34 @@ class TimeBank < ActiveRecord::Base
     swap_start_finish do
       update_columns(start: start, finish: finish) if persisted?
     end
+  end
+
+  # Facilitates migrating class properties from timestamps to a single timestamp and number of hours worked.
+  # @refs issue #16.
+  # Sets 'starts' to 'date_worked', and sets 'finish' to ('date_worked' + 'hours_worked.hours')
+  def update_start_and_finish
+    unless date_worked.nil? || hours_worked.nil?
+      self.start  = date_worked
+      self.finish = (date_worked + hours_worked.hours).to_datetime
+    end
+  end
+
+  # only allow negative hours_worked when this is a penalty or a gift_given
+  def validate_negative_hours_worked
+    return true if (time_type != "penalty" && time_type != "gift_given") || hours_worked.nil?
+    if r = hours_worked > 0
+      errors.add(:hours_worked, "must be negative for penalty or gift_given")
+    end
+    r
+  end
+
+  # hours must be a positive number unless a penalty or gift_given
+  def validate_positive_hours_worked
+    return true if (time_type == "gift_given" || time_type == "penalty") || hours_worked.nil?
+    if r = hours_worked < 0
+      errors.add(:hours_worked, "must be positive (unless a penalty or gift_given)")
+    end
+    r
   end
 
   # only check for negative times when it's for penalty

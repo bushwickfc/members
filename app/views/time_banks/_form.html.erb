@@ -23,6 +23,19 @@
     <%= f.label :committee_id %><br>
     <%= f.select :committee_id, @committees, include_blank: true %>
   </div>
+  <div class="field form-group">
+    <%= f.label :date_worked %><br>
+    <div class="input-group col-lg-2" id="datetimepicker-dateworked">
+      <%= f.text_field :date_worked, :class => 'form-control datetimepicker' %>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
+  </div>
+  <div class="field">
+    <%= f.label :hours_worked %><br>
+    <%= f.text_field :hours_worked, :maxlength => 4, :size => 10 %>
+  </div>
   <div class="field">
     <%= f.label :time_type %><br>
     <%= f.select :time_type, @time_types, include_blank: true %>
@@ -30,14 +43,6 @@
   <div class="field">
     <%= f.label :approved %><br>
     <%= f.check_box :approved %>
-  </div>
-  <div class="field">
-    <%= f.label :start %><br>
-    <%= f.datetime_select :start %>
-  </div>
-  <div class="field">
-    <%= f.label :finish %><br>
-    <%= f.datetime_select :finish %>
   </div>
 
   <%= f.fields_for :notes, [@note] do |builder| %>

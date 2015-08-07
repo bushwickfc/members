@@ -1,0 +1,2 @@
+# Precompile datetimepicker and moment dependency, to load after hard coded bootstrap script in application layout.
+Rails.application.config.assets.precompile += %w( moment.js bootstrap-datetimepicker.js )
