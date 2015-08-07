@@ -40,6 +40,30 @@ describe TimeBank do
       subject.errors[:finish].must_equal ["can't be blank"]
     end
 
+    it "date_worked" do
+      subject.date_worked = nil
+      subject.wont_be :valid?
+      subject.errors[:date_worked].must_equal ["can't be blank"]
+    end
+
+    it "hours_worked" do
+      subject.hours_worked = nil
+      subject.wont_be :valid?
+      subject.errors[:hours_worked].must_include "can't be blank"
+    end
+
+    it "hours_worked is non-zero" do
+      subject.hours_worked = 0
+      subject.wont_be :valid?
+      subject.errors[:hours_worked].must_include "must not be zero"
+    end
+
+    it "hours_worked is a number" do
+      subject.hours_worked = "the thirty-sixth chamber"
+      subject.wont_be :valid?
+      subject.errors[:hours_worked].must_include "is not a number"
+    end
+
     it "time_type" do
       subject.time_type = "invalid"
       subject.wont_be :valid?
@@ -50,7 +74,7 @@ describe TimeBank do
 
   describe "time_type" do
     describe "penalty" do
-      subject { TimeBank.new(member: @gus, admin_id: @addy.id, approved: true) }
+      subject { TimeBank.new(member: @gus, admin_id: @addy.id, date_worked: DateTime.yesterday, hours_worked: 4, approved: true) }
 
       it "swaps positive differences in setter" do
         subject.start = DateTime.yesterday
@@ -100,6 +124,16 @@ describe TimeBank do
   it "calculates virtual attribute hours" do
     @john_cashier_approved.send(:read_attribute, :hours).must_be :nil?
     @john_cashier_approved.hours.must_equal 4
+  end
+
+  it "hours_worked handles decimals" do
+    hrs_wrkd   = 4.25
+    new_finish = (@john_cashier_approved.date_worked + hrs_wrkd.hours).to_datetime
+
+    @john_cashier_approved.hours_worked = hrs_wrkd
+
+    @john_cashier_approved.must_be           :valid?
+    @john_cashier_approved.finish.must_equal new_finish
   end
 
   describe "Member::Proxy" do
@@ -203,6 +237,24 @@ describe TimeBank do
       expected = DateTime.current.strftime fmt
       @john.time_banks.last_shift(fmt).must_equal expected
     end
+  end
+
+  describe "#update_start_and_finish" do
+    dat_wrkd = DateTime.now
+    hrs_wrkd = 4
+    subject {
+      TimeBank.new(member: @morton, admin_id: @addy.id, date_worked: dat_wrkd, hours_worked: hrs_wrkd, approved: true)
+    }
+
+    it "updates start,finish from date_worked & hours_worked" do
+
+      subject.update_start_and_finish
+
+      subject.start.must_equal  dat_wrkd
+      subject.finish.must_equal (dat_wrkd + hrs_wrkd.hours).to_datetime
+    end
+
+
   end
 
 end
