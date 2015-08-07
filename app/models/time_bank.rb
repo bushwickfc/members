@@ -30,12 +30,13 @@ class TimeBank < ActiveRecord::Base
   validates :member_id, presence: true
   validates :admin_id,  presence: true
   validates :date_worked,  presence: true
-  validates :hours_worked, numericality: true, presence: true
+  validates :hours_worked, presence: true, numericality: true, exclusion: { in: [0], message: "must not be zero" }
   validates :start,     presence: true
   validates :finish,    presence: true
   validates :time_type, inclusion: { in: @@time_types }
 
-  validate  :validate_positive_times, :validate_negative_times
+  validate  :validate_negative_hours_worked, :validate_positive_hours_worked, :validate_positive_times,
+    :validate_negative_times
 
   scope :unapproved_only, -> { where(approved: false) }
   scope :approved_only,   -> { where(approved: true) }
@@ -92,6 +93,24 @@ class TimeBank < ActiveRecord::Base
       self.start  = date_worked
       self.finish = (date_worked + hours_worked.hours).to_datetime
     end
+  end
+
+  # only allow negative hours_worked when this is a penalty or a gift_given
+  def validate_negative_hours_worked
+    return true if (time_type != "penalty" && time_type != "gift_given") || hours_worked.nil?
+    if r = hours_worked > 0
+      errors.add(:hours_worked, "must be negative for penalty or gift_given")
+    end
+    r
+  end
+
+  # hours must be a positive number unless a penalty or gift_given
+  def validate_positive_hours_worked
+    return true if (time_type == "gift_given" || time_type == "penalty") || hours_worked.nil?
+    if r = hours_worked < 0
+      errors.add(:hours_worked, "must be positive (unless a penalty or gift_given)")
+    end
+    r
   end
 
   # only check for negative times when it's for penalty

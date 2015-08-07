@@ -123,15 +123,15 @@ ActiveRecord::Schema.define(version: 20150730212740) do
   add_index "notes", ["creator_id"], name: "index_notes_on_creator_id", using: :btree
 
   create_table "time_banks", force: true do |t|
-    t.integer  "member_id",                                             null: false
-    t.integer  "admin_id",                                              null: false
+    t.integer  "member_id",                                            null: false
+    t.integer  "admin_id",                                             null: false
     t.integer  "committee_id"
-    t.datetime "start",                                                 null: false
-    t.datetime "finish",                                                null: false
-    t.datetime "date_worked",                                           null: false
-    t.decimal  "hours_worked", precision: 10, scale: 0, default: 0,     null: false
-    t.string   "time_type",                                             null: false
-    t.boolean  "approved",                              default: false
+    t.datetime "start",                                                null: false
+    t.datetime "finish",                                               null: false
+    t.datetime "date_worked",                                          null: false
+    t.decimal  "hours_worked", precision: 4, scale: 2, default: 0.0,   null: false
+    t.string   "time_type",                                            null: false
+    t.boolean  "approved",                             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
