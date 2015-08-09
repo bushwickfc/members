@@ -41,6 +41,23 @@ class TimeBank < ActiveRecord::Base
   scope :include_parents, -> { includes(:admin, :member, :committee) }
   scope :select_all,      -> { select("#{table_name}.*").hours }
 
+  def initialize(attributes={})
+    date_hack(attributes, "date_worked")
+    super(attributes)
+  end
+
+  private def date_hack(attributes, property)
+    keys, values = [], []
+    attributes.each_key {|k| keys << k if k =~ /#{property}/ }.sort
+    keys.each { |k| values << attributes[k]; attributes.delete(k)}
+    if ! values.empty?
+      attributes["start"] = values.join("-").to_time
+      attributes["finish"] = attributes["start"] + attributes["hours_worked"].to_f.hours
+      attributes.delete("hours_worked")
+    end
+  end
+
+
   # @params range [Array|Range|Scalar] an array or range or two date strings
   def self.hours_between(*range)
     if range[0].kind_of?(String)
@@ -52,11 +69,23 @@ class TimeBank < ActiveRecord::Base
           start: range.first, finish: range.last)
   end
 
+  def date_worked
+    @date_worked ||= self.start.to_date
+  rescue
+    Date.current
+  end
+
+  def hours_worked
+    @hours_worked ||= hours
+  rescue NoMethodError
+    nil
+  end
+
   def hours
     if attributes["hours"]
       read_attribute(:hours).to_f 
     else
-      ((finish - start)/60.0/60.0).to_f
+      ((finish - start)/1.hour).to_f
     end
   rescue NoMethodError
     0.0

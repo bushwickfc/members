@@ -20,7 +20,7 @@ describe TimeBanksController do
 
   it "creates time_bank" do
     assert_difference('TimeBank.count') do
-      post :create, time_bank: { member_id: @john, admin_id: @addy, start: DateTime.current-4.hours, finish: DateTime.current, approved: true, time_type: "store_shift" }
+      post :create, time_bank: { member_id: @john, admin_id: @addy, 'date_worked(1i)'=> "2015", 'date_worked(2i)'=> "9", 'date_worked(3i)'=> "10", hours_worked: "4", approved: true, time_type: "store_shift" }
     end
 
     assert_redirected_to time_bank_path(assigns(:time_bank))

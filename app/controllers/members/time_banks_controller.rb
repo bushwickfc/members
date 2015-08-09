@@ -94,8 +94,10 @@ class Members::TimeBanksController < ApplicationController
         :member_id,
         :admin_id,
         :committee_id,
-        :start,
-        :finish,
+        "date_worked(1i)",
+        "date_worked(2i)",
+        "date_worked(3i)",
+        :hours_worked,
         :time_type,
         :approved,
         notes_attributes: note_params

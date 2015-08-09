@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from RuntimeError, NoMethodError, StandardError do |e|
+    Rails.logger.error(e)
     Rails.logger.error(e.backtrace.join("\n"))
     redirect_to root_url, alert: e.message
   end
