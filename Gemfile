@@ -18,7 +18,10 @@ gem 'redis-namespace'
 
 gem 'valid_email'
 #gem 'twitter-bootstrap-rails'
-gem 'bootstrap-datetimepicker-rails'
+
+# Twitter Bootstrap Datetimepicker
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.15.35'
 
 gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.0'
