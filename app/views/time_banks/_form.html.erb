@@ -31,9 +31,14 @@
     <%= f.label :approved %><br>
     <%= f.check_box :approved %>
   </div>
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :date_worked %><br>
-    <%= f.date_select :date_worked %>
+    <div class="input-group col-lg-2" id="datetimepicker-dateworked">
+      <%= f.text_field :date_worked, :class => 'form-control' %>
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+      </span>
+    </div>
   </div>
   <div class="field">
     <%= f.label :hours_worked %><br>
