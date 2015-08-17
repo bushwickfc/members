@@ -94,7 +94,7 @@ class TimeBank < ActiveRecord::Base
   end
 
   def date_worked=(date_worked_val)
-    self.attributes['date_worked'] = date_worked_val
+    @date_worked = date_worked_val
   end
 
   # Virtual attribute to provide better UX for inputting amount of time a
@@ -107,7 +107,7 @@ class TimeBank < ActiveRecord::Base
   end
 
   def hours_worked=(hours_worked_val)
-    self.attributes['hours_worked'] = hours_worked_val
+    @hours_worked = hours_worked_val
   end
 
   def hours
