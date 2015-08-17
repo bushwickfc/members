@@ -40,12 +40,74 @@ describe TimeBank do
       subject.errors[:finish].must_equal ["can't be blank"]
     end
 
+    it "date_worked not blank" do
+      subject.date_worked = ""
+      subject.wont_be :valid?
+      subject.errors[:date_worked].must_equal ["can't be blank"]
+    end
+
+    it "hours_worked not blank" do
+      subject.hours_worked = ""
+      subject.wont_be :valid?
+      subject.errors[:hours_worked].must_include "can't be blank"
+    end
+
+    it "hours_worked must be numeric" do
+      subject.hours_worked = "the thirty-sixth chamber"
+      subject.wont_be :valid?
+      subject.errors[:hours_worked].must_include "is not a number"
+    end
+
+    it "hours_worked nonzero" do
+      subject.hours_worked = 0
+      subject.wont_be :valid?
+      subject.errors[:hours_worked].must_include "must not be zero"
+    end
+
     it "time_type" do
       subject.time_type = "invalid"
       subject.wont_be :valid?
       subject.errors[:time_type].must_equal ["is not included in the list"]
     end
 
+  end
+
+  describe "virtual attributes getters defaults" do
+    subject { TimeBank.new }
+
+    it "returns 'today's date' as default value for date_worked" do
+      subject.date_worked.must_equal Date.today
+    end
+
+    it "returns '0.0' as default value for hours_worked" do
+      subject.hours_worked.must_equal 0.0
+    end
+  end
+
+  describe "virtual attributes setters" do
+    yesterday    = Date.yesterday
+    two_days_ago = 2.days.ago
+    subject { TimeBank.new({member: @gus, admin_id: @addy.id, date_worked: Date.yesterday, hours_worked: 2.5,
+      time_type: "store_shift", approved: true
+    }) }
+
+    it "sets date_worked via instantiation" do
+      subject.date_worked.must_equal Date.yesterday
+    end
+
+    it "sets date_worked via property manipulation" do
+      subject.date_worked = two_days_ago
+      subject.date_worked.must_equal two_days_ago
+    end
+
+    it "sets hours_worked via instantiation" do
+      subject.hours_worked.must_equal 2.5
+    end
+
+    it "sets hours_worked via property manipulation" do
+      subject.hours_worked = 4.25
+      subject.hours_worked.must_equal 4.25
+    end
   end
 
   describe "time_type" do
