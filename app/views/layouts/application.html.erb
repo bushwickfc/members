@@ -14,6 +14,8 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/<%= bootstrap_version %>/js/bootstrap.min.js"></script>
     <script src="//cdn.datatables.net/<%= datatables_version %>/js/jquery.dataTables.js"></script>
     <script src="//cdn.datatables.net/plug-ins/<%= datatables_bootstrap_version %>/integration/bootstrap/<%= bootstrap_version[0] %>/dataTables.bootstrap.js"></script>
+    <%= javascript_include_tag 'moment', 'data-turbolinks-track' => false %>
+    <%= javascript_include_tag 'bootstrap-datetimepicker', 'data-turbolinks-track' => false %>
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js">
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js">

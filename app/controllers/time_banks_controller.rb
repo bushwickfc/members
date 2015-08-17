@@ -101,8 +101,8 @@ class TimeBanksController < ApplicationController
         :member_id,
         :admin_id,
         :committee_id,
-        :start,
-        :finish,
+        :date_worked,
+        :hours_worked,
         :time_type,
         :approved,
         notes_attributes: note_params

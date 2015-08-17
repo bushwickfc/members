@@ -19,9 +19,12 @@ describe Hold do
     end
 
     it "member" do
-      subject.member.update_column(:work_date, Date.current - 1.year)
-      subject.wont_be :valid?
-      subject.errors[:member_id].must_equal ["must be able to shop"]
+      subject.member.update_column(:work_date, Date.current - 2.year)
+      subject.start = Date.current
+      subject.finish = Date.current + 1.month
+      subject.creator = Admin.first
+        subject.wont_be :valid?
+        subject.errors[:member_id].must_equal ["must be able to shop"]
     end
   end
 end

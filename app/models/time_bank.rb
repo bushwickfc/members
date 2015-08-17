@@ -26,11 +26,13 @@ class TimeBank < ActiveRecord::Base
 
   before_validation :penalty_swap
 
-  validates :member_id, presence: true
-  validates :admin_id,  presence: true
-  validates :start,     presence: true
-  validates :finish,    presence: true
-  validates :time_type, inclusion: { in: @@time_types }
+  validates :member_id,    presence: true
+  validates :admin_id,     presence: true
+  validates :date_worked,  presence: true
+  validates :hours_worked, presence: true, numericality: true, exclusion: { in: [0], message: "must not be zero" }
+  validates :start,        presence: true
+  validates :finish,       presence: true
+  validates :time_type,    inclusion: { in: @@time_types }
 
   validate  :validate_positive_times, :validate_negative_times
 
@@ -40,6 +42,36 @@ class TimeBank < ActiveRecord::Base
   scope :hours_summed,    -> { select(HOURS_SELECT % "SUM") }
   scope :include_parents, -> { includes(:admin, :member, :committee) }
   scope :select_all,      -> { select("#{table_name}.*").hours }
+
+  # Overriding initialize() due to manipulation of time data with values from
+  #  virtual attributes 'date_worked' and 'hours_worked'.
+  # @see TimeBank::date_hack()
+  def initialize(attributes={})
+    date_hack(attributes)
+    super(attributes)
+  end
+
+  # Overriding update() due to manipulation of time data with values from
+  #  virtual attributes 'date_worked' and 'hours_worked'.
+  # @see TimeBank::date_hack()
+  def update(attributes={})
+    date_hack(attributes)
+    super(attributes)
+  end
+
+  # Facilitates better UX for user input of a single date, and amount of hours
+  #  worked on that date, while preserving the original functionality of the
+  #  start time and finish time.
+  # @see TimeBank::date_worked() and TimeBank::hours_worked()
+  private def date_hack(attributes)
+    if !attributes["date_worked"].nil? && !attributes["date_worked"].blank?
+      attributes["start"]  = attributes["date_worked"].to_time
+      attributes["finish"] = attributes["start"] + attributes["hours_worked"].to_f.hours
+
+      attributes.delete("date_worked")
+      attributes.delete("hours_worked")
+    end
+  end
 
   # @params range [Array|Range|Scalar] an array or range or two date strings
   def self.hours_between(*range)
@@ -52,11 +84,37 @@ class TimeBank < ActiveRecord::Base
           start: range.first, finish: range.last)
   end
 
+  # Virtual attribute to provide better UX for inputting a Member's work on a
+  #  given day. Value is converted into TimeBank.start.
+  # @see TimeBank::date_hack()
+  def date_worked
+    @date_worked ||= self.start.to_date
+  rescue
+    Date.current
+  end
+
+  def date_worked=(date_worked_val)
+    @date_worked = date_worked_val
+  end
+
+  # Virtual attribute to provide better UX for inputting amount of time a
+  #  Member worked on a given day. Value is used to determine TimeBank.finish.
+  # @see TimeBank::date_hack()
+  def hours_worked
+    @hours_worked ||= hours
+  rescue NoMethodError
+    nil
+  end
+
+  def hours_worked=(hours_worked_val)
+    @hours_worked = hours_worked_val
+  end
+
   def hours
     if attributes["hours"]
       read_attribute(:hours).to_f 
     else
-      ((finish - start)/60.0/60.0).to_f
+      ((finish - start)/1.hour).to_f
     end
   rescue NoMethodError
     0.0
@@ -95,6 +153,7 @@ class TimeBank < ActiveRecord::Base
     return true if (time_type == "gift_given" || time_type == "penalty") || start.nil? || finish.nil?
     if r = start >= finish
       errors.add(:start, "must come before finish")
+      errors.add(:hours_worked, "must be positive for this time type")
     end
     r
   end

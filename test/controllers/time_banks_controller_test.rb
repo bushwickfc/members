@@ -14,7 +14,7 @@ describe TimeBanksController do
       get :index, all: 1
       assert_response :success
       assert_not_nil assigns(:time_banks)
-      assert_equal assigns(:time_banks).to_a.count, 17
+      assert_equal assigns(:time_banks).to_a.count, 23
     end
 
     it "gets unapproved index" do
@@ -37,7 +37,10 @@ describe TimeBanksController do
 
   it "creates time_bank" do
     assert_difference('TimeBank.count') do
-      post :create, time_bank: { member_id: @john, admin_id: @addy, start: DateTime.current-4.hours, finish: DateTime.current, approved: true, time_type: "store_shift" }
+      post :create, time_bank: {
+        member_id: @john, admin_id: @addy, date_worked: "2015-9-10", hours_worked: 1, approved: true,
+        time_type: "store_shift"
+      }
     end
 
     assert_redirected_to time_bank_path(assigns(:time_bank))
@@ -60,7 +63,10 @@ describe TimeBanksController do
   end
 
   it "updates time_bank" do
-    put :update, id: @john_cashier_approved, time_bank: { member_id: @john, admin_id: @addy, start: DateTime.current-4.hours, finish: DateTime.current, approved: true, time_type: "store_shift" }
+    put :update, id: @john_cashier_approved, time_bank: {
+      member_id: @john, admin_id: @addy, date_worked: "2015-9-10", hours_worked: 4, approved: true,
+      time_type: "store_shift"
+    }
     assert_redirected_to time_bank_path(assigns(:time_bank))
   end
 
