@@ -79,3 +79,10 @@ body {
   font-family: "Courier New";
 }
 
+.note-button {
+  margin: 10px 0px 10px 0px;
+}
+
+#note {
+  margin-bottom: 10px;
+}
