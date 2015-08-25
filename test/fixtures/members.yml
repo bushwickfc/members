@@ -83,6 +83,20 @@ suzy:
   membership_discount: 0.0
   annual_discount: 0.0
 
+simon:
+  <<: *DEFAULTS
+  first_name: Simon
+  last_name: Zzz
+  email: sz@gmail.com
+  admin: false
+  status: suspended
+  join_date: <%= Date.current - 1.year %>
+  work_date: <%= Date.current - 1.year %>
+  membership_agreement: true
+  monthly_hours: 4.0
+  membership_discount: 0.0
+  annual_discount: 0.0
+
 slim:
   <<: *DEFAULTS
   first_name: Slim

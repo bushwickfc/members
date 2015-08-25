@@ -64,6 +64,7 @@ describe Struct::MembershipStatus do
       it "is false for '#{s}'" do
         attrs = member_hash.values
         attrs[0] = s
+        attrs[8] = -16
         status = Struct::MembershipStatus.new(*attrs)
         status.check_status.must_equal false
         status.messages.must_equal ["#{s.capitalize} membership"]

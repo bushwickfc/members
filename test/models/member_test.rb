@@ -126,7 +126,7 @@ describe Member do
   end
 
   it 'finds current users who can shop' do
-    Member.cached_can_shop.count.must_equal 7
+    Member.cached_can_shop.count.must_equal 8
   end
 
   it 'finds all notes' do

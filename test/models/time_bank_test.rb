@@ -76,7 +76,7 @@ describe TimeBank do
     subject { TimeBank.new }
 
     it "returns 'today's date' as default value for date_worked" do
-      subject.date_worked.must_equal Date.today
+      subject.date_worked.must_equal Date.current
     end
 
     it "returns '0.0' as default value for hours_worked" do

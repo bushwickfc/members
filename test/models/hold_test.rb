@@ -2,7 +2,7 @@ require "test_helper"
 
 describe Hold do
   describe "invalidates attribute" do
-    subject { Hold.new(member: Member.find_by(admin: true)) }
+    subject { Hold.new(member: Member.find_by(status: "suspended")) }
 
     %w[inactive canceled suspended].each do |status|
       it "member for status #{status}" do
