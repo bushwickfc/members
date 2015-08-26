@@ -15,7 +15,7 @@ class UpdateHoldsAndLeaves
 
       parentals = Parental.active_between(start_lmonth, finish_lmonth)
       parentals.each do |parental|
-        UpdateHoldsAndLeaves.perform_async(parental.member_id, start_lmonth.to_s, finish_lmonth.to_s, "parental", hold.creator.id)
+        UpdateHoldsAndLeaves.perform_async(parental.member_id, start_lmonth.to_s, finish_lmonth.to_s, "parental", parental.creator.id)
       end
 
     else

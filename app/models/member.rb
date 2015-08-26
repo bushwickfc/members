@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'struct/membership_status'
 
 class Member < ActiveRecord::Base
   devise :database_authenticatable,

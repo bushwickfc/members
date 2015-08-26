@@ -42,7 +42,7 @@ Struct.new("MembershipStatus",
       messages << "Not a member"
 
     # enforce suspended status, if their hours warrant it, or reprocess them
-    elsif (status == "suspended" && time_bank_balance <= -8.25) || 
+    elsif (status == "suspended" && (time_bank_balance <= -8.25 || membership_fees_overdue)) || 
            status == "canceled" || status == "inactive"
       @status_ok = false
       messages << "#{status.capitalize} membership"
@@ -71,7 +71,8 @@ Struct.new("MembershipStatus",
       @status_ok = true
       self.status = "work_alert"
 
-    elsif (status == "suspended" && time_bank_balance > -8.25) || status == "active" || status.blank?
+    elsif (status == "suspended" && time_bank_balance > -8.25 && !membership_fees_overdue) ||
+           status == "active" || status.blank?
       @status_ok = true
       self.status = "active"
 
