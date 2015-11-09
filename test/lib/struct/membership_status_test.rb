@@ -207,16 +207,16 @@ describe Struct::MembershipStatus do
       status.status.must_equal "inactive"
     end
 
-    it "is true for balances > -16 && <= -8.25" do
+    it "is false for balances > -16 && <= -8.00" do
       attrs = member_hash.values
-      attrs[8] = -8.25
+      attrs[8] = -8.00
       status = Struct::MembershipStatus.new(*attrs)
       status.check_hours.must_equal false
-      status.messages.must_equal ["Suspended, owes 8.25 hours", "Last shift Feb 02, 2015"]
+      status.messages.must_equal ["Suspended, owes 8.0 hours", "Last shift Feb 02, 2015"]
       status.status.must_equal "suspended"
     end
 
-    it "is true for balances < 0" do
+    it "is true for balances < 0 && > -8" do
       attrs = member_hash.values
       attrs[8] = -7
       status = Struct::MembershipStatus.new(*attrs)

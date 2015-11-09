@@ -108,7 +108,11 @@ describe Member do
   end
 
   it "calculates hours owed" do
-    @john.hours_owed.must_equal 48
+    @suzy.hours_owed.must_equal 4
+  end
+
+  it "returns max hours owed no greater than 8.0" do
+    @john.hours_owed.must_equal 8
   end
 
   it 'generates a hashed email' do
