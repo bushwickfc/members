@@ -148,8 +148,10 @@ class Member < ActiveRecord::Base
     end.floor
   end
 
+  # Members should not go into debt beyond 8 hours, so regardless of status
+  #  or work history, members should never owe more than 8 hours.
   def hours_owed
-    work_in(:months) * monthly_hours
+    (hrs = work_in(:months) * monthly_hours) < 8.0 ? hrs : 8
   end
 
   def full_name
