@@ -170,10 +170,8 @@ describe TimeBank do
     end
 
     describe "#balance" do
-      it "calculates the difference between worked and owed" do
-        @john.work_date = DateTime.current - 3.months
-        @john.time_banks.balance.must_equal -4
-      end
+      # Beyond 2 months, members owe no further hours, as the max hours_owed
+      #  is 8 hours.
       it "calculates the difference between worked and owed" do
         @john.work_date = DateTime.current - 2.months
         @john.time_banks.balance.must_equal 0
@@ -232,14 +230,18 @@ describe TimeBank do
       end
 
       it "is true if !current? and !suspended?" do
-        @john.time_banks.stub(:suspended?, false, :current?, false) do
-          @john.time_banks.can_shop?.must_equal true
+        @john.time_banks.stub(:current?, false) do
+          @john.time_banks.stub(:suspended?, false) do
+            @john.time_banks.can_shop?.must_equal true
+          end
         end
       end
 
       it "is false if !current? and suspended?" do
-        @john.time_banks.stub(:current?, false, :suspended?, true) do
-          @john.time_banks.can_shop?.must_equal false
+        @john.time_banks.stub(:current?, false) do
+          @john.time_banks.stub(:suspended?, true) do
+            @john.time_banks.can_shop?.must_equal false
+          end
         end
       end
 
