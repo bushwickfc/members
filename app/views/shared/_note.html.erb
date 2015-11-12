@@ -4,7 +4,7 @@
   });
 </script>
 <section>
-  <h3 style="display:inline;">Note</h3> <input type=checkbox name="note_toggle" onclick="$('#note').toggle()">
+  <button type="button" class="btn btn-info note-button" onclick="$('#note').toggle()">Note</button> 
   <div id="note">
     <%= f.hidden_field :commentable_id  %>
     <%= f.hidden_field :commentable_type %>
