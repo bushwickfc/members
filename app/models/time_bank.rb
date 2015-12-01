@@ -2,6 +2,7 @@ class TimeBank < ActiveRecord::Base
   # format string used to insert SUM or nothing
   HOURS_SELECT = "IFNULL(CAST(%s(UNIX_TIMESTAMP(finish)-UNIX_TIMESTAMP(start))/60.0/60.0 AS DECIMAL(10,2)), 0.0) AS hours"
   HOURS_SUSPENDED = -4
+  MAX_HOURS_OWED = -8.0
   cattr_reader :time_types
   @@time_types = %w[
     store_shift
@@ -25,6 +26,7 @@ class TimeBank < ActiveRecord::Base
   accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
   before_validation :penalty_swap
+  after_save :update_member_status
 
   validates :member_id,    presence: true
   validates :admin_id,     presence: true
@@ -166,6 +168,11 @@ class TimeBank < ActiveRecord::Base
     write_attribute(:start, finish)
     write_attribute(:finish, s)
     block_given? ? yield : true
+  end
+
+  private def update_member_status
+    member.can_shop?
+    true
   end
 
   module TimeBank::MemberProxy

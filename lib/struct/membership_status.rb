@@ -34,6 +34,14 @@ Struct.new("MembershipStatus",
     !(status == "volunteer" || status == "interested" || join_date.blank?)
   end
 
+  def might_shop?
+    %w[inactive suspended work_alert].include?(status)
+  end
+
+  def eligible_to_shop?
+    time_bank_balance > TimeBank::MAX_HOURS_OWED && !membership_fees_overdue
+  end
+
   def check_status
     return @status_ok unless @status_ok.nil?
 
@@ -41,9 +49,15 @@ Struct.new("MembershipStatus",
       @status_ok = false
       messages << "Not a member"
 
+    elsif (status == 'active' || might_shop?) && eligible_to_shop?
+      @status_ok = true
+      self.status = "active"
+
+    elsif status == 'active' && !eligible_to_shop?
+      @status_ok = false
+
     # enforce suspended status, if their hours warrant it, or reprocess them
-    elsif (status == "suspended" && (time_bank_balance <= -8.25 || membership_fees_overdue)) || 
-           status == "canceled" || status == "inactive"
+    elsif (might_shop? && !eligible_to_shop?) || status == "canceled"
       @status_ok = false
       messages << "#{status.capitalize} membership"
 
@@ -71,8 +85,7 @@ Struct.new("MembershipStatus",
       @status_ok = true
       self.status = "work_alert"
 
-    elsif (status == "suspended" && time_bank_balance > -8.25 && !membership_fees_overdue) ||
-           status == "active" || status.blank?
+    elsif status.blank?
       @status_ok = true
       self.status = "active"
 
@@ -110,7 +123,7 @@ Struct.new("MembershipStatus",
       @hours_ok = false
       self.status = "inactive"
       messages << "Inactive, owes 16+ hours"
-    elsif time_bank_balance > -16 && time_bank_balance <= -8.25
+    elsif time_bank_balance <= TimeBank::MAX_HOURS_OWED
       @hours_ok = false
       self.status = "suspended"
       messages << "Suspended, owes #{time_bank_balance.abs} hours"

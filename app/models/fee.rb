@@ -9,6 +9,8 @@ class Fee < ActiveRecord::Base
   belongs_to :creator, class_name: "Member"
   has_many   :notes, as: :commentable
 
+  after_save :update_member_status
+
   accepts_nested_attributes_for :notes, reject_if: proc {|a| a['note'].blank?}
 
   validates :member_id, presence: true
@@ -22,6 +24,11 @@ class Fee < ActiveRecord::Base
   scope :membership_payment, -> { where(payment_type: "membership") }
   scope :annual_payment,     -> { where(payment_type: "annual") }
   scope :include_parents,    -> { includes :member, :creator }
+
+  private def update_member_status
+    member.can_shop?
+    true
+  end
 
   module MemberProxy
     def membership_payment_total
