@@ -23,6 +23,9 @@ json.array!(@members) do |member|
     :membership_agreement,
     :monthly_hours,
     :membership_discount,
-    :annual_discount
+    :annual_discount,
+    :hours,
+    :hours_owed,
+    :hours_difference,
   json.url member_url(member, format: :json)
 end

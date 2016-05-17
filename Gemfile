@@ -47,5 +47,6 @@ group :development, :test do
   gem 'pry-nav'
   gem 'pry-stack_explorer'
   gem 'minitest-rails'
+  gem 'timecop'
 end
 

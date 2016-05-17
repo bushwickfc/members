@@ -4,7 +4,7 @@ describe Hold do
   describe "invalidates attribute" do
     subject { Hold.new(member: Member.find_by(status: "suspended")) }
 
-    %w[inactive canceled suspended].each do |status|
+    %w[suspended].each do |status|
       it "member for status #{status}" do
         subject.member.update_column(:status, status)
         subject.wont_be :valid?

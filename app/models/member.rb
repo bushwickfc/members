@@ -10,7 +10,7 @@ class Member < ActiveRecord::Base
   ANNUAL_FEE     = 25
   FULL_NAME      = 'LTRIM(CONCAT_WS(" ", first_name, last_name)) AS full_name'
   cattr_reader :statuses, :contact_preferences
-  @@statuses = %w[active work_alert inactive suspended hold parental canceled interested volunteer].sort.freeze
+  @@statuses = %w[active work_alert suspended hold parental].sort.freeze
   @@contact_preferences = %w[email phone].sort.freeze
 
   has_many :committees,   dependent: :restrict_with_exception
@@ -42,8 +42,17 @@ class Member < ActiveRecord::Base
   scope     :status_totals, -> { select("count(*) as total, status").group(:status).order(:status) }
   scope     :form_select, -> { full_name.select(:id) }
   scope     :full_name,   -> { select(FULL_NAME) }
-  scope     :cached_cant_shop, -> { where(status: %w[inactive canceled volunteer interested hold]) }
-  scope     :cached_can_shop, -> { where(status: [nil, "work_alert", "suspended", "active", "parental"]) }
+  scope     :cached_cant_shop, -> { where(status: %w[suspended hold]) }
+  scope     :cached_can_shop, -> { where(status: [nil, "work_alert", "active", "parental"]) }
+  scope     :downloadable, -> { 
+    joins(:time_banks).
+      where(TimeBank.approved_only.where_sql[5..-1]).
+      select("members.*").
+      merge(TimeBank.hours_summed).
+      merge(TimeBank.hours_owed).
+      merge(TimeBank.hours_difference).
+      group("members.id")
+  }
 
   def self.by_email_hash(hash)
     find_by!("SHA1(email) = ?", hash)

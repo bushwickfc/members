@@ -18,8 +18,8 @@ addy:
   first_name: Addy
   last_name: admin
   email: admin@b.com
-  join_date: 2014-06-17
-  work_date: 2014-06-17
+  join_date: <%= Date.current - 2.years %>
+  work_date: <%= Date.current - 2.years %>
   admin: true
   status: active
   membership_agreement: true
@@ -103,9 +103,9 @@ slim:
   last_name: Zzz
   email: sl@gmail.com
   admin: false
-  status: inactive
-  join_date: <%= Date.current - 5.weeks %>
-  work_date: <%= Date.current - 5.weeks %>
+  status: suspended
+  join_date: <%= Date.current - 12.weeks %>
+  work_date: <%= Date.current - 12.weeks %>
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
@@ -117,9 +117,9 @@ safe_delete:
   last_name: Keaton
   email: a@gmail.com
   admin: false
-  join_date: 2014-06-17
-  work_date: 2014-06-17
-  status: interested
+  join_date: <%= Date.current - 2.years %>
+  work_date: <%= Date.current - 2.years %>
+  status: suspended
   membership_agreement: true
   monthly_hours: 4.0
   membership_discount: 0.0
@@ -131,8 +131,8 @@ member1:
   last_name: Last1
   email: a@gmail.com
   admin: false
-  join_date: 2014-06-17
-  work_date: 2014-06-17
+  join_date: <%= Date.current - 2.years %>
+  work_date: <%= Date.current - 2.years %>
   status: active
   membership_agreement: true
   monthly_hours: 4.0

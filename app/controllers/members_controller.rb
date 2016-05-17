@@ -10,18 +10,17 @@ class MembersController < ApplicationController
   def index
     if params[:search]
       @members = Member.unscoped.name_like(valid_search_params).order(:last_name, :first_name)
-    elsif params[:inactive]
-      @members = Member.where(status: %w[canceled inactive])
-    elsif params[:interested]
-      @members = Member.where(status: %w[volunteer interested])
+    elsif params[:suspended]
+      @members = Member.where(status: %w[suspended]).downloadable
     elsif params[:active_unpaid]
       mems = Member.cached_can_shop.inject([]) do |ary,member|
         ary << member.id unless member.fees.membership_paid?
         ary
       end
-      @members = Member.where(id: mems)
+      @members = Member.where(id: mems).downloadable
     else
-      @members = Member.cached_can_shop
+      @members = Member.cached_can_shop.downloadable
+      Rails.logger.debug ("HEY #{@members.collect(&:membership_status)}")
     end
     @status_totals = Member.status_totals
     if current_member.admin?
