@@ -31,7 +31,7 @@ Struct.new("MembershipStatus",
   end
 
   def a_member?
-    !(status == "volunteer" || status == "interested" || join_date.blank?)
+    !join_date.blank?
   end
 
   def check_status
@@ -42,8 +42,7 @@ Struct.new("MembershipStatus",
       messages << "Not a member"
 
     # enforce suspended status, if their hours warrant it, or reprocess them
-    elsif (status == "suspended" && (time_bank_balance <= -8.25 || membership_fees_overdue)) || 
-           status == "canceled" || status == "inactive"
+    elsif status == "suspended" && (time_bank_balance <= -8.25 || membership_fees_overdue)
       @status_ok = false
       messages << "#{status.capitalize} membership"
 
@@ -89,7 +88,7 @@ Struct.new("MembershipStatus",
     return false unless a_member?
 
     if membership_fees_overdue
-      self.status = "inactive"
+      self.status = "suspended"
       @fees_ok = false
       messages << "Membership fees not paid in 2 months, balance $%0.2f" % membership_fees_balance
     elsif membership_fees_balance > 0
@@ -106,11 +105,7 @@ Struct.new("MembershipStatus",
     return @hours_ok unless @hours_ok.nil?
     return false unless a_member?
 
-    if time_bank_balance <= -16
-      @hours_ok = false
-      self.status = "inactive"
-      messages << "Inactive, owes 16+ hours"
-    elsif time_bank_balance > -16 && time_bank_balance <= -8.25
+    if time_bank_balance <= -8.25
       @hours_ok = false
       self.status = "suspended"
       messages << "Suspended, owes #{time_bank_balance.abs} hours"

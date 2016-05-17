@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Listing <%= (params[:interested] && "interested") || (params[:inactive] && "inactive") || "active" %> members</h1>
+  <h1>Listing <%= (params[:suspended] && "suspended") || "active" %> members</h1>
 
   <h5>Membership summary</h5>
   <ul id="status-totals" class="clearfix">
@@ -24,7 +24,7 @@
       <th>Status</th>
       <th>Join date</th>
       <th>Work date</th>
-      <th>Membership<br>agreement</th>
+      <th>Time Balance</th>
       <th></th>
     </tr>
   </thead>
@@ -50,7 +50,7 @@
         <td><%= search_link(member, :status) %></td>
         <td><%= search_link(member, :join_date) %></td>
         <td><%= search_link(member, :work_date) %></td>
-        <td><%= search_link(member, :membership_agreement) %></td>
+        <td><%= member.hours_difference %></td>
         <td>
           <%= link_to 'Show', member_path(member), role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_member_path(member), role:'button', class:'btn btn-primary'  %>&nbsp;

@@ -36,15 +36,6 @@ describe Struct::MembershipStatus do
       status.wont_be :a_member?
     end
 
-    %w[volunteer interested].each do |s|
-      it "is false if status is '#{s}'" do
-        attrs = member_hash.values
-        attrs[0] = s
-        status = Struct::MembershipStatus.new(*attrs)
-        status.wont_be :a_member?
-      end
-    end
-
     it "is true otherwise" do
       status = Struct::MembershipStatus.new(*member_hash.values)
       status.must_be :a_member?
@@ -60,7 +51,7 @@ describe Struct::MembershipStatus do
       end
     end
 
-    %w[canceled suspended inactive].each do |s|
+    %w[suspended].each do |s|
       it "is false for '#{s}'" do
         attrs = member_hash.values
         attrs[0] = s
@@ -169,7 +160,7 @@ describe Struct::MembershipStatus do
       status = Struct::MembershipStatus.new(*attrs)
       status.check_membership_fees.must_equal false
       status.messages.must_equal ["Membership fees not paid in 2 months, balance $1.00"]
-      status.status.must_equal "inactive"
+      status.status.must_equal "suspended"
     end
 
     it "is true if membership_fees_balance" do
@@ -198,16 +189,7 @@ describe Struct::MembershipStatus do
       end
     end
 
-    it "is false for balances <= -16" do
-      attrs = member_hash.values
-      attrs[8] = -16
-      status = Struct::MembershipStatus.new(*attrs)
-      status.check_hours.must_equal false
-      status.messages.must_equal ["Inactive, owes 16+ hours", "Last shift Feb 02, 2015"]
-      status.status.must_equal "inactive"
-    end
-
-    it "is true for balances > -16 && <= -8.25" do
+    it "is true for balances <= -8.25" do
       attrs = member_hash.values
       attrs[8] = -8.25
       status = Struct::MembershipStatus.new(*attrs)

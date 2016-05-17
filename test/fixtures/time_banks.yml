@@ -1,7 +1,7 @@
 # Read about fixtures at
 # http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-<% ((Date.current-Date.parse('2014-06-17')).to_i/30).times do |i| %>
+<% ((Date.current - (Date.current-2.years)).to_i/30).times do |i| %>
 addy_cashier_approved_<%= i%>:
   member: addy
   admin: addy

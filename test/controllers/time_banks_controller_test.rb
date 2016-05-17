@@ -14,7 +14,7 @@ describe TimeBanksController do
       get :index, all: 1
       assert_response :success
       assert_not_nil assigns(:time_banks)
-      assert_equal assigns(:time_banks).to_a.count, 23
+      assert_equal assigns(:time_banks).to_a.count, 33
     end
 
     it "gets unapproved index" do

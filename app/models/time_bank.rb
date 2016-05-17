@@ -40,6 +40,7 @@ class TimeBank < ActiveRecord::Base
   scope :approved_only,   -> { where(approved: true) }
   scope :hours,           -> { select(HOURS_SELECT % nil) }
   scope :hours_summed,    -> { select(HOURS_SELECT % "SUM") }
+  scope :hours_owed,      -> { joins(:member).select %Q{FLOOR(DATEDIFF(NOW(), members.work_date) / 30)* members.monthly_hours AS hours_owed }}
   scope :include_parents, -> { includes(:admin, :member, :committee) }
   scope :select_all,      -> { select("#{table_name}.*").hours }
 
@@ -71,6 +72,15 @@ class TimeBank < ActiveRecord::Base
       attributes.delete("date_worked")
       attributes.delete("hours_worked")
     end
+  end
+
+  # Find the difference between the hours worked and the hours owed
+  def self.hours_difference
+    TimeBank.hours_owed.to_sql[/SELECT (.*) AS [^\s]+ *FROM.*/]
+    owed = $1
+    TimeBank.hours_summed.to_sql[/SELECT (.*) AS [^\s]+ *FROM.*/]
+    summed = $1
+    select("((#{summed}) - (#{owed})) AS hours_difference")
   end
 
   # @params range [Array|Range|Scalar] an array or range or two date strings

@@ -6,21 +6,7 @@ describe MembersController do
     get :index
     assert_response :success
     assert_not_nil assigns(:members)
-    assert_equal assigns(:members).to_a.count, 8
-  end
-
-  it "gets interested index" do
-    get :index, interested: 1
-    assert_response :success
-    assert_not_nil assigns(:members)
-    assert_equal assigns(:members).to_a.count, 1
-  end
-
-  it "gets inactive index" do
-    get :index, inactive: 1
-    assert_response :success
-    assert_not_nil assigns(:members)
-    assert_equal assigns(:members).to_a.count, 1
+    assert_equal 5, assigns(:members).to_a.count
   end
 
   it "gets new" do

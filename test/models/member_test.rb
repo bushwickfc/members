@@ -75,8 +75,8 @@ describe Member do
     it "determines membership length in #{gauge}, for member2" do
       result = @member2.membership_in(gauge)
       case gauge
-      when :days    then result.must_equal 1826
-      when :weeks   then result.must_equal 260
+      when :days    then result.must_equal 1827
+      when :weeks   then result.must_equal 261
       when :months  then result.must_equal 60
       when :years   then result.must_equal 5
       end
@@ -122,11 +122,11 @@ describe Member do
   end
 
   it 'finds current users who can\'t shop' do
-    Member.cached_cant_shop.count.must_equal 2
+    Member.cached_cant_shop.count.must_equal 3
   end
 
   it 'finds current users who can shop' do
-    Member.cached_can_shop.count.must_equal 8
+    Member.cached_can_shop.count.must_equal 7
   end
 
   it 'finds all notes' do

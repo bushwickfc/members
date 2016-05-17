@@ -4,7 +4,7 @@ require 'clockwork'
 
 include Clockwork
 
-every(1.day, 'Update status cache, for all members not suspended or canceled', at: ['11:55']) do
+every(1.day, 'Update status cache, for all members not suspended', at: ['11:55']) do
   UpdateMemberStatus.perform_async
 end
 
