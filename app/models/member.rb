@@ -106,8 +106,8 @@ class Member < ActiveRecord::Base
     fname = params[:first_name]
     lname = params[:last_name]
     rel = default_scoped
-    rel = rel.where("first_name LIKE '%#{fname}%'") if fname
-    rel = rel.where("last_name LIKE '%#{lname}%'") if lname
+    rel = rel.where("members.first_name LIKE '%#{fname}%'") if fname
+    rel = rel.where("members.last_name LIKE '%#{lname}%'") if lname
     rel
   end
 

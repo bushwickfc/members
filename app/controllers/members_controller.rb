@@ -9,7 +9,7 @@ class MembersController < ApplicationController
   # GET /members.csv
   def index
     if params[:search]
-      @members = Member.unscoped.name_like(valid_search_params).order(:last_name, :first_name)
+      @members = Member.unscoped.name_like(valid_search_params).order(:last_name, :first_name).downloadable
     elsif params[:suspended]
       @members = Member.where(status: %w[suspended]).downloadable
     elsif params[:active_unpaid]
@@ -20,7 +20,7 @@ class MembersController < ApplicationController
       @members = Member.where(id: mems).downloadable
     else
       @members = Member.cached_can_shop.downloadable
-      Rails.logger.debug ("HEY #{@members.collect(&:membership_status)}")
+      Rails.logger.debug (@members.collect(&:membership_status))
     end
     @status_totals = Member.status_totals
     if current_member.admin?
