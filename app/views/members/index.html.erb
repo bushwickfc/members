@@ -50,7 +50,7 @@
         <td><%= search_link(member, :status) %></td>
         <td><%= search_link(member, :join_date) %></td>
         <td><%= search_link(member, :work_date) %></td>
-        <td><%= member.hours_difference %></td>
+        <td><%= member.hours_difference rescue nil %></td>
         <td>
           <%= link_to 'Show', member_path(member), role:'button', class:'btn btn-info'  %>&nbsp;
           <%= link_to 'Edit', edit_member_path(member), role:'button', class:'btn btn-primary'  %>&nbsp;
