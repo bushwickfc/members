@@ -50,6 +50,9 @@
         <%= link_to 'Active', members_path %>
       </li>
       <li>
+        <%= link_to 'All', members_path(all: 1, format: :csv) %>
+      </li>
+      <li>
         <%= link_to 'Active Unpaid Fees', members_path(active_unpaid: 1) %>
       </li>
       <li>

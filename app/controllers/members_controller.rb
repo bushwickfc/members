@@ -12,6 +12,8 @@ class MembersController < ApplicationController
       @members = Member.unscoped.name_like(valid_search_params).order(:last_name, :first_name)
     elsif params[:suspended]
       @members = Member.where(status: %w[suspended]).downloadable
+    elsif params[:all]
+      @members = Member.all.downloadable
     elsif params[:active_unpaid]
       mems = Member.cached_can_shop.inject([]) do |ary,member|
         ary << member.id unless member.fees.membership_paid?

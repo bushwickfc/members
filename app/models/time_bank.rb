@@ -38,9 +38,11 @@ class TimeBank < ActiveRecord::Base
 
   scope :unapproved_only, -> { where(approved: false) }
   scope :approved_only,   -> { where(approved: true) }
+  scope :approved_or_null,-> { where(approved: [true,nil]) }
   scope :hours,           -> { select(HOURS_SELECT % nil) }
   scope :hours_summed,    -> { select(HOURS_SELECT % "SUM") }
   scope :hours_owed,      -> { joins(:member).select %Q{FLOOR(DATEDIFF(NOW(), members.work_date) / 30)* members.monthly_hours AS hours_owed }}
+  scope :hours_owed_merge,-> { select %Q{FLOOR(DATEDIFF(NOW(), members.work_date) / 30)* members.monthly_hours AS hours_owed }}
   scope :include_parents, -> { includes(:admin, :member, :committee) }
   scope :select_all,      -> { select("#{table_name}.*").hours }
 

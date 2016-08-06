@@ -45,11 +45,11 @@ class Member < ActiveRecord::Base
   scope     :cached_cant_shop, -> { where(status: %w[suspended hold]) }
   scope     :cached_can_shop, -> { where(status: [nil, "work_alert", "active", "parental"]) }
   scope     :downloadable, -> { 
-    joins(:time_banks).
-      where(TimeBank.approved_only.where_sql[5..-1]).
+    joins('LEFT JOIN time_banks ON time_banks.member_id = members.id').
+      where(TimeBank.approved_or_null.where_sql[5..-1]).
       select("members.*").
       merge(TimeBank.hours_summed).
-      merge(TimeBank.hours_owed).
+      merge(TimeBank.hours_owed_merge).
       merge(TimeBank.hours_difference).
       group("members.id")
   }
