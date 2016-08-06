@@ -3,6 +3,8 @@ timeout 60
 preload_app true
 if ENV['RAILS_ENV'] == 'production'
   listen '/tmp/bfc_members.sock'
+  stderr_path '/opt/apps/bfc-members/current/log/unicorn_stderr.log'
+  stdout_path '/opt/apps/bfc-members/current/log/unicorn_stdout.log'
 else
   listen '3000'
 end
